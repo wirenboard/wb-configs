@@ -20,9 +20,12 @@ min-memory		= 256
 
 # Test if vital daemons are running
 pidfile		= /var/run/syslogd.pid 
-#pidfile		= /var/run/sshd.pid
+pidfile		= /var/run/sshd.pid
 pidfile		= /var/run/mosquitto.pid
 pidfile		= /var/run/nginx.pid
+
+# Timeout for all tests
+retry-timeout		= 30
 
 # Put other test/repair scripts to this dir
 test-directory		= /etc/watchdog.d

@@ -1,3 +1,9 @@
+wb-configs (1.69.2) stable; urgency=medium
+
+  * use watchdog-5.15 and retry-timeout
+
+ -- Yury Usishchev <y.usishchev@contactless.ru>  Mon, 12 Dec 2016 18:58:07 +0400
+
 wb-configs (1.69.1) stable; urgency=medium
 
   * disable SSHd watchdog check
