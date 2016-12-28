@@ -1,0 +1,26 @@
+#!/bin/sh
+. /etc/wb_env.sh
+
+RULES=/etc/udev/rules.d/99-wb-uart.rules
+
+RULES_FILE=""
+
+case "$WB_VERSION" in
+    "58" | "55" | "52" | "50" )
+        RULES_FILE="/etc/udev/wb/99-wb-uart.rules.wb5"
+    ;;
+    "41" )
+        RULES_FILE="/etc/udev/wb/99-wb-uart.rules.wb4"
+    ;;
+    "32" )
+        RULES_FILE="/etc/udev/wb/99-wb-uart.rules.wb3"
+    ;;
+    "28" )
+        RULES_FILE="/etc/udev/wb/99-wb-uart.rules.wb2"
+    ;;
+    * )
+        RULES_FILE="/etc/udev/wb/99-wb-uart.rules.default"
+    ;;
+esac
+
+ucf --debconf-ok $RULES_FILE $RULES

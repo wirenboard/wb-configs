@@ -1,0 +1,1 @@
+KERNEL=="ttyAPP0", SUBSYSTEM=="tty", SYMLINK+="ttyGSM"
