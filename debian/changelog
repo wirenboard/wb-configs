@@ -1,3 +1,9 @@
+wb-configs (1.69.3) stable; urgency=medium
+
+  * Remove hardcoded architecture from apt repository
+
+ -- Yury Usishchev <y.usishchev@contactless.ru>  Mon, 16 Jan 2017 20:59:55 +0300
+
 wb-configs (1.69.2) stable; urgency=medium
 
   * use watchdog-5.15 and retry-timeout
