@@ -1,0 +1,2 @@
+KERNEL=="ttyAPP0", SUBSYSTEM=="tty", SYMLINK+="ttyGSM"
+KERNEL=="ttyNSC0", SUBSYSTEM=="tty", SYMLINK+="ttyRS485"
