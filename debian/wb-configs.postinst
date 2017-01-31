@@ -1,6 +1,8 @@
 #!/bin/sh
 . /etc/wb_env.sh
 
+#DEBHELPER#
+
 RULES=/etc/udev/rules.d/99-wb-uart.rules
 
 RULES_FILE=""
