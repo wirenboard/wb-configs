@@ -1,3 +1,9 @@
+wb-configs (1.69.4) UNRELEASED; urgency=medium
+
+  * Make UART symlinks with udev
+
+ -- Alexey Ignatov <lexszero@gmail.com>  Tue, 31 Jan 2017 01:36:45 +0000
+
 wb-configs (1.69.3) stable; urgency=medium
 
   * Remove hardcoded architecture from apt repository
