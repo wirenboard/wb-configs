@@ -3,26 +3,34 @@
 
 #DEBHELPER#
 
-RULES=/etc/udev/rules.d/99-wb-uart.rules
+RULES_DST_DIR=/etc/udev/rules.d
+RULES_DIR=/etc/udev/wb
 
-RULES_FILE=""
+# Args:
+# - rules file (e.g. "99-wb-uart")
+# - suffix (e.g. "wb5")
+install_rules() {
+	ucf --debconf-ok "$RULES_DIR/$1.rules.$2" "$RULES_DST_DIR/$1.rules"
+}
 
 case "$WB_VERSION" in
+    "60" )
+        install_rules 99-wb-uart wb6
+        install_rules 99-wb-ethernet wb6
+    ;;
     "58" | "55" | "52" | "50" )
-        RULES_FILE="/etc/udev/wb/99-wb-uart.rules.wb5"
+        install_rules 99-wb-uart wb5
     ;;
     "41" )
-        RULES_FILE="/etc/udev/wb/99-wb-uart.rules.wb4"
+        install_rules 99-wb-uart wb4
     ;;
     "32" )
-        RULES_FILE="/etc/udev/wb/99-wb-uart.rules.wb3"
+        install_rules 99-wb-uart wb3
     ;;
     "28" )
-        RULES_FILE="/etc/udev/wb/99-wb-uart.rules.wb2"
+        install_rules 99-wb-uart wb2
     ;;
     * )
-        RULES_FILE="/etc/udev/wb/99-wb-uart.rules.default"
+        install_rules 99-wb-uart default
     ;;
 esac
-
-ucf --debconf-ok $RULES_FILE $RULES

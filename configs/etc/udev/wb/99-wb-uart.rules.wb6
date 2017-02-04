@@ -1,0 +1,3 @@
+KERNEL=="ttymxc0", SUBSYSTEM=="tty", SYMLINK+="ttyCONSOLE"
+KERNEL=="ttymxc1", SUBSYSTEM=="tty", SYMLINK+="ttyRS485-1"
+KERNEL=="ttymxc3", SUBSYSTEM=="tty", SYMLINK+="ttyRS485-2"
