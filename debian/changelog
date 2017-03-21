@@ -1,3 +1,9 @@
+wb-configs (1.69.3) stable; urgency=medium
+
+  * allow Avahi/bonjour/zeroconf on network with .local domains
+
+ -- Evgeny Boger <boger@contactless.ru>  Tue, 21 Mar 2017 19:32:52 +0300
+
 wb-configs (1.69.2) stable; urgency=medium
 
   * use watchdog-5.15 and retry-timeout
