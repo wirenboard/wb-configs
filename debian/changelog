@@ -1,8 +1,19 @@
-wb-configs (1.69.3) stable; urgency=medium
+wb-configs (1.70.1) stable; urgency=medium
 
   * allow Avahi/bonjour/zeroconf on network with .local domains
 
  -- Evgeny Boger <boger@contactless.ru>  Tue, 21 Mar 2017 19:32:52 +0300
+
+wb-configs (1.70) stable; urgency=medium
+
+  * Make UART symlinks with udev
+
+ -- Alexey Ignatov <lexszero@gmail.com>  Tue, 31 Jan 2017 01:36:45 +0000
+wb-configs (1.69.3) stable; urgency=medium
+
+  * Remove hardcoded architecture from apt repository
+
+ -- Yury Usishchev <y.usishchev@contactless.ru>  Mon, 16 Jan 2017 20:59:55 +0300
 
 wb-configs (1.69.2) stable; urgency=medium
 
