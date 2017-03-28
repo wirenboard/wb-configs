@@ -1,3 +1,9 @@
+wb-configs (1.71) stable; urgency=medium
+
+  * Udev rules for WB6
+
+ -- Evgeny Boger <boger@contactless.ru>  Tue, 28 Mar 2017 20:01:25 +0300
+
 wb-configs (1.70.1) stable; urgency=medium
 
   * allow Avahi/bonjour/zeroconf on network with .local domains
