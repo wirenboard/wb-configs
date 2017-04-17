@@ -14,7 +14,7 @@ install_rules() {
 }
 
 case "$WB_VERSION" in
-    "60" )
+    "61" | "60" )
         install_rules 99-wb-uart wb6
         install_rules 99-wb-ethernet wb6
     ;;
