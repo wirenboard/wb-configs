@@ -1,3 +1,9 @@
+wb-configs (1.72) stable; urgency=medium
+
+  * Use wb-set-mac in network pre-up
+
+ -- Alexey Ignatov <lexszero@gmail.com>  Sat, 22 Apr 2017 08:28:12 +0300
+
 wb-configs (1.71) stable; urgency=medium
 
   * Udev rules for WB6
