@@ -1,3 +1,9 @@
+wb-configs (1.72.1) stable; urgency=medium
+
+  * ttyAPP0 => ttyGSM in configs
+
+ -- Evgeny Boger <boger@contactless.ru>  Fri, 12 May 2017 16:59:32 +0300
+
 wb-configs (1.72) stable; urgency=medium
 
   * Use wb-set-mac in network pre-up

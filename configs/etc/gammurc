@@ -1,3 +1,3 @@
 [gammu]
-port = /dev/ttyAPP0
+port = /dev/ttyGSM
 connection = at115200
