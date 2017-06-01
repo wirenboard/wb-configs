@@ -1,2 +1,0 @@
-KERNELS == "2188000.ethernet", SUBSYSTEM == "net", NAME = "eth0"
-KERNELS == "20b4000.ethernet", SUBSYSTEM == "net", NAME = "eth1"
