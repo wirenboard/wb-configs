@@ -5,6 +5,7 @@
 # Default-Stop:
 # Required-Start:    $local_fs wb-prepare
 # Required-Stop:
+# X-Start-Before:    networking
 # Short-Description:  move config files to shared partition
 # Description:        move config files to shared partition
 ### END INIT INFO
@@ -197,20 +198,6 @@ do_start()
     start-stop-daemon --start --quiet --pidfile $PIDFILE --background --no-close --startas $DAEMON --test &&
     start-stop-daemon --start --quiet --pidfile $PIDFILE --background --no-close --exec $DAEMON -- ${WB_WATCH_FILES[@]} ||
         log_warning_msg "Unable to start $DAEMON"
-
-    [[ "${md5_interfaces}" != "`md5sum /etc/network/interfaces`" ||
-       "`cat /sys/class/net/eth0/address`" != "`cat /var/lib/wirenboard/serial.conf`" ]] && {
-        log_action_msg "Network configuration changed, restarting"
-        if [ -e /etc/init.d/netplug ]; then
-            /etc/init.d/netplug stop
-        fi
-    
-        ifdown eth0 ; ifconfig eth0 down ; ifup eth0
-    
-        if [ -e /etc/init.d/netplug ]; then
-            /etc/init.d/netplug start
-        fi
-    }
 
     return 0
 }
