@@ -1,3 +1,10 @@
+wb-configs (1.74.0) stable; urgency=medium
+
+  * sshd config added, /mnt/data is removed from fstab, added at first startup
+
+ -- Attila Door <a.door@contactless.ru>  Sat, 16 Jan 2018 12:03:22 +0300
+
+
 wb-configs (1.73.1) stable; urgency=medium
 
   * starts wb-configs init script before networking to avoid possible conflicts
