@@ -12,9 +12,6 @@ log-dir			= /var/log/watchdog
 realtime		= yes
 priority		= 1
 
-# Test if /var/log/messages is accessible
-file			= /var/log/messages
-
 # Test if there at least 1MB of memory (256 pages)
 min-memory		= 256
 

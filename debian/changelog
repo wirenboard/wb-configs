@@ -1,3 +1,9 @@
+wb-configs (1.74.1) stable; urgency=medium
+
+  * testing /var/log/messages is removed from watchdog config
+
+ -- Attila Door <a.door@contactless.ru>  Sat, 16 Jan 2018 12:03:22 +0300
+
 wb-configs (1.74.0) stable; urgency=medium
 
   * sshd config added, /mnt/data is removed from fstab, added at first startup
