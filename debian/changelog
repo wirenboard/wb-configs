@@ -1,3 +1,9 @@
+wb-configs (1.74.2) stable; urgency=medium
+
+  * init symlink is generated for systemd support
+
+ -- Attila Door <a.door@contactless.ru>  Sat, 22 Jan 2018 13:03:22 +0300
+
 wb-configs (1.74.1) stable; urgency=medium
 
   * testing /var/log/messages is removed from watchdog config

@@ -1,0 +1,9 @@
+#!/bin/sh
+. /etc/wb_env.sh
+
+if [ "$1" = "purge" ] ; then
+        rm /etc/rc3.d/S01wb-configs
+fi
+
+
+#DEBHELPER#

@@ -3,6 +3,8 @@
 
 #DEBHELPER#
 
+ln -s /etc/init.d/wb-configs /etc/rc3.d/S01wb-configs
+
 RULES_DST_DIR=/etc/udev/rules.d
 RULES_DIR=/etc/udev/wb
 
