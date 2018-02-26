@@ -1,3 +1,9 @@
+wb-configs (1.74.3) stable; urgency=medium
+
+  * linux-image-wb replaced by linux-image-wb2 OR wb6
+
+ -- Attila Door <a.door@contactless.ru>  Sat, 26 Feb 2018 17:03:22 +0300
+
 wb-configs (1.74.2) stable; urgency=medium
 
   * runlevel 3 is added to init script for systemd support
