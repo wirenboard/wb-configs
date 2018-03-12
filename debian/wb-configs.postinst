@@ -13,6 +13,16 @@ install_rules() {
 	ucf --debconf-ok "$RULES_DIR/$1.rules.$2" "$RULES_DST_DIR/$1.rules"
 }
 
+# Args:
+# arg1: file path
+# arg2: PARAM in targt file
+# arg3: new PARAM val
+wb_replace_parameter_in_file()
+{
+    echo $(sed  "s/$2/$3/g" <$1) > $1
+}
+
+
 case "$WB_VERSION" in
     "61" | "60" )
         install_rules 99-wb-uart wb6
@@ -34,3 +44,11 @@ case "$WB_VERSION" in
         install_rules 99-wb-uart default
     ;;
 esac
+
+# setting target distro in repo source file
+. /etc/os-release
+DISTRIBUTION=$(echo $VERSION | cut -d "(" -f2 | cut -d ")" -f1)
+wb_replace_parameter_in_file /etc/apt/sources.list.d/contactless.list DISTRO $DISTRIBUTION
+wb_replace_parameter_in_file /etc/apt/sources.list.d/backports.list DISTRO $DISTRIBUTION
+
+
