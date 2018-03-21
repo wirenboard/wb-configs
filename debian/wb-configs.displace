@@ -12,7 +12,7 @@
 /etc/hostapd.conf.wb
 /etc/default/hostapd.wb
 /etc/watchdog.conf.wb
-
+/etc/ssh/sshd_config
 /etc/ppp/chap-secrets.wb
 
 /etc/nginx/sites-available/default.wb
