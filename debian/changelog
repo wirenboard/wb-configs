@@ -1,5 +1,11 @@
 wb-configs (1.75.0) stable; urgent=medium
   
+  * add networking service systemd config to stretch configs
+
+ -- Attila Door <a.door@contactless.ru>  Wed, 21 Mar 2018 15:03:22 +0300
+
+wb-configs (1.75.0) stable; urgent=medium
+  
   * add wb-configs-stretch and wheezy
 
  -- Attila Door <a.door@contactless.ru>  Sat, 15 Mar 2018 15:03:22 +0300
