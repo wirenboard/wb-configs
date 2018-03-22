@@ -12,7 +12,7 @@ WantedBy=multi-user.target
 WantedBy=network-online.target
 
 [Service]
-Type=oneshot
+Type=simple
 EnvironmentFile=-/etc/default/networking
 ExecStartPre=-/bin/sh -c '[ "$CONFIGURE_INTERFACES" != "no" ] && [ -n "$(ifquery --read-environment --list --exclude=lo)" ] && udevadm settle'
 ExecStart=/sbin/ifup -a --read-environment
