@@ -1,0 +1,4 @@
+# This disables so-called "Predictable Network Interface Names" in systemd/udev.
+# I.e. wlan0/wlan1 interface names are not renamed to something like wlx54c9daaaaaaa.
+# See https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/
+# for details.
