@@ -1,3 +1,64 @@
+wb-configs (1.75.4) stable; urgent=medium
+  
+  * change debian repo url to stable
+
+ -- Evgeny Boger <boger@contactless.ru>  Wed, 28 Mar 2018 15:03:22 +0300
+
+wb-configs (1.75.3) stable; urgent=medium
+  
+  * wb-watch-configs moved 
+
+ -- Attila Door <a.door@contactless.ru>  Wed, 28 Mar 2018 15:03:22 +0300
+
+wb-configs (1.75.2) stable; urgent=medium
+  
+  * add ssh config to displace list
+
+ -- Attila Door <a.door@contactless.ru>  Wed, 21 Mar 2018 15:03:22 +0300
+
+wb-configs (1.75.1) stable; urgent=medium
+  
+  * add networking service systemd config to stretch configs
+
+ -- Attila Door <a.door@contactless.ru>  Wed, 21 Mar 2018 15:03:22 +0300
+
+wb-configs (1.75.0) stable; urgent=medium
+  
+  * add wb-configs-stretch and wheezy
+
+ -- Attila Door <a.door@contactless.ru>  Sat, 15 Mar 2018 15:03:22 +0300
+
+wb-configs (1.74.4) stable; urgency=medium
+
+  * add /etc/apt/preferences config
+
+ -- Attila Door <a.door@contactless.ru>  Sat, 12 Mar 2018 15:03:22 +0300
+
+wb-configs (1.74.3) stable; urgency=medium
+
+  * linux-image-wb replaced by linux-image-wb2 OR wb6
+
+ -- Attila Door <a.door@contactless.ru>  Sat, 26 Feb 2018 17:03:22 +0300
+
+wb-configs (1.74.2) stable; urgency=medium
+
+  * runlevel 3 is added to init script for systemd support
+
+ -- Attila Door <a.door@contactless.ru>  Sat, 16 Jan 2018 12:03:22 +0300
+
+wb-configs (1.74.1) stable; urgency=medium
+
+  * testing /var/log/messages is removed from watchdog config
+
+ -- Attila Door <a.door@contactless.ru>  Sat, 16 Jan 2018 12:03:22 +0300
+
+wb-configs (1.74.0) stable; urgency=medium
+
+  * sshd config added, /mnt/data is removed from fstab, added at first startup
+
+ -- Attila Door <a.door@contactless.ru>  Sat, 16 Jan 2018 12:03:22 +0300
+
+
 wb-configs (1.73.1) stable; urgency=medium
 
   * starts wb-configs init script before networking to avoid possible conflicts
