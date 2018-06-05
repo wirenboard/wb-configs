@@ -156,6 +156,11 @@ wb_move_bind()
     mount --bind "$dst" "$src"
 }
 
+wb_move_bind_nosavefiles()
+{
+    nosavefiles=1 wb_move_bind "$@"
+}
+
 WB_WATCH_FILES=()
 
 wb_move_watch()
