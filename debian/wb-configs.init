@@ -198,7 +198,7 @@ init_stop_functions() {
         local src=${1%/}
         local dst="$MNT${2:-$src}"
 
-        umount -f $src 2>&1 >/dev/null
+        umount -l $src 2>&1 >/dev/null
     }
 
     wb_move_bind_nosavefiles() {
