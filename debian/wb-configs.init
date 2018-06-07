@@ -110,74 +110,100 @@ wb_fix_data_file()
     fi
 }
 
-wb_move()
-{
-    wb_fix_data_file "$@" || return $?
+# Start functions allow to use config file for
+# initializing (mount binds etc.)
+init_start_functions() {
+    wb_move()
+    {
+        wb_fix_data_file "$@" || return $?
 
-    local src=${1%/}
-    local dst="$MNT${2:-$src}"
+        local src=${1%/}
+        local dst="$MNT${2:-$src}"
 
-    # is there an existing symlink?
-    if [[ -h "$src" && -e "$src" ]]; then
-        # it points to correct file?
-        local f=`readlink -f "$src"`
-        if [[ "$f" == "$dst" ]]; then
-            [[ "$DEBUG" == "yes" ]] && echo "$src: good symlink, not touching"
-            return 0
+        # is there an existing symlink?
+        if [[ -h "$src" && -e "$src" ]]; then
+            # it points to correct file?
+            local f=`readlink -f "$src"`
+            if [[ "$f" == "$dst" ]]; then
+                [[ "$DEBUG" == "yes" ]] && echo "$src: good symlink, not touching"
+                return 0
+            fi
         fi
-    fi
 
-    echo "$src: symlinking to $dst"
-    rm -rf "$src"
-    ln -Tfs "$dst" "$src"
-}
-
-wb_move_nosavefiles()
-{
-    nosavefiles=1 wb_move "$@"
-}
-
-wb_move_bind()
-{
-    wb_fix_data_file "$@" || return $?
-
-    local src=${1%/}
-    local dst="$MNT${2:-$src}"
-    echo "$src: binding to $dst"
-    umount -f $src 2>&1 >/dev/null
-    if [[ -d "$dst" && ! -d "$src" ]]; then
+        echo "$src: symlinking to $dst"
         rm -rf "$src"
-        mkdir "$src"
-    fi
-    if [[ -f "$dst" && ! -f "$src" ]]; then
-        rm -f "$src"
-        touch "$src"
-    fi
-    mount --bind "$dst" "$src"
-}
-
-wb_move_bind_nosavefiles()
-{
-    nosavefiles=1 wb_move_bind "$@"
-}
-
-WB_WATCH_FILES=()
-
-wb_move_watch()
-{
-    wb_fix_data_file "$@" || return $?
-
-    local src=$1
-    local dst="$MNT${2:-$src}"
-
-    [[ ! -f "$src" || -h "$src" ]] && rm "$src"
-    diff -q "$src" "$dst" >/dev/null 2>&1 || {
-        echo "$src: copying from $dst"
-        cp -aH "$dst" "$src"
+        ln -Tfs "$dst" "$src"
     }
 
-    [[ "$DEBUG" == "yes" ]] && echo "$src: watching for changes"
-    WB_WATCH_FILES+=("$src")
+    wb_move_nosavefiles()
+    {
+        nosavefiles=1 wb_move "$@"
+    }
+
+    wb_move_bind()
+    {
+        wb_fix_data_file "$@" || return $?
+
+        local src=${1%/}
+        local dst="$MNT${2:-$src}"
+        echo "$src: binding to $dst"
+        umount -f $src 2>&1 >/dev/null
+        if [[ -d "$dst" && ! -d "$src" ]]; then
+            rm -rf "$src"
+            mkdir "$src"
+        fi
+        if [[ -f "$dst" && ! -f "$src" ]]; then
+            rm -f "$src"
+            touch "$src"
+        fi
+        mount --bind "$dst" "$src"
+    }
+
+    wb_move_bind_nosavefiles()
+    {
+        nosavefiles=1 wb_move_bind "$@"
+    }
+
+    WB_WATCH_FILES=()
+
+    wb_move_watch()
+    {
+        wb_fix_data_file "$@" || return $?
+
+        local src=$1
+        local dst="$MNT${2:-$src}"
+
+        [[ ! -f "$src" || -h "$src" ]] && rm "$src"
+        diff -q "$src" "$dst" >/dev/null 2>&1 || {
+            echo "$src: copying from $dst"
+            cp -aH "$dst" "$src"
+        }
+
+        [[ "$DEBUG" == "yes" ]] && echo "$src: watching for changes"
+        WB_WATCH_FILES+=("$src")
+    }
+}
+
+# Stop functions treat config file for
+# deinit (unmount etc.)
+init_stop_functions() {
+    wb_move() {
+    }
+
+    wb_move_nosavefiles() {
+
+    }
+
+    wb_move_bind() {
+        local src=${1%/}
+        local dst="$MNT${2:-$src}"
+
+        umount -f $src 2>&1 >/dev/null
+    }
+
+    wb_move_bind_nosavefiles() {
+        wb_move_bind "$@"
+    }
 }
 
 #
@@ -186,6 +212,8 @@ wb_move_watch()
 
 do_start()
 {
+    init_start_functions
+
     echo
     wb_check_data || {
         log_warning_msg "$MNT not mounted, skipping symlinks check"
@@ -212,6 +240,13 @@ do_start()
 #
 do_stop()
 {
+    init_stop_functions
+
+    for item in /etc/wb-configs.d/*; do
+        grep -q '\.dpkg-old$' <<< "$item" && continue
+        source "$item"
+    done
+
 	# Return
 	#   0 if daemon has been stopped
 	#   1 if daemon was already stopped
