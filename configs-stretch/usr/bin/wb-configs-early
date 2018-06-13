@@ -1,0 +1,184 @@
+#!/bin/bash
+
+STORAGE=/dev/mmcblk0
+MNT=/mnt/data
+
+WATCH_FILES_LIST=/var/run/wb-configs.watch
+
+wb_fix_data_file()
+{
+    local src_orig=$1
+    local src=${1%/}
+    local dst="$MNT${2:-$src}"
+
+    # ensure that file in /mnt/data exists. if not, copy from rootfs.
+    if [[ ! -e "$dst" ]]; then
+        local f=''
+        if [[ -f "${src}" || -d "${src}" ]]; then
+            f="$src"
+        elif [[ -e "${src}.default" ]]; then
+            f="${src}.default"
+        elif [[ -e "${src}.wb" ]]; then
+            f="${src}.wb"
+            rm -rf "${src}.default"
+            ln -Tfs "$f" "${src}.default"
+        elif [[ "${src_orig}" != "$src" ]]; then
+            mkdir -p "$dst"
+            f=$dst
+        else
+            echo "$src: unable to find file to fix broken state"
+            return 1
+        fi
+
+        echo "$src: fixing with existing file $f"
+        mkdir -p `dirname "$dst"`
+        [[ -n "$nosavefiles" ]] && find "$f" -type f -delete
+        cp -aH "$f" "$dst"
+
+        # create backup if there isn't one
+        if [[ ! -e "${src}.default" ]]; then
+            echo "$src: saving backup to ${src}.default"
+            cp -aH "$f" "${src}.default"
+        fi
+    fi
+}
+
+# Start functions allow to use config file for
+# initializing (mount binds etc.)
+init_start_functions() {
+    wb_move()
+    {
+        wb_fix_data_file "$@" || return $?
+
+        local src=${1%/}
+        local dst="$MNT${2:-$src}"
+
+        # is there an existing symlink?
+        if [[ -h "$src" && -e "$src" ]]; then
+            # it points to correct file?
+            local f=`readlink -f "$src"`
+            if [[ "$f" == "$dst" ]]; then
+                [[ "$DEBUG" == "yes" ]] && echo "$src: good symlink, not touching"
+                return 0
+            fi
+        fi
+
+        echo "$src: symlinking to $dst"
+        rm -rf "$src"
+        ln -Tfs "$dst" "$src"
+    }
+
+    wb_move_nosavefiles()
+    {
+        nosavefiles=1 wb_move "$@"
+    }
+
+    wb_move_bind()
+    {
+        wb_fix_data_file "$@" || return $?
+
+        local src=${1%/}
+        local dst="$MNT${2:-$src}"
+        echo "$src: binding to $dst"
+        umount -f $src 2>&1 >/dev/null
+        if [[ -d "$dst" && ! -d "$src" ]]; then
+            rm -rf "$src"
+            mkdir "$src"
+        fi
+        if [[ -f "$dst" && ! -f "$src" ]]; then
+            rm -f "$src"
+            touch "$src"
+        fi
+        mount --bind "$dst" "$src"
+    }
+
+    wb_move_bind_nosavefiles()
+    {
+        nosavefiles=1 wb_move_bind "$@"
+    }
+
+    WB_WATCH_FILES=()
+
+    wb_move_watch()
+    {
+        wb_fix_data_file "$@" || return $?
+
+        local src=$1
+        local dst="$MNT${2:-$src}"
+
+        [[ ! -f "$src" || -h "$src" ]] && rm "$src"
+        diff -q "$src" "$dst" >/dev/null 2>&1 || {
+            echo "$src: copying from $dst"
+            cp -aH "$dst" "$src"
+        }
+
+        [[ "$DEBUG" == "yes" ]] && echo "$src: watching for changes"
+        WB_WATCH_FILES+=("$src")
+    }
+}
+
+# Stop functions treat config file for
+# deinit (unmount etc.)
+init_stop_functions() {
+    wb_move() {
+        true
+    }
+
+    wb_move_nosavefiles() {
+        true
+    }
+
+    wb_move_bind() {
+        local src=${1%/}
+        local dst="$MNT${2:-$src}"
+
+        umount -l $src 2>&1 >/dev/null
+    }
+
+    wb_move_bind_nosavefiles() {
+        wb_move_bind "$@"
+    }
+
+    wb_move_watch() {
+        true
+    }
+}
+
+do_start()
+{
+    init_start_functions
+
+    local md5_interfaces=`md5sum /etc/network/interfaces`
+
+    log_action_msg "Checking symlinks to $MNT"
+    for item in /etc/wb-configs.d/*; do
+        grep -q '\.dpkg-old$' <<< "$item" && continue
+        source "$item"
+    done
+
+    echo "${WB_WATCH_FILES[@]}" > $WATCH_FILES_LIST
+}
+
+do_stop()
+{
+    init_stop_functions
+
+    for item in /etc/wb-configs.d/*; do
+        grep -q '\.dpkg-old$' <<< "$item" && continue
+        source "$item"
+    done
+
+}
+
+case "$1" in
+  start)
+    do_start
+    ;;
+  latestop)
+    do_stop
+    ;;
+  *)
+	echo "Usage: $1 {start|stop}" >&2
+	exit 3
+	;;
+esac
