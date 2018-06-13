@@ -1,1 +1,2 @@
 rm_conffile /etc/kernel/postinst.d/zImage-uboot
+rm_conffile /etc/init.d/wb-configs 1.76~

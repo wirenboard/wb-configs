@@ -1,8 +1,9 @@
-wb-configs (1.76.1) stable; urgency=medium
+wb-configs (1.77) stable; urgency=medium
 
-  * Stretch cleanups
+  * Fix dependencies between wb-configs and wb-configs-<releasename>
+  * Use systemd services for wb-configs-stretch
 
- -- Nikita Maslov <n.maslov@contactless.ru>  Wed, 06 Jun 2018 13:06:01 +0300
+ -- Nikita Maslov <n.maslov@contactless.ru>  Wed, 13 Jun 2018 14:54:15 +0300
 
 wb-configs (1.76) stable; urgency=medium
 

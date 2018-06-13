@@ -4,24 +4,24 @@ Priority: extra
 Maintainer: Evgeny Boger <boger@contactless.ru>
 Build-Depends: debhelper (>= 8.0.0), config-package-dev (>= 5.0), dh-systemd (>= 1.5)
 Standards-Version: 3.9.4
-Homepage: <insert the upstream URL, if relevant>
+Homepage: https://github.com/contactless/wb-configs
 
 Package: wb-configs
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 1.71), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15), linux-image-wb2 | linux-image-wb6
+Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 1.71), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15), linux-image-wb2 | linux-image-wb6, wb-configs-wheezy | wb-configs-stretch
 Provides: ${diverted-files}, mqtt-wss
 Conflicts: ${diverted-files}, mqtt-wss
 Replaces: mqtt-wss
-Description: Default config files for Wiren Board
+Description: Default common config files for Wiren Board
 
 Package: wb-configs-wheezy
 Architecture: all
-Depends: wb-configs (>= 1.76)
+Depends: sysvinit (>= 2.88), lsb-base (>= 4.1)
 Replaces: wb-configs-stretch
 Description: Default wheezy-specific config files for Wiren Board
 
 Package: wb-configs-stretch
 Architecture: all
-Depends: wb-configs (>= 1.76)
+Depends: systemd (>= 232-25)
 Replaces: wb-configs-wheezy
 Description: Default stretch-specific config files for Wiren Board
