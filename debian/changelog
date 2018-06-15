@@ -2,6 +2,7 @@ wb-configs (1.77) stable; urgency=medium
 
   * Fix dependencies between wb-configs and wb-configs-<releasename>
   * Use systemd services for wb-configs-stretch
+  * Use bind mount for /var/log for systemd to work correctly
 
  -- Nikita Maslov <n.maslov@contactless.ru>  Wed, 13 Jun 2018 14:54:15 +0300
 
