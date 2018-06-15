@@ -2,9 +2,9 @@ Source: wb-configs
 Section: config
 Priority: extra
 Maintainer: Evgeny Boger <boger@contactless.ru>
-Build-Depends: debhelper (>= 8.0.0), config-package-dev (>= 5.0)
+Build-Depends: debhelper (>= 8.0.0), config-package-dev (>= 5.0), dh-systemd (>= 1.5)
 Standards-Version: 3.9.4
-Homepage: <insert the upstream URL, if relevant>
+Homepage: https://github.com/contactless/wb-configs
 
 Package: wb-configs
 Architecture: all
@@ -12,14 +12,16 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 1.71), inotify-to
 Provides: ${diverted-files}, mqtt-wss
 Conflicts: ${diverted-files}, mqtt-wss
 Replaces: mqtt-wss
-Description: Default config files for Wiren Board rootfs
+Description: Default common config files for Wiren Board
 
 Package: wb-configs-wheezy
 Architecture: all
+Depends: sysvinit (>= 2.88), lsb-base (>= 4.1)
 Replaces: wb-configs-stretch
-Description: wheezy specific configs
+Description: Default wheezy-specific config files for Wiren Board
 
 Package: wb-configs-stretch
 Architecture: all
+Depends: systemd (>= 232-25)
 Replaces: wb-configs-wheezy
-Description: stretch spcecific configs
+Description: Default stretch-specific config files for Wiren Board

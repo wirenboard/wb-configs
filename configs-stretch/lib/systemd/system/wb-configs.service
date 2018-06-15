@@ -1,0 +1,10 @@
+[Unit]
+Description=watch config files
+ConditionPathExists=/var/run/wb-configs.watch
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -c '/usr/bin/wb-watch-configs `cat /var/run/wb-configs.watch`'
+
+[Install]
+WantedBy=multi-user.target

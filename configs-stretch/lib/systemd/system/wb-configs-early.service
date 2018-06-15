@@ -1,0 +1,16 @@
+[Unit]
+Description=prepare mounts and symlinks to config files
+DefaultDependencies=no
+Conflicts=shutdown.target
+After=local-fs.target systemd-sysusers.service mnt-data.mount
+Before=sysinit.target shutdown.target systemd-tmpfiles-setup.service
+RefuseManualStop=true
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/wb-configs-early start
+ExecStop=/usr/bin/wb-configs-early stop
+
+[Install]
+WantedBy=sysinit.target
