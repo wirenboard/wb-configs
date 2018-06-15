@@ -35,7 +35,7 @@ MNT=/mnt/data
 
 wb_check_mounted()
 {
-    grep "$1" /proc/mounts 2>&1 >/dev/null
+    grep "$1" /proc/mounts 2>/dev/null >/dev/null
 }
 
 # Run mkfs.ext4 with custom options
@@ -144,7 +144,7 @@ wb_move_bind()
     local src=${1%/}
     local dst="$MNT${2:-$src}"
     echo "$src: binding to $dst"
-    umount -f $src 2>&1 >/dev/null
+    umount -f $src 2>/dev/null >/dev/null
     if [[ -d "$dst" ]] && [[ ! -d "$src" || -h "$src" ]]; then
         rm -rf "$src"
         mkdir "$src"
@@ -171,7 +171,7 @@ wb_move_watch()
     local dst="$MNT${2:-$src}"
 
     [[ ! -f "$src" || -h "$src" ]] && rm "$src"
-    diff -q "$src" "$dst" >/dev/null 2>&1 || {
+    diff -q "$src" "$dst" >/dev/null 2>/dev/null || {
         echo "$src: copying from $dst"
         cp -aH "$dst" "$src"
     }
