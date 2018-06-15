@@ -81,11 +81,11 @@ init_start_functions() {
         local dst="$MNT${2:-$src}"
         echo "$src: binding to $dst"
         umount -f $src 2>&1 >/dev/null
-        if [[ -d "$dst" && ! -d "$src" ]]; then
+        if [[ -d "$dst" ]] && [[ ! -d "$src" || -h "$src" ]]; then
             rm -rf "$src"
             mkdir "$src"
         fi
-        if [[ -f "$dst" && ! -f "$src" ]]; then
+        if [[ -f "$dst" ]] && [[ ! -f "$src" || -h "$src" ]]; then
             rm -f "$src"
             touch "$src"
         fi
