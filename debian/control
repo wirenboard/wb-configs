@@ -2,7 +2,7 @@ Source: wb-configs
 Section: config
 Priority: extra
 Maintainer: Evgeny Boger <boger@contactless.ru>
-Build-Depends: debhelper (>= 8.0.0), config-package-dev (>= 5.0)
+Build-Depends: debhelper (>= 9), config-package-dev (>= 5.0), dh-systemd
 Standards-Version: 3.9.4
 Homepage: https://github.com/contactless/wb-configs
 

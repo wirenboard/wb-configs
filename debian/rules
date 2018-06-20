@@ -4,12 +4,24 @@
 export DH_VERBOSE = 1
 
 %:
-	dh $@ --with config-package
+	dh $@ --with config-package --with systemd
 
 ifneq (,$(filter wb-configs-stretch,$(shell dh_listpackages)))
 override_dh_installsystemd:
 	dh_installsystemd --name=wb-configs-early --no-start --no-restart-after-upgrade --no-restart-on-upgrade
 	dh_installsystemd --name=wb-configs
+
+override_dh_installinit:
+	dh_installinit --name=wb-configs-early
+	dh_installinit --name=wb-configs
+
+override_dh_systemd_enable:
+	dh_systemd_enable --name=wb-configs-early wb-configs-early.service
+	dh_systemd_enable --name=wb-configs wb-configs.service
+
+override_dh_systemd_start:
+	dh_systemd_start --name=wb-configs-early --no-start wb-configs-early.service
+	dh_systemd_start --name=wb-configs wb-configs.service
 endif
 
 ifneq (,$(filter wb-configs-wheezy,$(shell dh_listpackages)))
