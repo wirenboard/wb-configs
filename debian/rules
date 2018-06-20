@@ -4,10 +4,19 @@
 export DH_VERBOSE = 1
 
 %:
-	dh $@ --with config-package --with systemd
+	dh $@ --with config-package
 
+ifneq (,$(filter wb-configs-stretch,$(shell dh_listpackages)))
+override_dh_installsystemd:
+	dh_installsystemd --name=wb-configs-early --no-start --no-restart-after-upgrade --no-restart-on-upgrade
+	dh_installsystemd --name=wb-configs
+endif
+
+ifneq (,$(filter wb-configs-wheezy,$(shell dh_listpackages)))
 override_dh_installinit:
 	dh_installinit -- start 11 S
+endif
+
 
 override_dh_builddeb:
 	dh_builddeb -- -Zgzip
