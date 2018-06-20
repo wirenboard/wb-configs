@@ -150,7 +150,7 @@ do_start()
 
     local md5_interfaces=`md5sum /etc/network/interfaces`
 
-    log_action_msg "Checking symlinks to $MNT"
+    echo "Checking symlinks to $MNT" >&2
     for item in /etc/wb-configs.d/*; do
         grep -q '\.dpkg-old$' <<< "$item" && continue
         source "$item"
