@@ -1,3 +1,9 @@
+wb-configs (1.76.2) stable; urgency=critical
+
+  * Fix: disable /mnt/data formatting on hard reboot
+
+ -- Nikita Maslov <n.maslov@contactless.ru>  Thu, 28 Jun 2018 12:08:07 +0300
+
 wb-configs (1.76.1) stable; urgent=medium
 
   * add logrotate conf for /var/log/messages
