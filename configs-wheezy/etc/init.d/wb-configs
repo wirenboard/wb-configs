@@ -64,7 +64,16 @@ wb_check_data()
         return 0
     }
     
-    wb_mkfs_ext4 ${data} data || return $?
+    # QUICKFIX: sometimes this script accidentially
+    # formats a good partition only because is was not
+    # mounted at the moment. This problem was detected
+    # at WB6 stretch. To prevent this, we just don't allow
+    # script to format data partition.
+    #
+    # In case user really need to format data partition,
+    # he can use factory reset feature while updating.
+    #
+    # wb_mkfs_ext4 ${data} data || return $?
     mount ${data} $MNT || {
         log_failure_msg "Can't mount ${data}"
         return 1
