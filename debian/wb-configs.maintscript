@@ -1,1 +1,4 @@
 rm_conffile /etc/kernel/postinst.d/zImage-uboot
+rm_conffile /etc/init.d/wb-configs 1.76~
+rm_conffile /etc/apt/sources.list.d/contactless.list 1.76~
+rm_conffile /etc/apt/sources.list.d/wheezy-backports.list 1.76~
