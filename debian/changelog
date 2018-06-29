@@ -1,3 +1,9 @@
+wb-configs (1.77.1) stable; urgency=medium
+
+  * Fix: manually undisplace sshd_config from older wb-configs
+
+ -- Nikita Maslov <n.maslov@contactless.ru>  Fri, 29 Jun 2018 12:37:15 +0300
+
 wb-configs (1.77) stable; urgency=medium
 
   * Fix dependencies between wb-configs and wb-configs-<releasename>

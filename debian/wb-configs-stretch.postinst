@@ -1,0 +1,74 @@
+#!/bin/bash
+set -e
+
+ours=.wb
+theirs=.wb-orig
+
+# Remove diversion of sshd_configs from wb-configs which
+# was accidently left unattended
+
+# These functions are taken from config-package-dev heplers
+# with modifications which allow to remove diversions from
+# other packages
+wb_undisplace_unlink_symlink()
+{
+    file="$1"
+    ourfile="$2"
+    theirfile="$3"
+    if [ ! -L "$file" ] || \
+	[ "$(readlink "$file")" != "$(basename "$ourfile")" -a \
+	  "$(readlink "$file")" != "$(basename "$theirfile")" ]; then
+	echo "*** OMINOUS WARNING ***: $file is not linked to either $(basename "$ourfile") or $(basename "$theirfile")" >&2
+    else
+	rm -f "$file"
+    fi
+}
+
+wb_undisplace_unlink_displace()
+{
+    file="$1"
+    if [ ! -L "$file" ] && [ ! -e "$file" ]; then
+    echo "Run dpkg-divert --remove..."
+	dpkg-divert --remove --rename "$file"
+    else
+	echo "Not removing diversion of $file by $package" >&2
+    fi
+}
+
+wb_undisplace_unlink()
+{
+    prefix=$1
+    suffix=$2
+
+    file=$prefix$suffix
+    ourfile=$prefix$ours$suffix
+    theirfile=$prefix$theirs$suffix
+
+    wb_undisplace_unlink_symlink "$file" "$ourfile" "$theirfile"
+    wb_undisplace_unlink_displace "$file"
+}
+
+wb_check_undisplace_unlink_from()
+{
+    prefix=$1
+    suffix=$2
+    from_package=$3
+    from_version=$4
+
+    file=$prefix$suffix
+    ourfile=$prefix$ours$suffix
+    theirfile=$prefix$theirs$suffix
+
+    if LC_ALL=C dpkg-divert --list "$from_package" | \
+	grep -xFq "diversion of $file to $theirfile by $from_package" &&
+    dpkg --compare-versions `dpkg-query -f '${Version}' -W "$from_package"` "lt" "$from_version"; then
+        echo "Picking up diversion of $file from $package to replace it with our one"
+	    wb_undisplace_unlink "$prefix" "$suffix" "$from_package"
+    fi
+}
+
+if [ "$1" = "configure" ]; then
+    wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
+fi
+
+#DEBHELPER#

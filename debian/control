@@ -17,13 +17,17 @@ Description: Default common config files for Wiren Board
 Package: wb-configs-wheezy
 Architecture: all
 Depends: sysvinit (>= 2.88), lsb-base (>= 4.1)
-Replaces: wb-configs-stretch
+Provides: ${diverted-files}
+Conflicts: ${diverted-files}
+Replaces: wb-configs-stretch, wb-configs (<< 1.77)
 Breaks: wb-configs (<< 1.77)
 Description: Default wheezy-specific config files for Wiren Board
 
 Package: wb-configs-stretch
 Architecture: all
 Depends: systemd (>= 232-25)
-Replaces: wb-configs-wheezy
+Provides: ${diverted-files}
+Conflicts: ${diverted-files}
+Replaces: wb-configs-wheezy, wb-configs (<< 1.77)
 Breaks: wb-configs (<< 1.77)
 Description: Default stretch-specific config files for Wiren Board
