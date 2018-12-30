@@ -8,7 +8,7 @@ Homepage: https://github.com/contactless/wb-configs
 
 Package: wb-configs
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 1.71), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15), linux-image-wb2 | linux-image-wb6, wb-configs-wheezy (>= 1.77) | wb-configs-stretch (>= 1.77)
+Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 1.71), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15), linux-image-wb2 | linux-image-wb6, wb-configs-wheezy (>= 1.78) | wb-configs-stretch (>= 1.78)
 Provides: ${diverted-files}, mqtt-wss
 Conflicts: ${diverted-files}, mqtt-wss
 Replaces: mqtt-wss
@@ -19,8 +19,8 @@ Architecture: all
 Depends: sysvinit (>= 2.88), lsb-base (>= 4.1)
 Provides: ${diverted-files}
 Conflicts: ${diverted-files}
-Replaces: wb-configs-stretch, wb-configs (<< 1.77)
-Breaks: wb-configs (<< 1.77)
+Replaces: wb-configs-stretch, wb-configs (<< 1.78)
+Breaks: wb-configs (<< 1.78)
 Description: Default wheezy-specific config files for Wiren Board
 
 Package: wb-configs-stretch
@@ -28,6 +28,6 @@ Architecture: all
 Depends: systemd (>= 232-25)
 Provides: ${diverted-files}
 Conflicts: ${diverted-files}
-Replaces: wb-configs-wheezy, wb-configs (<< 1.77)
-Breaks: wb-configs (<< 1.77)
+Replaces: wb-configs-wheezy, wb-configs (<< 1.78)
+Breaks: wb-configs (<< 1.78)
 Description: Default stretch-specific config files for Wiren Board
