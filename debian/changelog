@@ -1,3 +1,10 @@
+wb-configs (1.78) stable; urgency=medium
+
+  * add proper pining preferences for new unstable and experimental repos
+  * add commented-out list file for unstable repo
+
+ -- Evgeny Boger <boger@contactless.ru>  Sun, 30 Dec 2018 17:05:59 +0300
+
 wb-configs (1.77.1) stable; urgency=medium
 
   * Fix: manually undisplace sshd_config from older wb-configs

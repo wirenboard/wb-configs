@@ -1,0 +1,3 @@
+Package: *
+Pin: release o=wirenboard, l=stable
+Pin-Priority: 990

@@ -1,0 +1,2 @@
+#uncomment to enable unstable (i.e. latest git master) repo
+#deb http://releases.contactless.ru/unstable/wheezy wheezy main
