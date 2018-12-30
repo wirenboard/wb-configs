@@ -33,3 +33,6 @@ wb-configs_*.*
 *.pyc
 
 .tern-port
+debian/wb-configs/
+debian/wb-configs-wheezy/
+debian/wb-configs-stretch/
