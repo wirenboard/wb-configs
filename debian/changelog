@@ -1,3 +1,13 @@
+wb-configs (1.78.1) stable; urgency=medium
+
+  * fix udev rules
+  * use new wb-utils 2.0 devicetree compatible helpers instead of WB_VERSION
+  * use wb_env from /usr/lib/wb-utils to make sure not-yet-configured wb-utils
+    can be used
+  * properly removes udev configs at package purge
+
+ -- Evgeny Boger <boger@contactless.ru>  Mon, 31 Dec 2018 16:55:09 +0300
+
 wb-configs (1.78) stable; urgency=medium
 
   * add proper pining preferences for new unstable and experimental repos
