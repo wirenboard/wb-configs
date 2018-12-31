@@ -1,5 +1,5 @@
 #!/bin/bash
-. /etc/wb_env.sh
+. /usr/lib/wb-utils/wb_env.sh
 wb_source "of"
 
 #DEBHELPER#
