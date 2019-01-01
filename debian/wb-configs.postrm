@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#DEBHELPER#
+
+RULES_DST_DIR=/etc/udev/rules.d
+
+purge_ucf_conffile() {
+    if [ -x /usr/bin/ucf ]; then
+        ucf  --purge $1
+        rm -f  $1
+    fi
+}
+
+if [ "$1" = "purge" ]; then
+    purge_ucf_conffile "$RULES_DST_DIR/99-wb-uart.rules"
+    purge_ucf_conffile "$RULES_DST_DIR/99-wb-ethernet.rules"
+fi
