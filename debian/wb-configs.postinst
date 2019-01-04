@@ -2,6 +2,18 @@
 . /usr/lib/wb-utils/wb_env.sh
 wb_source "of"
 
+# generate u-boot env config before config-package debheler 
+UBOOT_DIR="/usr/share/wb-configs/u-boot"
+UBOOT_FNAME="fw_env.config.wb"
+if of_machine_match "fsl,imx6ul" || of_machine_match "fsl,imx6ull"; then
+    FVER="imx6"
+elif FVER "fsl,imx28" || of_machine_match "fsl,imx23"; then
+    FVER="mxs"
+else
+    UBOOT_FNAME="default"
+fi
+cp "${UBOOT_DIR}/${UBOOT_FNAME}.${FVER}" "/etc/${UBOOT_FNAME}"
+
 #DEBHELPER#
 
 RULES_DST_DIR=/etc/udev/rules.d
