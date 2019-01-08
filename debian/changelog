@@ -1,3 +1,13 @@
+wb-configs (1.79) stable; urgency=medium
+
+  * u-boot env config for fw_setenv is moved to wb-configs from u-boot-tools.
+    The reason why it was moved: u-boot-tools(-wb) have nothing to do with 
+    the actual bootloader, it's just a bunch of tools to work with FITs and
+    bootloader environment. U-boot environment location is, in contrast, 
+    device- and distribution-specific.
+
+ -- Evgeny Boger <boger@contactless.ru>  Fri, 04 Jan 2019 14:52:12 +0300
+
 wb-configs (1.78.1) stable; urgency=medium
 
   * fix udev rules
