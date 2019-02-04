@@ -7,7 +7,7 @@ UBOOT_DIR="/usr/share/wb-configs/u-boot"
 UBOOT_FNAME="fw_env.config.wb"
 if of_machine_match "fsl,imx6ul" || of_machine_match "fsl,imx6ull"; then
     FVER="imx6"
-elif FVER "fsl,imx28" || of_machine_match "fsl,imx23"; then
+elif of_machine_match "fsl,imx28" || of_machine_match "fsl,imx23"; then
     FVER="mxs"
 else
     UBOOT_FNAME="default"
