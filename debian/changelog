@@ -1,3 +1,9 @@
+wb-configs (1.79.1) stable; urgency=medium
+
+  * fix post install script fail on WB5
+
+ -- Evgeny Boger <boger@contactless.ru>  Wed, 06 Feb 2019 17:21:40 +0300
+
 wb-configs (1.79) stable; urgency=medium
 
   * u-boot env config for fw_setenv is moved to wb-configs from u-boot-tools.
