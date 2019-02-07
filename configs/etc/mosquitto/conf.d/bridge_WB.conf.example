@@ -1,0 +1,10 @@
+connection main
+
+topic test/# out
+
+address myhost.net:1883
+
+bridge_cafile   /etc/ssl/certs/WirenBoard_Root_CA.pem
+bridge_certfile /etc/ssl/device/device_bundle.crt.pem
+bridge_keyfile  engine:ateccx08:ATECCx08:00:04:C0:00
+
