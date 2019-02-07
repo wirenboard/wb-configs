@@ -40,3 +40,49 @@ elif of_machine_match "contactless,imx23-wirenboard28"; then
 else
     install_rules 99-wb-uart default
 fi
+
+# fix device_bundle certificate
+
+CERT_IN=/etc/ssl/certs/device_bundle.crt.pem
+CERT_OUT=/etc/ssl/device/device_bundle.crt.pem
+CERT_BKP=/etc/ssl/device/_device_bundle.crt.pem
+
+prn() {
+    cat $CERT_IN|grep "$1" -n|sed -n "$2p"|cut -d':' -f1
+}
+
+fix() {
+    B1=$(prn "BEGIN CERTIFICATE" 1)
+    B2=$(prn "BEGIN CERTIFICATE" 2)
+    E1=$(prn "END CERTIFICATE" 1)
+    E2=$(prn "END CERTIFICATE" 2)
+
+    if [[ "$E1" -le "$B1" || "$E2" -le "$B2" || "$E1" -ge "$B2" ]]; then
+        echo "ERROR in device cert bundle."
+        exit 1
+    fi
+
+    cat $CERT_IN|sed -n "${B2},${E2}p"
+    cat $CERT_IN|sed -n "${B1},${E1}p"
+}
+
+mkdir -p /etc/ssl/device
+
+if [ -f "$CERT_IN" ]; then
+    echo "backup device bundle certificate..."
+    cp "$CERT_IN" "$CERT_BKP"
+fi
+
+if [ ! -f "$CERT_OUT" ]; then
+    if [ ! -f "$CERT_IN" ]; then
+        echo "ERROR: no such file: $CERT_IN"
+        exit 1
+    fi
+    fix > "$CERT_OUT"
+    echo "Device bundle certificate fix done."
+    rm -f "${CERT_IN}"
+else
+    echo "Device cert $CERT_OUT already fixed."
+fi
+
+update-ca-certificates

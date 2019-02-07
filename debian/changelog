@@ -1,3 +1,9 @@
+wb-configs (1.79.2) stable; urgency=medium
+
+  * Add example bridge config for mosquitto
+
+ -- Oleg Serikov <o.serikov@contactless.ru>  Wed, 07 Feb 2019 15:32:40 +0300
+
 wb-configs (1.79.1) stable; urgency=medium
 
   * fix post install script fail on WB5
