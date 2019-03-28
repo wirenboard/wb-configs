@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+# wheezy has been moved to archive.debian.org, so update apt sources accordingly
+sed -i 's/mirror.yandex.ru\/debian\/ wheezy/archive.debian.org\/debian\/ wheezy/' /etc/apt/sources.list
+
+# wheezy-updates has been removed
+sed -i 's/deb http:\/\/archive.debian.org\/debian\/ wheezy-updates main//' /etc/apt/sources.list
+
+#DEBHELPER#

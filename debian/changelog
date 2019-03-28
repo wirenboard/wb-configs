@@ -1,3 +1,9 @@
+wb-configs (1.79.2) stable; urgency=medium
+
+  * change upstream debian repository location on Wheezy
+
+ -- Evgeny Boger <boger@contactless.ru>  Mon, 25 Mar 2019 20:51:07 +0300
+
 wb-configs (1.79.1) stable; urgency=medium
 
   * fix post install script fail on WB5
