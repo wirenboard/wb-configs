@@ -8,7 +8,7 @@ Homepage: https://github.com/contactless/wb-configs
 
 Package: wb-configs
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 2.1), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15), linux-image-wb2 | linux-image-wb6, wb-configs-wheezy (>= 1.78) | wb-configs-stretch (>= 1.78)
+Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 2.1), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15), linux-image-wb2 | linux-image-wb6, wb-configs-wheezy (>= 1.79.2) | wb-configs-stretch (>= 1.79.2)
 Provides: ${diverted-files}, mqtt-wss
 Conflicts: ${diverted-files}, mqtt-wss
 Replaces: mqtt-wss
