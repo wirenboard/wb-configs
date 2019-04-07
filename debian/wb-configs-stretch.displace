@@ -1,2 +1,3 @@
 /lib/systemd/system/networking.service.wb
 /etc/ssh/sshd_config.wb
+/etc/avahi/avahi-daemon.conf.wb
