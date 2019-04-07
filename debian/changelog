@@ -1,3 +1,9 @@
+wb-configs (1.79.3) stable; urgency=medium
+
+  * preserve user changes of timezone (wb_move_watch for localtime)
+
+ -- Evgeny Boger <boger@contactless.ru>  Thu, 28 Mar 2019 20:35:54 +0300
+
 wb-configs (1.79.2) stable; urgency=medium
 
   * change upstream debian repository location on Wheezy
