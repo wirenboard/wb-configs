@@ -1,3 +1,9 @@
+wb-configs (1.79.5) stable; urgency=medium
+
+  * remove security.debian.org repo for wheezy as it's end-of-life
+
+ -- Evgeny Boger <boger@contactless.ru>  Mon, 08 Apr 2019 18:46:34 +0300
+
 wb-configs (1.79.4) stable; urgency=medium
 
   * publish host via Avahi/Bonjour

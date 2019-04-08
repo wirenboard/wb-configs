@@ -7,4 +7,7 @@ sed -i 's/mirror.yandex.ru\/debian\/ wheezy/archive.debian.org\/debian\/ wheezy/
 # wheezy-updates has been removed
 sed -i 's/deb http:\/\/archive.debian.org\/debian\/ wheezy-updates main//' /etc/apt/sources.list
 
+# security wheezy/updates has been removed as well
+sed -i 's/deb http:\/\/security.debian.org wheezy\/updates main//' /etc/apt/sources.list
+
 #DEBHELPER#
