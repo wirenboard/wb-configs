@@ -40,3 +40,5 @@ elif of_machine_match "contactless,imx23-wirenboard28"; then
 else
     install_rules 99-wb-uart default
 fi
+
+udevadm trigger # apply new udev rules
