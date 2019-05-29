@@ -15,3 +15,5 @@ if [ "$1" = "purge" ]; then
     purge_ucf_conffile "$RULES_DST_DIR/99-wb-uart.rules"
     purge_ucf_conffile "$RULES_DST_DIR/99-wb-ethernet.rules"
 fi
+
+udevadm trigger # apply new udev rules
