@@ -1,3 +1,9 @@
+wb-configs (1.79.6) stable; urgency=medium
+
+  * add permanent /dev/ttyUZB file for Z-Wave stick
+
+ -- Pavel Poglazov <poglazov@contactless.ru>  Wed, 29 May 2019 13:46:42 +0300
+
 wb-configs (1.79.5) stable; urgency=medium
 
   * remove security.debian.org repo for wheezy as it's end-of-life
