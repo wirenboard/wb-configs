@@ -1,4 +1,4 @@
-wb-configs (1.81) stable; urgency=medium
+wb-configs (1.81.0) stable; urgency=medium
 
   * add udev rules to create /dev/i2c-modX symlinks
 
