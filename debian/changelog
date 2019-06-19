@@ -1,3 +1,9 @@
+wb-configs (1.81.0) stable; urgency=medium
+
+  * add udev rules to create /dev/i2c-modX symlinks
+
+ -- Evgeny Boger <boger@contactless.ru>  Wed, 19 Jun 2019 17:46:21 +0300
+
 wb-configs (1.80) stable; urgency=medium
 
   * add permanent /dev/ttyUZB file for Z-Wave stick
