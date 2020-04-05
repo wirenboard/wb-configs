@@ -1,4 +1,4 @@
-KERNEL=="ttyAMA0", SUBSYSTEM=="tty", SYMLINK+="ttyCONSOLE"
-KERNEL=="ttyAPP0", SUBSYSTEM=="tty", SYMLINK+="ttyGSM"
-KERNEL=="ttyNSC0", SUBSYSTEM=="tty", SYMLINK+="ttyRS485-1"
-KERNEL=="ttyNSC1", SUBSYSTEM=="tty", SYMLINK+="ttyRS485-2"
+KERNEL=="ttyAMA0", SUBSYSTEM=="tty", SYMLINK+="ttyCONSOLE", GROUP="tty"
+KERNEL=="ttyAPP0", SUBSYSTEM=="tty", SYMLINK+="ttyGSM", GROUP="dialout"
+KERNEL=="ttyNSC0", SUBSYSTEM=="tty", SYMLINK+="ttyRS485-1", GROUP="dialout"
+KERNEL=="ttyNSC1", SUBSYSTEM=="tty", SYMLINK+="ttyRS485-2", GROUP="dialout"
