@@ -71,4 +71,9 @@ if [ "$1" = "configure" ]; then
     wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
 fi
 
+# stretch repos have been moved to separate file
+sed -i 's+deb http://mirror.yandex.ru/debian/ stretch main++' /etc/apt/sources.list
+sed -i 's+deb http://mirror.yandex.ru/debian/ stretch-updates main++' /etc/apt/sources.list
+sed -i 's+deb http://security.debian.org/debian-security/ stretch/updates main++' /etc/apt/sources.list
+
 #DEBHELPER#
