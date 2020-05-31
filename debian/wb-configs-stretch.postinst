@@ -74,6 +74,6 @@ fi
 # stretch repos have been moved to separate file
 sed -i 's+deb http://mirror.yandex.ru/debian/ stretch main++' /etc/apt/sources.list
 sed -i 's+deb http://mirror.yandex.ru/debian/ stretch-updates main++' /etc/apt/sources.list
-sed -i 's+deb http://security.debian.org/debian-security/ stretch/updates main++' /etc/apt/sources.list
+sed -i 's+deb http://security.debian.org stretch/updates main++' /etc/apt/sources.list
 
 #DEBHELPER#
