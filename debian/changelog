@@ -1,3 +1,9 @@
+wb-configs (1.82.2) stable; urgency=medium
+
+  * improve configs backup logic
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Mon, 20 Jul 2020 15:44:12 +0500
+
 wb-configs (1.82.1) stable; urgency=medium
 
   * change upstream debian repository location on stretch
