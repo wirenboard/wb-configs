@@ -1,6 +1,12 @@
 wb-configs (1.82.2) stable; urgency=medium
 
-  * improve configs backup logic
+  * wb-configs service backups wb-homa-adc.conf, wb-homa-gpio.conf, wb-mqtt-serial.conf 
+    and wb-rules configs by moving them to /mnt/data and creating symlinks to original files locations. 
+    Since 2015 every service which needs to backup its configs can add a file with instructions 
+    for wb-configs in /etc/wb-configs.d. All services use this new logic for 5 years. 
+    This update removes obsolete backuping code. 
+    After renaming new versions of wb-homa-adc and wb-homa-gpio manage themselves symlinks to conf files, 
+    so the old wb-configs logic breaks they normal operation.
 
  -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Mon, 20 Jul 2020 15:44:12 +0500
 
