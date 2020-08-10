@@ -1,0 +1,17 @@
+#! /bin/sh
+
+set -e
+
+if [ "$IFACE" != wlan0 ]; then
+	exit 0
+fi
+
+if [ "$MODE" != start ]; then
+	exit 0
+fi
+
+if [ "$(systemctl is-active hostapd)" = "active" ]; then
+	systemctl restart hostapd >/dev/null 2>&1 || true
+fi
+
+exit 0
