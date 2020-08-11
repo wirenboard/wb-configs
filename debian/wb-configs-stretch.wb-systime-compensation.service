@@ -1,0 +1,11 @@
+[Unit]
+Description=Compensation of systime in PPM from value, stored in device-tree (with opposite sign)
+ConditionPathExists=/proc/device-tree/wirenboard/24mhz_ppm_diff
+After=ntp.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '/usr/sbin/ntptime -f $(/usr/bin/bc -l <<<"$(/bin/cat /proc/device-tree/wirenboard/24mhz_ppm_diff)*-1")'
+
+[Install]
+WantedBy=multi-user.target

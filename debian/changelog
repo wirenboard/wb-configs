@@ -1,11 +1,17 @@
+wb-configs (1.83.0) stable; urgency=medium
+
+  * added systime-compensation service, looking into ppm_diff in device-tree
+
+ -- Vladimir Romanov <v.romanov@wirenboard.ru>  Tue, 11 Aug 2020 17:19:08 +0300
+
 wb-configs (1.82.2) stable; urgency=medium
 
-  * wb-configs service backups wb-homa-adc.conf, wb-homa-gpio.conf, wb-mqtt-serial.conf 
-    and wb-rules configs by moving them to /mnt/data and creating symlinks to original files locations. 
-    Since 2015 every service which needs to backup its configs can add a file with instructions 
-    for wb-configs in /etc/wb-configs.d. All services use this new logic for 5 years. 
-    This update removes obsolete backuping code. 
-    After renaming new versions of wb-homa-adc and wb-homa-gpio manage themselves symlinks to conf files, 
+  * wb-configs service backups wb-homa-adc.conf, wb-homa-gpio.conf, wb-mqtt-serial.conf
+    and wb-rules configs by moving them to /mnt/data and creating symlinks to original files locations.
+    Since 2015 every service which needs to backup its configs can add a file with instructions
+    for wb-configs in /etc/wb-configs.d. All services use this new logic for 5 years.
+    This update removes obsolete backuping code.
+    After renaming new versions of wb-homa-adc and wb-homa-gpio manage themselves symlinks to conf files,
     so the old wb-configs logic breaks they normal operation.
 
  -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Mon, 20 Jul 2020 15:44:12 +0500
@@ -74,9 +80,9 @@ wb-configs (1.79.1) stable; urgency=medium
 wb-configs (1.79) stable; urgency=medium
 
   * u-boot env config for fw_setenv is moved to wb-configs from u-boot-tools.
-    The reason why it was moved: u-boot-tools(-wb) have nothing to do with 
+    The reason why it was moved: u-boot-tools(-wb) have nothing to do with
     the actual bootloader, it's just a bunch of tools to work with FITs and
-    bootloader environment. U-boot environment location is, in contrast, 
+    bootloader environment. U-boot environment location is, in contrast,
     device- and distribution-specific.
 
  -- Evgeny Boger <boger@contactless.ru>  Fri, 04 Jan 2019 14:52:12 +0300
@@ -131,31 +137,31 @@ wb-configs (1.76) stable; urgency=medium
  -- Evgeny Boger <boger@contactless.ru>  Fri, 01 Jun 2018 22:29:36 +0300
 
 wb-configs (1.75.4) stable; urgent=medium
-  
+
   * change debian repo url to stable
 
  -- Evgeny Boger <boger@contactless.ru>  Wed, 28 Mar 2018 15:03:22 +0300
 
 wb-configs (1.75.3) stable; urgent=medium
-  
-  * wb-watch-configs moved 
+
+  * wb-watch-configs moved
 
  -- Attila Door <a.door@contactless.ru>  Wed, 28 Mar 2018 15:03:22 +0300
 
 wb-configs (1.75.2) stable; urgent=medium
-  
+
   * add ssh config to displace list
 
  -- Attila Door <a.door@contactless.ru>  Wed, 21 Mar 2018 15:03:22 +0300
 
 wb-configs (1.75.1) stable; urgent=medium
-  
+
   * add networking service systemd config to stretch configs
 
  -- Attila Door <a.door@contactless.ru>  Wed, 21 Mar 2018 15:03:22 +0300
 
 wb-configs (1.75.0) stable; urgent=medium
-  
+
   * add wb-configs-stretch and wheezy
 
  -- Attila Door <a.door@contactless.ru>  Sat, 15 Mar 2018 15:03:22 +0300
@@ -367,7 +373,7 @@ wb-configs (1.56) stable; urgency=medium
 wb-configs (1.55) stable; urgency=medium
 
   * add init script, move symlink management from wb-utils
-  * /etc/wb-configs.d/ for lists of files to move to shared partition 
+  * /etc/wb-configs.d/ for lists of files to move to shared partition
 
  -- Alexey Ignatov <lexszero@gmail.com>  Fri, 25 Sep 2015 15:38:39 +0000
 
@@ -473,13 +479,13 @@ wb-configs (1.03) stable; urgency=medium
 
 wb-configs (1.02) stable; urgency=medium
 
-  * remove /boot/uEnv.txt 
+  * remove /boot/uEnv.txt
 
  -- Evgeny Boger <boger@contactless.ru>  Thu, 06 Nov 2014 18:57:50 +0300
 
 wb-configs (1.01) stable; urgency=medium
 
-  * Remove mosquitto.conf 
+  * Remove mosquitto.conf
 
  -- Evgeny Boger <boger@contactless.ru>  Mon, 22 Sep 2014 18:54:42 +0400
 
