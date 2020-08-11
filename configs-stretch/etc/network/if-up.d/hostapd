@@ -1,15 +1,42 @@
 #! /bin/sh
+# Скрипт перезапускает hostapd при старте интерфейса wlan0.
+# Это требуется для стабильной работы встроенного wi-fi модуля с драйвером "rtl8723bu" в режиме точки доступа.
+# При нагрузке ~3A на линию 4V контроллера WB6 (До версии 6.7) кратковременно отключается USB хаб.
+# Из-за этого в некоторых случаях зависает модуль Wi-Fi. В обновленной версии ядра linux USB хаб автоматически перезапускает wi-fi модуль по питанию. 
+# При этом перезапускается интерфейс wlan0, после чего для нормальной работы точки доступа необходим перезапуск сервиса hostapd.
+# Симптомы отключения хаба: В консоли будет примерно следующее:
+# ...
+# [86458.744148] usb 2-1: USB disconnect, device number 74
+# [86458.758208] usb 2-1.1: USB disconnect, device number 75
+# [86458.786848] RTL871X: rtw_cmd_thread: DriverStopped(1) SurpriseRemoved(1) break at line 452
+# [86458.808600] RTL871X: rtw_ndev_uninit(wlan0)
+# [86458.911260] RTL871X: rtw_dev_unload: driver not in IPS
+# [86458.925400] usb 2-1.2: USB disconnect, device number 78
+# [86459.290339] usb 2-1: new high-speed USB device number 79 using ci_hdrc
+# [86459.491016] usb 2-1: New USB device found, idVendor=0424, idProduct=2514
+# [86459.497808] usb 2-1: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+# [86459.520792] hub 2-1:1.0: USB hub found
+# [86459.530780] hub 2-1:1.0: 4 ports detected
+# [86459.860359] usb 2-1.1: new high-speed USB device number 80 using ci_hdrc
+# [86460.022013] usb 2-1.1: New USB device found, idVendor=0bda, idProduct=b720
+# [86460.028952] usb 2-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+# [86460.036436] usb 2-1.1: Product: 802.11n WLAN Adapter
+# [86460.041457] usb 2-1.1: Manufacturer: Realtek
+# ...
 
 set -e
 
+# Restart hostapd when wlan0 is configured.
 if [ "$IFACE" != wlan0 ]; then
 	exit 0
 fi
 
+# Only run from ifup.
 if [ "$MODE" != start ]; then
 	exit 0
 fi
 
+# Restart hostapd only if it was started.
 if [ "$(systemctl is-active hostapd)" = "active" ]; then
 	systemctl restart hostapd >/dev/null 2>&1 || true
 fi
