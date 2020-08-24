@@ -5,6 +5,12 @@ wb-configs (1.83.0) stable; urgency=medium
 
  -- Vladimir Romanov <v.romanov@contactless.ru>  Thu, 20 Aug 2020 17:10:12 +0300
 
+wb-configs (1.82.3) stable; urgency=medium
+
+  * Added a script to reboot hostapd when the wlan0 interface starts
+
+ -- Ian Ianin <ianin@wirenboard.ru>  Mon, 10 Aug 2020 13:51:32 +0300
+
 wb-configs (1.82.2) stable; urgency=medium
 
   * wb-configs service backups wb-homa-adc.conf, wb-homa-gpio.conf, wb-mqtt-serial.conf 
