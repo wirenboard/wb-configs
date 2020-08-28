@@ -1,3 +1,10 @@
+wb-configs (1.83.0) stable; urgency=medium
+
+  * changed UART for wb6.7 gsm modem
+  * new UART for wb6-mod4 slot
+
+ -- Vladimir Romanov <v.romanov@contactless.ru>  Thu, 20 Aug 2020 17:10:12 +0300
+
 wb-configs (1.82.3) stable; urgency=medium
 
   * Added a script to reboot hostapd when the wlan0 interface starts
