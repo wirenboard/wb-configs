@@ -72,8 +72,12 @@ if [ "$1" = "configure" ]; then
 fi
 
 # stretch repos have been moved to separate file
-sed -i '\+deb http://mirror.yandex.ru/debian/ stretch main+d' /etc/apt/sources.list
-sed -i '\+deb http://mirror.yandex.ru/debian/ stretch-updates main+d' /etc/apt/sources.list
-sed -i '\+deb http://security.debian.org stretch/updates main+d' /etc/apt/sources.list
+sources_file=/etc/apt/sources.list
+if [ ! -e "$sources_file" ]; then
+    touch $sources_file
+fi
+sed -i '\+deb http://mirror.yandex.ru/debian/ stretch main+d' $sources_file
+sed -i '\+deb http://mirror.yandex.ru/debian/ stretch-updates main+d' $sources_file
+sed -i '\+deb http://security.debian.org stretch/updates main+d' $sources_file
 
 #DEBHELPER#

@@ -1,6 +1,7 @@
 wb-configs (1.83.1) stable; urgency=medium
 
   * added systemd service for systime adjustment from dts (ntp-friendly)
+  * fixed package configuration error, when there is no /etc/apt/sources.list file
 
  -- Vladimir Romanov <v.romanov@contactless.ru>  Thu, 10 Sep 2020 11:47:10 +0300
 
