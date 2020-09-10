@@ -1,6 +1,6 @@
 wb-configs (1.83.1) stable; urgency=medium
 
-  * added systemd service for systime compensation from dts
+  * added systemd service for systime adjustment from dts (ntp-friendly)
 
  -- Vladimir Romanov <v.romanov@contactless.ru>  Thu, 10 Sep 2020 11:47:10 +0300
 
