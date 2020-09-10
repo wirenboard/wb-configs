@@ -1,0 +1,42 @@
+#!/bin/bash
+
+ALLOWED_UNSUCCESSFUL_POLLS=5
+FALLBACK_TIMEOUT=60
+PPM_DIFF_FNAME=/proc/device-tree/wirenboard/24mhz_ppm_diff
+
+write_compensation()
+{
+    local compensation_value=$(bc -l <<<"$(cat $PPM_DIFF_FNAME)*-1")  # value in dts is with the opposite sign
+    ntptime -f "$compensation_value"
+    echo "Set systime compensation $compensation_value via ntptime"
+}
+
+wait_for_ntp()
+{
+    local ntp_poll_time=$(ntpstat | grep -o 'polling server every [[:digit:]]*' | grep -o '[[:digit:]]*')
+    if [ -z $ntp_poll_time ]; then
+        echo "Ntp poll period was not found. Will use fallback ($FALLBACK_TIMEOUT s)"
+        local timeout=$FALLBACK_TIMEOUT
+    else
+        local timeout=$(bc -l <<<"$ntp_poll_time * $ALLOWED_UNSUCCESSFUL_POLLS")
+    fi
+    echo "Will wait ntp synchronization for $timeout s"
+    sleep $timeout
+}
+
+do_adjust()
+{
+    if ntpstat; then
+        echo "Time has already synchronized via ntp"
+    else
+        wait_for_ntp
+        if ntpstat; then
+            echo "Time has synchronized via ntp (after timeout)"
+        else
+            write_compensation
+        fi
+    fi
+    return 0
+}
+
+do_adjust
