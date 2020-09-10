@@ -1,8 +1,21 @@
+wb-configs (1.83.1) stable; urgency=medium
+
+  * added systemd service for systime compensation from dts
+
+ -- Vladimir Romanov <v.romanov@contactless.ru>  Thu, 10 Sep 2020 11:47:10 +0300
+
 wb-configs (1.83.0) stable; urgency=medium
 
-  * added systime-compensation service, looking into ppm_diff in device-tree
+  * changed UART for wb6.7 gsm modem
+  * new UART for wb6-mod4 slot
 
- -- Vladimir Romanov <v.romanov@wirenboard.ru>  Tue, 11 Aug 2020 17:19:08 +0300
+ -- Vladimir Romanov <v.romanov@contactless.ru>  Thu, 20 Aug 2020 17:10:12 +0300
+
+wb-configs (1.82.3) stable; urgency=medium
+
+  * Added a script to reboot hostapd when the wlan0 interface starts
+
+ -- Ian Ianin <ianin@wirenboard.ru>  Mon, 10 Aug 2020 13:51:32 +0300
 
 wb-configs (1.82.2) stable; urgency=medium
 
