@@ -1,42 +1,38 @@
 #!/bin/bash
 
-ALLOWED_UNSUCCESSFUL_POLLS=10
-FALLBACK_TIMEOUT=60
 PPM_DIFF_FNAME=/proc/device-tree/wirenboard/24mhz_ppm_diff
+NTP_DRIFT_FILE=/var/lib/ntp/ntp.drift
+ALLOWED_SECONDS_FROM_LAST_MODIFICATION=432000  # 5 days
 
 write_compensation()
 {
     local compensation_value=$(bc -l <<<"$(cat $PPM_DIFF_FNAME)*-1")  # value in dts is with the opposite sign
     ntptime -f "$compensation_value"
-    echo "Set systime compensation $compensation_value via ntptime"
+    echo "Has set systime compensation $compensation_value via ntptime"
 }
 
-wait_for_ntp()
+seconds_from_last_modification()
 {
-    local ntp_poll_time=$(ntpstat | grep -o 'polling server every [[:digit:]]*' | grep -o '[[:digit:]]*')
-    if [ -z $ntp_poll_time ]; then
-        echo "Ntp poll period was not found. Will use fallback ($FALLBACK_TIMEOUT s)"
-        local timeout=$FALLBACK_TIMEOUT
-    else
-        local timeout=$(bc -l <<<"$ntp_poll_time * $ALLOWED_UNSUCCESSFUL_POLLS")
-    fi
-    echo "Will wait ntp synchronization for $timeout s"
-    sleep $timeout
+    local drift_modified_at=$(date -r $NTP_DRIFT_FILE +%s)
+    local now=$(date +%s)
+    return $(bc -l <<<"$now - $drift_modified_at")
 }
 
 do_adjust()
 {
-    if ntpstat; then
-        echo "Time has already synchronized via ntp"
-    else
-        wait_for_ntp
-        if ntpstat; then
-            echo "Time has synchronized via ntp (after timeout)"
-        else
+    if $(systemctl is-active --quiet ntp); then
+        echo "Found active ntp service. Will look to $NTP_DRIFT_FILE"
+        seconds_from_last_modification
+        if [ "$?" -gt "$ALLOWED_SECONDS_FROM_LAST_MODIFICATION" ]; then
+            echo "Drift file is too old (was edited more than $? seconds ago)"
             write_compensation
+        else
+            echo "Drift file is valid (was recently edited)"
         fi
+    else
+        echo "No active ntp service was found"
+        write_compensation
     fi
-    return 0
 }
 
 do_adjust
