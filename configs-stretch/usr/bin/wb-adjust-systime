@@ -1,0 +1,38 @@
+#!/bin/bash
+
+PPM_DIFF_FNAME=/proc/device-tree/wirenboard/24mhz_ppm_diff
+NTP_DRIFT_FILE=/var/lib/ntp/ntp.drift
+ALLOWED_SECONDS_FROM_LAST_MODIFICATION=432000  # 5 days
+
+write_compensation()
+{
+    local compensation_value=$(bc -l <<<"$(cat $PPM_DIFF_FNAME)*-1")  # value in dts is with the opposite sign
+    ntptime -f "$compensation_value"
+    echo "Has set systime compensation $compensation_value via ntptime"
+}
+
+seconds_from_last_modification()
+{
+    local drift_modified_at=$(date -r $NTP_DRIFT_FILE +%s)
+    local now=$(date +%s)
+    return $(bc -l <<<"$now - $drift_modified_at")
+}
+
+do_adjust()
+{
+    if $(systemctl is-active --quiet ntp); then
+        echo "Found active ntp service. Will look to $NTP_DRIFT_FILE"
+        seconds_from_last_modification
+        if [ "$?" -gt "$ALLOWED_SECONDS_FROM_LAST_MODIFICATION" ]; then
+            echo "Drift file is too old (was edited more than $? seconds ago)"
+            write_compensation
+        else
+            echo "Drift file is valid (was recently edited)"
+        fi
+    else
+        echo "No active ntp service was found"
+        write_compensation
+    fi
+}
+
+do_adjust
