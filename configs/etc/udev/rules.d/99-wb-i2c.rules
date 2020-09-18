@@ -1,3 +1,4 @@
 SUBSYSTEM=="i2c-dev", ATTRS{name}=="mod1_i2c", SYMLINK+="i2c-mod1"
 SUBSYSTEM=="i2c-dev", ATTRS{name}=="mod2_i2c", SYMLINK+="i2c-mod2"
 SUBSYSTEM=="i2c-dev", ATTRS{name}=="mod3_i2c", SYMLINK+="i2c-mod3"
+SUBSYSTEM=="i2c-dev", ATTRS{name}=="mod4_i2c", SYMLINK+="i2c-mod4"
