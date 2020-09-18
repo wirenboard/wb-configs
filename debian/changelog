@@ -1,3 +1,9 @@
+wb-configs (1.83.2) stable; urgency=medium
+
+  * added symlink for i2c on mod4
+
+ -- Vladimir Romanov <v.romanov@contactless.ru>  Fri, 18 Sep 2020 18:02:10 +0300
+
 wb-configs (1.83.1) stable; urgency=medium
 
   * added systemd service for systime adjustment from dts (ntp-friendly)
