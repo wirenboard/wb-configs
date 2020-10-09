@@ -1,3 +1,9 @@
+wb-configs (1.83.3) stable; urgency=medium
+
+  * add nodejs repo
+
+ -- Ian Ianin <ianin@wirenboard.ru>  Fri, 09 Oct 2020 12:32:18 +0300
+
 wb-configs (1.83.2) stable; urgency=medium
 
   * added symlink for i2c on mod4
