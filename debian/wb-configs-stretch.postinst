@@ -79,5 +79,6 @@ fi
 sed -i '\+deb http://mirror.yandex.ru/debian/ stretch main+d' $sources_file
 sed -i '\+deb http://mirror.yandex.ru/debian/ stretch-updates main+d' $sources_file
 sed -i '\+deb http://security.debian.org stretch/updates main+d' $sources_file
+apt-key add /etc/apt/nodesource.gpg.key
 
 #DEBHELPER#
