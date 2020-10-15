@@ -1,0 +1,2 @@
+#uncomment to enable nodejs repo
+#deb https://deb.nodesource.com/node_12.x stretch main
