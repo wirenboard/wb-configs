@@ -1,3 +1,9 @@
+wb-configs (1.83.4) stable; urgency=medium
+
+  * add 8723bu.conf file to \etc\modprobe.d
+
+ -- Ian Ianin <ianin@wirenboard.ru>  Tue, 27 Oct 2020 13:16:40 +0300
+
 wb-configs (1.83.3) stable; urgency=medium
 
   * add nodejs repo
