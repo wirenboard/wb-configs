@@ -1,0 +1,29 @@
+# Use GPIO watchdog
+watchdog-device		= /dev/watchdog1
+
+# Defaults compiled into the binary
+admin			= 
+interval		= 1
+logtick                	= 1
+log-dir			= /var/log/watchdog
+
+# This greatly decreases the chance that watchdog won't be scheduled before
+# your machine is really loaded
+realtime		= yes
+priority		= 1
+
+# Test if there at least 1MB of memory (256 pages)
+min-memory		= 256
+
+# Test if vital daemons are running
+pidfile		= /var/run/rsyslogd.pid 
+pidfile		= /var/run/sshd.pid
+pidfile		= /var/run/mosquitto.pid
+pidfile		= /var/run/nginx.pid
+
+# Timeout for all tests
+retry-timeout		= 30
+
+# Put other test/repair scripts to this dir
+test-directory		= /etc/watchdog.d
+test-timeout		= 30
