@@ -16,7 +16,7 @@ Description: Default common config files for Wiren Board
 
 Package: wb-configs-wheezy
 Architecture: all
-Depends: sysvinit (>= 2.88), lsb-base (>= 4.1)
+Depends: sysvinit (>= 2.88), lsb-base (>= 4.1), busybox-syslogd
 Provides: ${diverted-files}
 Conflicts: ${diverted-files}, wb-homa-adc (<< 1.9.2), wb-homa-gpio (<< 1.14), wb-mqtt-serial(<< 1.14.2), wr-rules(<< 1.5.1)
 Replaces: wb-configs-stretch, wb-configs (<< 1.84.0)
