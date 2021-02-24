@@ -1,3 +1,11 @@
+wb-configs (1.84.0) stable; urgency=medium
+
+  * journald persistent logging is enabled
+  * busybox-syslogd is replaced by rsyslog in Debian Stretch based installations.
+    Log archive is limited to 20MB. Log rotation moved from logrotate to rsyslog's outchannel.
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Mon, 11 Jan 2021 10:17:00 +0500
+
 wb-configs (1.83.5) stable; urgency=medium
 
   * add e2fsck.conf: broken_system_clock to avoid systemd-fsck switching to emergency mode when the RTC time is invalid

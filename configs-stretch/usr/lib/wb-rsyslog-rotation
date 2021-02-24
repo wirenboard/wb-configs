@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mv -f /var/log/messages /var/log/messages.1
+gzip -f /var/log/messages.1

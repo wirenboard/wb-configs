@@ -81,3 +81,7 @@ sed -i '\+deb http://mirror.yandex.ru/debian/ stretch-updates main+d' $sources_f
 sed -i '\+deb http://security.debian.org stretch/updates main+d' $sources_file
 
 #DEBHELPER#
+
+deb-systemd-invoke restart rsyslog
+deb-systemd-invoke start watchdog
+deb-systemd-invoke restart systemd-journald

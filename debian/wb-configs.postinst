@@ -45,3 +45,6 @@ else
 fi
 
 udevadm trigger # apply new udev rules
+
+rm -f /etc/logrotate.d/messages
+rm -f /etc/logrotate.d/rsyslog
