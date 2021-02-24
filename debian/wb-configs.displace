@@ -24,3 +24,5 @@
 /etc/default/avahi-daemon.wb
 /etc/nsswitch.conf.wb
 /etc/fw_env.config.wb
+
+/etc/e2fsck.conf.wb
