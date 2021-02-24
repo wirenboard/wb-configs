@@ -6,6 +6,12 @@ wb-configs (1.84.0) stable; urgency=medium
 
  -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Mon, 11 Jan 2021 10:17:00 +0500
 
+wb-configs (1.83.5) stable; urgency=medium
+
+  * add e2fsck.conf: broken_system_clock to avoid systemd-fsck switching to emergency mode when the RTC time is invalid
+
+ -- Ivan Zaentsev <ivan.zaentsev@wirenboard.ru>  Tue, 26 Jan 2021 11:35:58 +0300
+
 wb-configs (1.83.4) stable; urgency=medium
 
   * add 8723bu.conf file to \etc\modprobe.d
