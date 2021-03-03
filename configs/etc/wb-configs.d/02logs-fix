@@ -1,0 +1,4 @@
+mkdir -p /var/log/mosquitto
+chown mosquitto /var/log/mosquitto
+
+mkdir -p /var/log/nginx
