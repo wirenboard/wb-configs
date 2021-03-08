@@ -1,3 +1,9 @@
+wb-configs (1.84.2) stable; urgency=medium
+
+  * do not reboot system if mosquitto or nginx are stopped
+
+ -- Evgeny Boger <boger@contactless.ru>  Mon, 08 Mar 2021 21:03:26 +0300
+
 wb-configs (1.84.1) stable; urgency=medium
 
   * Grant write permissions to /var/log/mosquitto to mosquitto user
