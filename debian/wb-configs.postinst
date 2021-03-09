@@ -46,5 +46,8 @@ fi
 
 udevadm trigger # apply new udev rules
 
-rm -f /etc/logrotate.d/messages
+if dpkg-query -s rsyslog; then
+    rm -f /etc/logrotate.d/messages
+fi
+
 rm -f /etc/logrotate.d/rsyslog

@@ -25,7 +25,7 @@ Description: Default wheezy-specific config files for Wiren Board
 
 Package: wb-configs-stretch
 Architecture: all
-Depends: systemd (>= 232-25), apt-transport-https, rsyslog
+Depends: systemd (>= 232-25), apt-transport-https, rsyslog | busybox-syslogd
 Provides: ${diverted-files}
 Conflicts: ${diverted-files}, wb-homa-adc (<< 1.9.2), wb-homa-gpio (<< 1.14), wb-mqtt-serial(<< 1.14.2), wr-rules(<< 1.5.1)
 Replaces: wb-configs-wheezy, wb-configs (<< 1.84.0)

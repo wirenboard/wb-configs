@@ -1,3 +1,9 @@
+wb-configs (1.84.2) stable; urgency=medium
+
+  * Support for both rsyslog and busybox-syslogd. One can install rsyslog manually
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Tue, 09 Mar 2021 10:47:00 +0500
+
 wb-configs (1.84.1) stable; urgency=medium
 
   * Grant write permissions to /var/log/mosquitto to mosquitto user
