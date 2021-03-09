@@ -1,5 +1,6 @@
 wb-configs (1.84.2) stable; urgency=medium
 
+  * do not reboot system if mosquitto or nginx are stopped
   * Support for both rsyslog and busybox-syslogd. One can install rsyslog manually
 
  -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Tue, 09 Mar 2021 10:47:00 +0500
