@@ -1,3 +1,9 @@
+wb-configs (1.84.3) stable; urgency=medium
+
+  * syslog third time a charm
+
+ -- Evgeny Boger <boger@contactless.ru>  Fri, 12 Mar 2021 23:35:11 +0300
+
 wb-configs (1.84.2) stable; urgency=medium
 
   * do not reboot system if mosquitto or nginx are stopped
