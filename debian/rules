@@ -28,11 +28,5 @@ override_dh_systemd_start:
 	dh_systemd_start --name=wb-systime-adjust --no-start wb-systime-adjust.service
 endif
 
-ifneq (,$(filter wb-configs-wheezy,$(shell dh_listpackages)))
-override_dh_installinit:
-	dh_installinit -- start 11 S
-endif
-
-
 override_dh_builddeb:
 	dh_builddeb -- -Zgzip

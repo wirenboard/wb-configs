@@ -46,8 +46,15 @@ fi
 
 udevadm trigger # apply new udev rules
 
-if dpkg-query -s rsyslog; then
+if dpkg-query -s rsyslog >/dev/null 2>/dev/null; then
     rm -f /etc/logrotate.d/messages
 fi
 
 rm -f /etc/logrotate.d/rsyslog
+rm -f /etc/update-motd.d/10-uname
+
+# remove default Debian motd
+if [[ -f /etc/motd ]] && [[ $(sha256sum /etc/motd | head -c 6) == 'a37897' ]]; then
+    rm -f /etc/motd
+    ln -s /var/run/motd /etc/motd
+fi

@@ -1,3 +1,13 @@
+wb-configs (2.0) stable; urgency=medium
+
+  * remove wheezy support
+  * remove old contactless repository; now switching to the new
+    deb.wirenboard.com repo with releases. It is not forced by wb-configs
+    anymore, a list file is created on rootfs build or by the transitional
+    version of wb-configs from the old contactless repo
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Sun, 14 Mar 2021 14:50:01 +0300
+
 wb-configs (1.84.3) stable; urgency=medium
 
   * use dummy busybox-syslogd trick to replace it safely with rsyslog

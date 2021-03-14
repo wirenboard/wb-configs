@@ -1,0 +1,22 @@
+#!/bin/bash
+
+. /etc/wb_env.sh
+. /usr/lib/wb-release
+SHORT_SN=`cat /var/lib/wirenboard/short_sn.conf`
+
+echo -ne "\u001b[32m"
+figlet wirenboard
+echo -ne "\u001b[0m"
+
+echo -e "Welcome to \u001b[32mWirenboard ${WB_BOARD_REVISION}\u001b[0m \
+(s/n \u001b[1m${SHORT_SN}\u001b[0m), \
+release \u001b[1m\u001b[37m${RELEASE_NAME}\u001b[0m \
+(as \u001b[1m\u001b[37m${SUITE}\u001b[0m)"
+uname -a
+echo ''
+
+if [[ -n "$REPO_PREFIX" ]]; then
+	echo -e "This is a \u001b[1m\u001b[31mDEVELOPMENT\u001b[0m release \
+(prefix \u001b[1m\u001b[37m${REPO_PREFIX}\u001b[0m)"
+	echo -e "Don't use it in production!\n"
+fi
