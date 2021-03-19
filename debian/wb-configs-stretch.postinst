@@ -82,7 +82,6 @@ sed -i '\+deb http://security.debian.org stretch/updates main+d' $sources_file
 
 #DEBHELPER#
 
-deb-systemd-invoke restart busybox-syslogd || true
 deb-systemd-invoke restart rsyslog || true
 deb-systemd-invoke start watchdog
 deb-systemd-invoke restart systemd-journald

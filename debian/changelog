@@ -1,3 +1,9 @@
+wb-configs (1.84.3) stable; urgency=medium
+
+  * use dummy busybox-syslogd trick to replace it safely with rsyslog
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Thu, 18 Mar 2021 20:55:58 +0300
+
 wb-configs (1.84.2) stable; urgency=medium
 
   * do not reboot system if mosquitto or nginx are stopped
