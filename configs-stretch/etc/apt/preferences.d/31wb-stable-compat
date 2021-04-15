@@ -1,3 +1,0 @@
-Package: *
-Pin: release l=stable/stretch stretch
-Pin-Priority: 990

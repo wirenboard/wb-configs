@@ -1,3 +1,9 @@
+wb-configs (2.0~~transitional) stable; urgency=medium
+
+  * transitional package to switch to the new repository
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Thu, 15 Apr 2021 17:37:55 +0300
+
 wb-configs (1.84.3) stable; urgency=medium
 
   * use dummy busybox-syslogd trick to replace it safely with rsyslog
