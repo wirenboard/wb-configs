@@ -1,3 +1,0 @@
-Package: *
-Pin: release l=. wheezy
-Pin-Priority: 990
