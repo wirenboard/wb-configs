@@ -1,0 +1,5 @@
+#!/bin/bash
+
+
+echo -e "\nYour Wirenboard is now being switched to the new repository (deb.wirenboard.com)."
+echo -e "Run '\u001b[1mapt update && apt dist-upgrade\u001b[0m' to finish the process."

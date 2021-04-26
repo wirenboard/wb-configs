@@ -85,3 +85,43 @@ sed -i '\+deb http://security.debian.org stretch/updates main+d' $sources_file
 deb-systemd-invoke restart rsyslog || true
 deb-systemd-invoke start watchdog
 deb-systemd-invoke restart systemd-journald
+
+# switch unstable users to testing
+if grep '^deb' /etc/apt/sources.list.d/wb-unstable.list* >/dev/null 2>/dev/null; then
+    RELEASE=testing
+else
+    RELEASE=stable
+fi
+
+# remove old apt sources and preferences cause we don't use them anymore
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/sources.list.d/contactless.list "2.0~~" wb-configs-stretch -- "$@"
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/sources.list.d/wb-unstable.list "2.0~~" wb-configs-stretch -- "$@"
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/preferences.d/31wb-stable-compat "2.0~~" wb-configs-stretch -- "$@"
+
+# generate new sources.list and temp policy to switch to the new repository
+. /usr/lib/wb-utils/wb_env.sh
+wb_source "of"
+
+if of_machine_match "contactless,imx6ul-wirenboard670" || of_machine_match "contactless,imx6ul-wirenboard60"; then
+    TARGET="wb6/stretch"
+else
+    TARGET="wb5/stretch"
+fi
+
+# these files will be regenerated/removed in postinst of new wb-configs from new repository
+echo "Creating transitional APT settings to switch to new repository"
+echo "Target platform: $TARGET, release $RELEASE"
+
+echo "deb http://deb.wirenboard.com/$TARGET $RELEASE main" > /etc/apt/sources.list.d/wirenboard-release-transition-tmp.list
+cat >/etc/apt/preferences.d/00wirenboard-release-transition-tmp <<EOF
+Package: *
+Pin: release o=wirenboard, a=$RELEASE
+Pin-Priority: 1010
+
+Package: *
+Pin: release o=wirenboard
+Pin-Priority: -10
+EOF

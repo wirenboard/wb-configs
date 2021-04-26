@@ -17,3 +17,11 @@ if [ "$1" = "purge" ]; then
 fi
 
 udevadm trigger # apply new udev rules
+
+# remove old apt sources and preferences cause we don't use them anymore
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/preferences.d/10wb-experimental "2.0~~" wb-configs -- "$@"
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/preferences.d/20wb-unstable "2.0~~" wb-configs -- "$@"
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/preferences.d/30wb-stable "2.0~~" wb-configs -- "$@"

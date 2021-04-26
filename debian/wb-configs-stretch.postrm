@@ -2,8 +2,6 @@
 
 #DEBHELPER#
 
-deb-systemd-invoke stop watchdog
-
 # remove old apt sources and preferences cause we don't use them anymore
 dpkg-maintscript-helper rm_conffile \
     /etc/apt/sources.list.d/contactless.list "2.0~~" wb-configs-stretch -- "$@"

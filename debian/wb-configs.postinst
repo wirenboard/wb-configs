@@ -46,8 +46,18 @@ fi
 
 udevadm trigger # apply new udev rules
 
-if dpkg-query -s rsyslog; then
+if dpkg-query -s rsyslog >/dev/null 2>/dev/null; then
     rm -f /etc/logrotate.d/messages
 fi
 
 rm -f /etc/logrotate.d/rsyslog
+
+# remove old apt sources and preferences cause we don't use them anymore
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/preferences.d/10wb-experimental "2.0~~" wb-configs -- "$@"
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/preferences.d/20wb-unstable "2.0~~" wb-configs -- "$@"
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/preferences.d/30wb-stable "2.0~~" wb-configs -- "$@"
+
+. /etc/update-motd.d/99wb-upgrade-transition-tmp

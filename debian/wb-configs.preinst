@@ -70,4 +70,12 @@ if [ "$1" = "upgrade" ] && dpkg --compare-versions "$2" "lt" "1.75.4"; then
     wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
 fi
 
+# remove old apt sources and preferences cause we don't use them anymore
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/preferences.d/10wb-experimental "2.0~~" wb-configs -- "$@"
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/preferences.d/20wb-unstable "2.0~~" wb-configs -- "$@"
+dpkg-maintscript-helper rm_conffile \
+    /etc/apt/preferences.d/30wb-stable "2.0~~" wb-configs -- "$@"
+
 #DEBHELPER#
