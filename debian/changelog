@@ -1,3 +1,9 @@
+wb-configs (2.1.0) stable; urgency=medium
+
+  * add wb-suite to recommends to install it automatically on update
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Tue, 03 Aug 2021 15:04:03 +0300
+
 wb-configs (2.0.1) stable; urgency=medium
 
   * renamed "Wirenboard" to "Wiren Board" in banner
