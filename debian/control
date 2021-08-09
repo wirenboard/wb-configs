@@ -12,7 +12,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 2.1), inotify-too
 Pre-Depends: wb-update-manager
 Provides: ${diverted-files}, mqtt-wss
 Conflicts: ${diverted-files}, mqtt-wss
-Recommends: wb-essential, figlet
+Recommends: wb-essential, wb-suite, figlet
 Replaces: mqtt-wss
 Description: Default common config files for Wiren Board
 
