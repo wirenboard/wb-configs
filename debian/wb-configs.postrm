@@ -16,4 +16,11 @@ if [ "$1" = "purge" ]; then
     purge_ucf_conffile "$RULES_DST_DIR/99-wb-ethernet.rules"
 fi
 
+if [ "$1" = "upgrade" ] && dpkg --compare-versions "$2" -lt 3.0; then
+    if find /etc/mosquitto/ -name '*.wb-bak3' | grep -q ""; then
+        echo "Restoring old mosquitto configs"
+        find /etc/mosquitto/ -name '*.wb-bak3' -type f -exec rename -f 's/\.wb-bak3$//' '{}' \;
+    fi
+fi
+
 udevadm trigger # apply new udev rules

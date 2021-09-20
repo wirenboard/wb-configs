@@ -65,3 +65,14 @@ if [[ -f /etc/motd ]] && [[ $(sha256sum /etc/motd | head -c 6) == 'a37897' ]]; t
 fi
 
 deb-systemd-invoke reload nginx || true
+
+# comment old patched mosquitto's `allow_anonymous_localhost` out
+# or it will break new mosquitto launch
+OPT_REGEX='^\s*\(allow_anonymous_localhost\)'
+if grep -q -R --include=\*.conf "$OPT_REGEX" /etc/mosquitto/; then
+    DEPR_MSG="allow_anonymous_localhost is deprecated, use per listener settings from mosquitto 2.0"
+    echo "WARNING: $DEPR_MSG"
+    find /etc/mosquitto/ -name '*.conf' \
+        -exec grep -q '^\s*allow_anonymous_localhost' '{}' \; \
+        -exec sed -i.wb-bak3 "s/${OPT_REGEX}/# ${DEPR_MSG}\n#\1/" '{}' \;
+fi
