@@ -2,7 +2,7 @@
 . /usr/lib/wb-utils/wb_env.sh
 wb_source "of"
 
-# generate u-boot env config before config-package debheler 
+# generate u-boot env config before config-package debheler
 UBOOT_DIR="/usr/share/wb-configs/u-boot"
 UBOOT_FNAME="fw_env.config.wb"
 if of_machine_match "allwinner,sun8i-r40"; then
@@ -15,6 +15,76 @@ else
     FVER="default"
 fi
 cp "${UBOOT_DIR}/${UBOOT_FNAME}.${FVER}" "/etc/${UBOOT_FNAME}"
+
+ours=.wb
+theirs=.wb-orig
+
+# Remove diversion of sshd_configs from wb-configs which
+# was accidently left unattended
+
+# These functions are taken from config-package-dev heplers
+# with modifications which allow to remove diversions from
+# other packages
+wb_undisplace_unlink_symlink()
+{
+    file="$1"
+    ourfile="$2"
+    theirfile="$3"
+    if [ ! -L "$file" ] || \
+	[ "$(readlink "$file")" != "$(basename "$ourfile")" -a \
+	  "$(readlink "$file")" != "$(basename "$theirfile")" ]; then
+	echo "*** OMINOUS WARNING ***: $file is not linked to either $(basename "$ourfile") or $(basename "$theirfile")" >&2
+    else
+	rm -f "$file"
+    fi
+}
+
+wb_undisplace_unlink_displace()
+{
+    file="$1"
+    if [ ! -L "$file" ] && [ ! -e "$file" ]; then
+    echo "Run dpkg-divert --remove..."
+	dpkg-divert --remove --rename "$file"
+    else
+	echo "Not removing diversion of $file by $package" >&2
+    fi
+}
+
+wb_undisplace_unlink()
+{
+    prefix=$1
+    suffix=$2
+
+    file=$prefix$suffix
+    ourfile=$prefix$ours$suffix
+    theirfile=$prefix$theirs$suffix
+
+    wb_undisplace_unlink_symlink "$file" "$ourfile" "$theirfile"
+    wb_undisplace_unlink_displace "$file"
+}
+
+wb_check_undisplace_unlink_from()
+{
+    prefix=$1
+    suffix=$2
+    from_package=$3
+    from_version=$4
+
+    file=$prefix$suffix
+    ourfile=$prefix$ours$suffix
+    theirfile=$prefix$theirs$suffix
+
+    if LC_ALL=C dpkg-divert --list "$from_package" | \
+	grep -xFq "diversion of $file to $theirfile by $from_package" &&
+    dpkg --compare-versions `dpkg-query -f '${Version}' -W "$from_package"` "lt" "$from_version"; then
+        echo "Picking up diversion of $file from $package to replace it with our one"
+	    wb_undisplace_unlink "$prefix" "$suffix" "$from_package"
+    fi
+}
+
+if [ "$1" = "configure" ]; then
+    wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
+fi
 
 #DEBHELPER#
 
@@ -65,3 +135,51 @@ if [[ -f /etc/motd ]] && [[ $(sha256sum /etc/motd | head -c 6) == 'a37897' ]]; t
 fi
 
 deb-systemd-invoke reload nginx || true
+
+# comment old patched mosquitto's `allow_anonymous_localhost` out
+# or it will break new mosquitto launch
+OPT_REGEX='^\s*\(allow_anonymous_localhost\)'
+if grep -q -R --include=\*.conf "$OPT_REGEX" /etc/mosquitto/; then
+    DEPR_MSG="allow_anonymous_localhost is deprecated, use per listener settings from mosquitto 2.0"
+    echo "WARNING: $DEPR_MSG"
+    find /etc/mosquitto/ -name '*.conf' \
+        -exec grep -q '^\s*allow_anonymous_localhost' '{}' \; \
+        -exec sed -i.wb-bak3 "s/${OPT_REGEX}/# ${DEPR_MSG}\n#\1/" '{}' \;
+fi
+
+# this flag may be created in preinst
+MOSQUITTO_UPGRADE_FLAG=/var/lib/wirenboard/.mosquitto2-upgrade-restart-required
+
+if [ -f $MOSQUITTO_UPGRADE_FLAG ]; then
+    echo "mosquitto configs are updated, restarting mosquitto and all Wiren Board MQTT services"
+
+    # SERVICES=(mosquitto wb-mqtt-adc wb-mqtt-confed wb-mqtt-db wb-mqtt-gpio wb-mqtt-mbgate wb-mqtt-opcua wb-mqtt-serial wb-mqtt-w1 wb-rules)
+    # for service in ${SERVICES[@]}; do
+        # deb-systemd-invoke restart $service
+    # done
+
+    rm $MOSQUITTO_UPGRADE_FLAG -rf
+fi
+
+deb-systemd-invoke restart rsyslog || true
+deb-systemd-invoke start watchdog
+deb-systemd-invoke restart systemd-journald
+
+# remove transitional files left after 2.0~~transitional
+if echo "$2" | grep '~~transitional' >/dev/null; then
+    echo "Cleaning up transitional APT settings"
+    rm -f /etc/apt/preferences.d/00wirenboard-release-transition-tmp
+    rm -f /etc/apt/sources.list.d/wirenboard-release-transition-tmp.list
+    rm -f /etc/update-motd.d/99wb-upgrade-transition-tmp
+
+    echo "Generating new APT preferences according to installed release info"
+    wb-release -r
+fi
+
+# nginx user should has rw access to fwupdate uploads dir
+nginx_uploads_dir="/mnt/data/uploads"
+nginx_user="www-data"
+if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
+    echo "Setting ownership $nginx_user to $nginx_uploads_dir"
+    chown -R $nginx_user:$nginx_user $nginx_uploads_dir
+fi

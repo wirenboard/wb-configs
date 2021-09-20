@@ -1,0 +1,5 @@
+[Match]
+Driver=rtl8723bu
+
+[Link]
+NamePolicy=kernel
