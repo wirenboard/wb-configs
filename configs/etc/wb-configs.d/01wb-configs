@@ -39,6 +39,6 @@ wb_move /etc/nginx/sites-enabled/
 wb_move /etc/mosquitto/conf.d/00default_listener.conf
 wb_move /etc/mosquitto/conf.d/10listeners.conf
 wb_move /etc/mosquitto/conf.d/20bridges.conf
-wb_move /etc/mosquitto/passwd.conf
-wb_move /etc/mosquitto/acl.conf
+wb_move /etc/mosquitto/passwd/
+wb_move /etc/mosquitto/acl/
 wb_move_watch /etc/localtime
