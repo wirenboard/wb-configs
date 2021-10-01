@@ -83,10 +83,10 @@ MOSQUITTO_UPGRADE_FLAG=/var/lib/wirenboard/.mosquitto2-upgrade-restart-required
 if [ -f $MOSQUITTO_UPGRADE_FLAG ]; then
     echo "mosquitto configs are updated, restarting mosquitto and all Wiren Board MQTT services"
 
-    SERVICES=(mosquitto wb-mqtt-adc wb-mqtt-confed wb-mqtt-db wb-mqtt-gpio wb-mqtt-mbgate wb-mqtt-opcua wb-mqtt-serial wb-mqtt-w1 wb-rules)
-    for service in ${SERVICES[@]}; do
-        deb-systemd-invoke restart $service
-    done
+    # SERVICES=(mosquitto wb-mqtt-adc wb-mqtt-confed wb-mqtt-db wb-mqtt-gpio wb-mqtt-mbgate wb-mqtt-opcua wb-mqtt-serial wb-mqtt-w1 wb-rules)
+    # for service in ${SERVICES[@]}; do
+        # deb-systemd-invoke restart $service
+    # done
 
     rm $MOSQUITTO_UPGRADE_FLAG -rf
 fi
