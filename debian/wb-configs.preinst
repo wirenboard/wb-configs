@@ -70,4 +70,11 @@ if [ "$1" = "upgrade" ] && dpkg --compare-versions "$2" "lt" "1.75.4"; then
     wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
 fi
 
+# if wb-configs is upgraded with newer mosquitto, schedule service restarts
+# (will be handled in postinst)
+if [ "$1" = "upgrade" ] && dpkg --compare-versions "$2" "lt" "3.0.0~~"; then
+    echo "Scheduling services restart because of mosquitto upgrade"
+    touch /var/lib/wirenboard/.mosquitto2-upgrade-restart-required
+fi
+
 #DEBHELPER#
