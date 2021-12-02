@@ -58,3 +58,5 @@ if [[ -f /etc/motd ]] && [[ $(sha256sum /etc/motd | head -c 6) == 'a37897' ]]; t
     rm -f /etc/motd
     ln -s /var/run/motd /etc/motd
 fi
+
+deb-systemd-invoke reload nginx || true
