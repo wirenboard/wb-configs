@@ -1,3 +1,9 @@
+wb-configs (2.2.0) stable; urgency=medium
+
+  * WB7 support
+
+ -- Evgeny Boger <boger@contactless.ru>  Tue, 23 Nov 2021 02:10:12 +0300
+
 wb-configs (2.1.2) stable; urgency=medium
 
   * Disable client side caching of web-interface's index.html
