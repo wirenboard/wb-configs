@@ -1,3 +1,9 @@
+wb-configs (2.3.0) stable; urgency=medium
+
+  * add dependency on linux-image-wb7
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Wed, 08 Dec 2021 22:46:07 +0300
+
 wb-configs (2.2.0) stable; urgency=medium
 
   * WB7 support
