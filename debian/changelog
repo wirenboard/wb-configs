@@ -1,3 +1,12 @@
+wb-configs (2.3.4) stable; urgency=medium
+
+  * don't change baudrate in serial console. Noise on RX pin can make
+    agetty change baudrate to lower value (but not back).
+    See https://github.com/systemd/systemd/issues/15611 for
+    details
+
+ -- Evgeny Boger <boger@contactless.ru>  Wed, 29 Dec 2021 21:49:45 +0300
+
 wb-configs (2.3.3) stable; urgency=medium
 
   * added "allow-hotplug" mode to eth0
