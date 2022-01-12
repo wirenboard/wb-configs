@@ -14,7 +14,13 @@ for f in passwd shadow group gshadow; do
 	wb_move_watch /etc/${f}
 done
 
-wb_move /etc/network/interfaces
+# There is a race condition between systemd-udev-trigger.service and mnt-data.mount
+# which may cause misconfiguration for interfaces with allow-hotplug
+# which are available on system boot (on-board Wi-Fi, for example).
+# This problem shoots on WB7 (fast hardware, huh).
+# So /etc/network/interfaces should be available before /mnt/data settles.
+wb_move_watch /etc/network/interfaces
+
 wb_move /etc/resolv.conf
 wb_move /etc/ssh
 wb_move /etc/dnsmasq.conf
