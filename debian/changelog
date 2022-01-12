@@ -1,3 +1,10 @@
+wb-configs (2.3.1) stable; urgency=medium
+
+  * fix race condition on /etc/network/interfaces during boot
+    (the reason why Wi-Fi AP may not start properly on WB7 sometimes)
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Wed, 12 Jan 2022 18:36:52 +0300
+
 wb-configs (2.3.0) stable; urgency=medium
 
   * add dependency on linux-image-wb7
