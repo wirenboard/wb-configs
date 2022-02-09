@@ -19,12 +19,14 @@ log() {
 	logger -t wb-watch-configs "$*"
 }
 
+log "Watched dirs: ${WATCH_DIRS[*]}"
+
 (
 	echo "$BASHPID" > "$PID_FILE"
 	2>/dev/null exec inotifywait -m \
 		--event close_write,moved_to \
 		--format '%w%f %e' \
-		$WATCH_DIRS
+		"${WATCH_DIRS[@]}"
 ) | {
 trap cleanup EXIT
 
