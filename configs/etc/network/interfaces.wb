@@ -17,6 +17,7 @@ iface wlan0 inet static
 
 
 auto eth0
+allow-hotplug eth0
 iface eth0 inet dhcp
    pre-up wb-set-mac
    hostname WirenBoard
@@ -34,4 +35,3 @@ iface eth1 inet dhcp
 #iface ppp0 inet ppp
 ## select provider: megafon, mts or beeline below
 #  provider megafon
-

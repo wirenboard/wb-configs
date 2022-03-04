@@ -1,3 +1,9 @@
+wb-configs (2.3.3) stable; urgency=medium
+
+  * added "allow-hotplug" mode to eth0
+
+ -- Vladimir Romanov <v.romanov@wirenboard.ru>  Thu, 10 Feb 2022 19:12:41 +0300
+
 wb-configs (2.3.2) stable; urgency=medium
 
   * fix wb-watch-configs script to properly handle /etc/network/interfaces
