@@ -88,11 +88,13 @@ deb-systemd-invoke restart systemd-journald
 
 # remove transitional files left after 2.0~~transitional
 if echo "$2" | grep '~~transitional' >/dev/null; then
-    echo "Cleaning up transitional APT settings"
-    rm -f /etc/apt/preferences.d/00wirenboard-release-transition-tmp
-    rm -f /etc/apt/sources.list.d/wirenboard-release-transition-tmp.list
-    rm -f /etc/update-motd.d/99wb-upgrade-transition-tmp
+    remove_transitional_settings() {
+        echo "Cleaning up transitional APT settings"
+        rm -f /etc/apt/preferences.d/00wirenboard-release-transition-tmp
+        rm -f /etc/apt/sources.list.d/wirenboard-release-transition-tmp.list
+        rm -f /etc/update-motd.d/99wb-upgrade-transition-tmp
+    }
 
     echo "Generating new APT preferences according to installed release info"
-    wb-release -r
+    wb-release -r && remove_transitional_settings
 fi
