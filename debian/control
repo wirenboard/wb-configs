@@ -9,8 +9,7 @@ Homepage: https://github.com/contactless/wb-configs
 Package: wb-configs
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 2.1), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15),
-         linux-image-wb2 | linux-image-wb6 | linux-image-wb7, wb-configs-stretch (>= ${binary:Version})
-Pre-Depends: wb-update-manager
+         linux-image-wb2 | linux-image-wb6 | linux-image-wb7, wb-update-manager, wb-configs-stretch (>= ${binary:Version})
 Provides: ${diverted-files}, mqtt-wss
 Conflicts: ${diverted-files}, mqtt-wss
 Recommends: wb-essential, wb-suite, figlet
@@ -19,6 +18,7 @@ Description: Default common config files for Wiren Board
 
 Package: wb-configs-stretch
 Architecture: all
+Pre-Depends: wb-update-manager
 Depends: systemd (>= 232-25), apt-transport-https, rsyslog
 Provides: ${diverted-files}
 Conflicts: ${diverted-files}, wb-homa-adc (<< 1.9.2), wb-homa-gpio (<< 1.14), wb-mqtt-serial(<< 1.14.2), wb-rules(<< 1.5.1), busybox-syslogd (<< 9:1.0~dummy)
