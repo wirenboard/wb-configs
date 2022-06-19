@@ -1,4 +1,4 @@
-wb-configs (2.3.4) stable; urgency=medium
+wb-configs (2.3.5) stable; urgency=medium
 
   * don't change baudrate in serial console. Noise on RX pin can make
     agetty change baudrate to lower value (but not back).
