@@ -17,8 +17,6 @@
 # Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
 ##
 
-upload_progress fwupdate 1M;
-
 server {
 	#listen   80; ## listen for ipv4; this line is default and implied
 	#listen   [::]:80 default_server ipv6only=on; ## listen for ipv6
@@ -36,37 +34,6 @@ server {
 
 	location ~* \.(js|jpg|jpeg|gif|png|svg|css)$ {
 		add_header Cache-Control "max-age=31536000";
-	}
-
-	location /fwupdate/upload {
-		limit_except POST {
-			deny all;
-		}
-		client_body_buffer_size 128K;
-		client_max_body_size 1000M;
-
-		upload_pass @fwupdate;
-		upload_resumable on;
-		upload_store /var/www/uploads;
-		upload_store_access user:rw;
-		upload_state_store /var/www/uploads/state;
-
-		upload_set_form_field $upload_field_name.name "$upload_file_name";
-		upload_set_form_field $upload_field_name.content_type "$upload_content_type";
-		upload_set_form_field $upload_field_name.path "$upload_tmp_path";
-		
-		# Inform backend about hash and size of a file
-		upload_aggregate_form_field "$upload_field_name.md5" "$upload_file_md5";
-		upload_aggregate_form_field "$upload_field_name.size" "$upload_file_size";
-		track_uploads fwupdate 5s;
-	}
-
-	location @fwupdate {
-		return 200;
-	}
-
-	location /fwupdate/progress {
-		report_uploads fwupdate;
 	}
 
 	location /mqtt {
