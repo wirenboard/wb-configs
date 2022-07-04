@@ -2,7 +2,7 @@
 . /usr/lib/wb-utils/wb_env.sh
 wb_source "of"
 
-# generate u-boot env config before config-package debheler 
+# generate u-boot env config before config-package debheler
 UBOOT_DIR="/usr/share/wb-configs/u-boot"
 UBOOT_FNAME="fw_env.config.wb"
 if of_machine_match "allwinner,sun8i-r40"; then
@@ -174,4 +174,11 @@ if echo "$2" | grep '~~transitional' >/dev/null; then
 
     echo "Generating new APT preferences according to installed release info"
     wb-release -r
+fi
+
+# nginx user should has rw access to fwupdate uploads dir
+local nginx_uploads_dir="/mnt/data/uploads"
+local nginx_user="www-data"
+if [[ -d $nginx_uploads_dir ]] && [[ id -u ${nginx_user} > /dev/null 2>&1 ]]; then
+    chown -R ${nginx_user}:${nginx_user} ${nginx_uploads_dir}
 fi
