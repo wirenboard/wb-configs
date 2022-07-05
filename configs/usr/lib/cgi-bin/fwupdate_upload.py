@@ -2,10 +2,12 @@
 
 import os
 import sys
+import shutil
+from tempfile import mkstemp
 from cgi import FieldStorage
 
 
-RW_DIR = os.environ.get("UPLOADS_DIR", "/var/www/uploads")  # nginx user should have rw access
+RW_DIR = os.environ.get("UPLOADS_DIR", "/var/www/uploads")  # nginx user should has rw access
 os.makedirs(RW_DIR, exist_ok=True)
 
 
@@ -23,16 +25,21 @@ def to_chunks(fp, chunk_size=8192):
 
 
 form = FieldStorage(encoding="utf-8")
-uploading_file = form.get("file", None)
-if not uploading_file:
-    _error()
+if "file" not in form.keys():  # get("file") does not work (due to FieldStorage internals)
+    _error("Incorrect request")
 
+uploading_file = form["file"]
 if hasattr(uploading_file, "filename") and hasattr(uploading_file, "file"):
     fname = uploading_file.filename or "fwupdate"
     fp_upload = uploading_file.file
 else:
-    _error()
+    _error("Incorrect request body")
 
-with open(os.path.join(RW_DIR, fname), "wb") as fp_save:
+uploading_fd, uploading_fname = mkstemp()
+
+with os.fdopen(uploading_fd, "wb") as fp_save:
     for chunk in to_chunks(fp_upload):
         fp_save.write(chunk)
+sys.stdout.write("Status: 200\r\n\r\n")
+
+shutil.copyfile(uploading_fname, os.path.join(RW_DIR, fname))
