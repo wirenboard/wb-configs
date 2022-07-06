@@ -13,16 +13,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 3.7.0), inotify-t
 Pre-Depends: wb-update-manager
 Provides: ${diverted-files}, mqtt-wss
 Conflicts: ${diverted-files}, mqtt-wss, wb-homa-adc (<< 1.9.2), wb-homa-gpio (<< 1.14), wb-mqtt-serial(<< 1.14.2), wb-rules(<< 1.5.1), busybox-syslogd (<< 9:1.0~dummy), nginx-common (<< 1.7.11)
+Breaks: wb-configs-stretch (<< 3.0.0)
 Recommends: wb-essential, wb-suite, figlet
-Replaces: mqtt-wss
+Replaces: mqtt-wss, wb-configs-stretch (<< 3.0.0)
 Description: Default common config files for Wiren Board
-
-Package: wb-configs-stretch
-Architecture: all
-Pre-Depends: wb-update-manager
-Depends: systemd (>= 232-25), apt-transport-https, rsyslog
-Provides: ${diverted-files}
-Replaces: wb-configs-wheezy, wb-configs (<< 1.84.0)
-Breaks: wb-configs (<< 1.78)
-Description: Default stretch-specific config files for Wiren Board
-  This is a dummy package. It can safely be removed.
