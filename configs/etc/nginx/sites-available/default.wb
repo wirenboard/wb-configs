@@ -17,6 +17,8 @@
 # Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
 ##
 
+upload_progress fwupdate 1M;
+
 server {
 	#listen   80; ## listen for ipv4; this line is default and implied
 	#listen   [::]:80 default_server ipv6only=on; ## listen for ipv6
@@ -36,6 +38,33 @@ server {
 		add_header Cache-Control "max-age=31536000";
 	}
 
+	location /fwupdate/upload {
+		limit_except POST {
+			deny all;
+		}
+		client_body_buffer_size 128K;
+		client_max_body_size 1000M;
+
+		gzip off;
+
+		fastcgi_param UPLOADS_DIR /var/www/uploads;
+		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/fwupdate_upload.py;
+		fastcgi_param SCRIPT_NAME fwupdate_upload.py;
+		fastcgi_param QUERY_STRING $query_string;
+		fastcgi_param REQUEST_METHOD $request_method;
+		fastcgi_param CONTENT_TYPE $content_type;
+		fastcgi_param CONTENT_LENGTH $content_length;
+		fastcgi_param REQUEST_URI $request_uri;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		fastcgi_request_buffering off;  # to allow stream-downloading via backend
+
+		track_uploads fwupdate 5s;
+	}
+
+	location /fwupdate/progress {
+		report_uploads fwupdate;
+	}
+
 	location /mqtt {
 	    proxy_pass http://localhost:18883;
 	    proxy_http_version 1.1;
@@ -43,4 +72,3 @@ server {
 	    proxy_set_header Connection upgrade;
 	}
 }
-
