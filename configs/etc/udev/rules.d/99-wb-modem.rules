@@ -1,0 +1,10 @@
+ACTION!="add|change|move|bind", GOTO="wb_modem_end"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="1e0e", GOTO="wb_modem_types"
+GOTO="wb_modem_end"
+
+LABEL="wb_modem_types"
+
+# SIMCOM A7600E-H SIM switch
+ATTRS{idVendor}=="1e0e", ATTRS{idProduct}=="9011", ENV{ID_MM_SIM_SWITCH_GPIO_LABEL}="SIM_SELECT"
+
+LABEL="wb_modem_end"
