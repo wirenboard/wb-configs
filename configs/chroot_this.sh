@@ -17,10 +17,12 @@ echo $DIR
 
 mkdir -p $DIR/proc
 mkdir -p $DIR/sys
+mkdir -p $DIR/tmp
 mkdir -p $DIR/dev/pts
 
 mount -t proc none $DIR/proc
 mount -t sysfs none $DIR/sys
+mount -t tmpfs none $DIR/tmp
 #mount --bind /dev $DIR/dev
 mount -t devpts devpts $DIR/dev/pts -o "gid=5,mode=620,ptmxmode=666,newinstance"
 [[ -L $DIR/dev/ptmx ]] || mount --bind $DIR/dev/pts/ptmx $DIR/dev/ptmx
@@ -28,6 +30,7 @@ mount -t devpts devpts $DIR/dev/pts -o "gid=5,mode=620,ptmxmode=666,newinstance"
 cleanup_mounts() {
 	umount "$DIR/proc"
 	umount "$DIR/sys"
+	umount "$DIR/tmp"
     umount -R "$DIR/dev/pts"
 	#~ umount -R "$DIR/dev"
 }
