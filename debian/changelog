@@ -1,3 +1,9 @@
+wb-configs (2.3.6) stable; urgency=medium
+
+  * Added mount point /tmp to chroot_this script
+
+ -- Roman Kochkin <roman.kochkin@wirenboard.ru>  Wed, 17 Aug 2022 23:56:32 +0400
+
 wb-configs (2.3.5) stable; urgency=medium
 
   * don't change baudrate in serial console. Noise on RX pin can make
