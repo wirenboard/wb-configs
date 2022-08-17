@@ -9,3 +9,4 @@ echo $DIR
 umount $DIR/dev/pts
 umount $DIR/proc
 umount $DIR/sys
+umount $DIR/tmp
