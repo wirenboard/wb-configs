@@ -1,0 +1,17 @@
+[connection]
+id=wb-gsm
+uuid=5d4297ba-c319-4c05-a153-17cb42e6e196
+type=gsm
+autoconnect=false
+
+[gsm]
+auto-config=true
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+method=ignore
+
+[proxy]
