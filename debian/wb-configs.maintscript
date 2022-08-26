@@ -4,3 +4,7 @@ rm_conffile /etc/apt/sources.list.d/contactless.list 1.76~
 rm_conffile /etc/apt/sources.list.d/wheezy-backports.list 1.76~
 rm_conffile /etc/apt/preferences 1.78~
 rm_conffile /etc/preferences 1.78~
+rm_conffile /etc/mosquitto/conf.d/auth.conf 3.0.0~
+rm_conffile /etc/mosquitto/conf.d/listeners.conf 3.0.0~
+rm_conffile /etc/mosquitto/conf.d/bridge.conf 3.0.0~
+rm_conffile /etc/mosquitto/conf.d/bridge.conf.example 3.0.0~

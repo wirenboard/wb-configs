@@ -1,3 +1,17 @@
+wb-configs (3.0.1) stable; urgency=medium
+
+  * nginx: change fwupdate-uploading backend from nginx upload module to python cgi
+
+ -- Vladimir Romanov <v.romanov@wirenboard.ru>  Mon, 04 Jul 2022 09:37:21 +0300
+
+wb-configs (3.0.0) stable; urgency=medium
+
+  * bullseye build
+  * switch to mosquitto 2.0.11-1
+  * switch to upstream nginx
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Mon, 22 Aug 2022 13:44:28 +0300
+
 wb-configs (2.3.5) stable; urgency=medium
 
   * don't change baudrate in serial console. Noise on RX pin can make

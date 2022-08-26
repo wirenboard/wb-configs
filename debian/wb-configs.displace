@@ -1,4 +1,6 @@
 /root/.bashrc.wb
+/root/.config/mosquitto_sub.wb
+/root/.config/mosquitto_pub.wb
 /etc/locale.gen.wb
 /etc/hostname.wb
 /etc/modules.wb
@@ -26,3 +28,9 @@
 /etc/fw_env.config.wb
 
 /etc/e2fsck.conf.wb
+
+/lib/systemd/system/networking.service.wb
+/etc/ssh/sshd_config.wb
+/etc/avahi/avahi-daemon.conf.wb
+/etc/systemd/journald.conf.wb
+/etc/rsyslog.conf.wb

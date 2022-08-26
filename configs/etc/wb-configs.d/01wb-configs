@@ -36,9 +36,9 @@ wb_move_nosavefiles /var/www/uploads/ /uploads  # here will be firmware updates
 wb_move /etc/lirc/lircd.conf.d/
 wb_move /etc/nginx/passwd
 wb_move /etc/nginx/sites-enabled/
-wb_move /etc/mosquitto/conf.d/bridge.conf
-wb_move /etc/mosquitto/conf.d/listeners.conf
-wb_move /etc/mosquitto/conf.d/auth.conf
-wb_move /etc/mosquitto/passwd.conf
-wb_move /etc/mosquitto/acl.conf
+wb_move /etc/mosquitto/conf.d/00default_listener.conf
+wb_move /etc/mosquitto/conf.d/10listeners.conf
+wb_move /etc/mosquitto/conf.d/20bridges.conf
+wb_move /etc/mosquitto/passwd/
+wb_move /etc/mosquitto/acl/
 wb_move_watch /etc/localtime
