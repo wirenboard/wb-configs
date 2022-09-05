@@ -7,12 +7,10 @@ interface-name=eth0
 [ethernet]
 
 [ipv4]
-dhcp-hostname=WirenBoard
 method=auto
 
 [ipv6]
 addr-gen-mode=stable-privacy
-dhcp-hostname=WirenBoard
 method=auto
 
 [proxy]
