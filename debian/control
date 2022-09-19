@@ -8,7 +8,7 @@ Homepage: https://github.com/contactless/wb-configs
 
 Package: wb-configs
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 3.9.0), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15),
+Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 4.1.0), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15),
          linux-image-wb2 | linux-image-wb6 | linux-image-wb7, fcgiwrap, wb-update-manager
 Pre-Depends: wb-update-manager
 Provides: ${diverted-files}, mqtt-wss
