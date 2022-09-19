@@ -1,0 +1,16 @@
+[connection]
+id=wb-eth0
+uuid=91f1c71d-2d97-4675-886f-ecbe52b8451e
+type=ethernet
+interface-name=eth0
+
+[ethernet]
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+method=auto
+
+[proxy]
