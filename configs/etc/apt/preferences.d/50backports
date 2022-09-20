@@ -1,0 +1,3 @@
+Package: libnm0 libmbim-*:any libqmi-*:any gir1.2-mbim-1.0 gir1.2-qmi-1.0
+Pin: release a=bullseye-backports
+Pin-Priority: 510

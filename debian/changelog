@@ -1,3 +1,9 @@
+wb-configs (3.2.0) stable; urgency=medium
+
+  * add apt pin to install modemmanager dependencies from backports
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Tue, 20 Sep 2022 13:07:32 +0300
+
 wb-configs (3.1.0) stable; urgency=medium
 
   * Add ModemManager and NetworkManager support
