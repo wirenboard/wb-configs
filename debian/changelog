@@ -1,3 +1,9 @@
+wb-configs (3.2.1) stable; urgency=medium
+
+  * Set correct access right to NetworkManager connections
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Fri, 30 Sep 2022 14:10:04 +0500
+
 wb-configs (3.2.0) stable; urgency=medium
 
   * add apt pin to install modemmanager dependencies from backports
