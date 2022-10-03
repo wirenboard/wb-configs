@@ -1,3 +1,10 @@
+wb-configs (3.2.1) stable; urgency=medium
+
+  * Add networking and netplug services to
+    wb-configs-early.service "After" section 
+
+ -- Ekaterina Volkova  <ekaterina.volkova@wirenboard.ru>  Mon, 03 Oct 2022 17:23:28 +0300
+
 wb-configs (3.2.0) stable; urgency=medium
 
   * add apt pin to install modemmanager dependencies from backports

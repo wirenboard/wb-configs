@@ -3,7 +3,7 @@ Description=prepare mounts and symlinks to config files
 DefaultDependencies=no
 Conflicts=shutdown.target
 After=local-fs.target systemd-sysusers.service mnt-data.mount
-Before=sysinit.target shutdown.target systemd-tmpfiles-setup.service networking.service
+Before=sysinit.target shutdown.target systemd-tmpfiles-setup.service networking.service netplug.service
 RefuseManualStop=true
 
 [Service]
