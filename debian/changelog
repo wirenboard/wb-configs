@@ -1,7 +1,7 @@
 wb-configs (3.2.1) stable; urgency=medium
 
   * Add networking and netplug services to
-    wb-configs-early.service "After" section 
+    wb-configs-early.service "Before" section 
 
  -- Ekaterina Volkova  <ekaterina.volkova@wirenboard.ru>  Mon, 03 Oct 2022 17:23:28 +0300
 
