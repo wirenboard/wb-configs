@@ -1,7 +1,6 @@
 wb-configs (3.2.1) stable; urgency=medium
 
-  * Add networking and netplug services to
-    wb-configs-early.service "Before" section 
+  * fix network interface user settings applying after updating via fit
 
  -- Ekaterina Volkova  <ekaterina.volkova@wirenboard.ru>  Mon, 03 Oct 2022 17:23:28 +0300
 
