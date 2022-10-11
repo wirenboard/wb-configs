@@ -1,8 +1,15 @@
-wb-configs (3.2.1) stable; urgency=medium
+wb-configs (3.2.2) stable; urgency=medium
 
   * fix network interface user settings applying after updating via fit
 
- -- Ekaterina Volkova  <ekaterina.volkova@wirenboard.ru>  Mon, 03 Oct 2022 17:23:28 +0300
+ -- Ekaterina Volkova  <ekaterina.volkova@wirenboard.ru>  Mon, 11 Oct 2022 11:23:28 +0300
+
+wb-configs (3.2.1) stable; urgency=medium
+
+  * add apt pin to install wb-release-info from bullseye
+  * prefer nodejs from nodesource (switch to bullseye, enable by default)
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Mon, 10 Oct 2022 11:59:03 +0600
 
 wb-configs (3.2.0) stable; urgency=medium
 
