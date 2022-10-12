@@ -178,3 +178,7 @@ if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
     echo "Setting ownership $nginx_user to $nginx_uploads_dir"
     chown -R $nginx_user:$nginx_user $nginx_uploads_dir
 fi
+
+chmod 600 /etc/NetworkManager/system-connections/wb-eth0.nmconnection
+chmod 600 /etc/NetworkManager/system-connections/wb-eth1.nmconnection
+chmod 600 /etc/NetworkManager/system-connections/wb-gsm-sim1.nmconnection

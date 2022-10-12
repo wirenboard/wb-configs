@@ -1,3 +1,9 @@
+wb-configs (3.2.3) stable; urgency=medium
+
+  * Set correct access right to NetworkManager connections
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Wed, 12 Oct 2022 12:56:11 +0500
+
 wb-configs (3.2.2) stable; urgency=medium
 
   * fix network interface user settings applying after updating via fit
