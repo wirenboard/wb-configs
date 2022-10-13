@@ -3,7 +3,7 @@ Description=Raise network interfaces
 Documentation=man:interfaces(5)
 DefaultDependencies=no
 Wants=network.target
-After=local-fs.target network-pre.target apparmor.service systemd-sysctl.service systemd-modules-load.service
+After=local-fs.target network-pre.target apparmor.service systemd-sysctl.service systemd-modules-load.service wb-hwconf-manager.service
 Before=network.target shutdown.target network-online.target
 Conflicts=shutdown.target
 
