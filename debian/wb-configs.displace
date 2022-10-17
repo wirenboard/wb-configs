@@ -29,7 +29,6 @@
 
 /etc/e2fsck.conf.wb
 
-/lib/systemd/system/networking.service.wb
 /etc/ssh/sshd_config.wb
 /etc/avahi/avahi-daemon.conf.wb
 /etc/systemd/journald.conf.wb
