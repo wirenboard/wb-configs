@@ -1,8 +1,9 @@
 wb-configs (3.3.0) stable; urgency=medium
 
   * Fix networking.service symlink in bullseye by removing networking.service.wb
+  * Add ExecCondition for hostapd.service (doesn't start if wlanx interface has wpa-ssid)
 
- -- Ekaterina Volkova <ekaterina.volkova@wirenboard.ru>  Mon, 17 Oct 2022 12:59:47 +0300
+ -- Ekaterina Volkova <ekaterina.volkova@wirenboard.ru>  Mon, 19 Oct 2022 10:47:47 +0300
 
 wb-configs (3.2.3) stable; urgency=medium
 
