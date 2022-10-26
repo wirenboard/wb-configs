@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# This wrapper script adds arguments for mosquitto utils
+# to connect via UNIX socket in case
+# if no special connection settings are provided.
+
+ORIG_TOOL="$0.mosq"
+DEFAULT_ARGS=("--unix" "/var/run/mosquitto/mosquitto.sock")
+
+for arg in "$@"; do
+case "$arg" in
+    -h|-p|--unix)  # connection settings are specified via arguments
+        exec $ORIG_TOOL "$@"
+esac
+done
+
+exec "$ORIG_TOOL" "${DEFAULT_ARGS[@]}" "$@"
