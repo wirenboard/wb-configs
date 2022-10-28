@@ -200,7 +200,7 @@ nm_fixes() {
         local ssid="WirenBoard-${short_sn}"
         sed -i "s/^ssid=Wirenboard/ssid=${ssid}/" "/etc/NetworkManager/system-connections/wb-ap.nmconnection"
 
-        deb-systemd-invoke restart NetworkManager
+        deb-systemd-invoke restart NetworkManager || true
     fi
 }
 
