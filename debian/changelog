@@ -1,8 +1,14 @@
-wb-configs (3.4.0) stable; urgency=medium
+wb-configs (3.5.0) stable; urgency=medium
 
   * wrap mosquitto tools into our script to pass UNIX socket by default
 
- -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Wed, 26 Oct 2022 13:08:33 +0600
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Fri, 28 Oct 2022 18:21:23 +0600
+
+wb-configs (3.4.0) stable; urgency=medium
+
+  * Add Wi-Fi access point and second SIM slot NetworkManager connection profiles
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Thu, 27 Oct 2022 11:17:12 +0500
 
 wb-configs (3.3.0) stable; urgency=medium
 

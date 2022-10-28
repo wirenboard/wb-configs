@@ -28,7 +28,7 @@ for file in "${mosquitto_apps[@]}"; do
     # It's not a problem if upgrade keeps divertion of mosquitto tools,
     # but breaks them on downgrade.
 
-    if [[ "$1" = "upgrade" ]] && dpkg --compare-versions "$2" lt "3.4.0~~"; then
+    if [[ "$1" = "upgrade" ]] && dpkg --compare-versions "$2" lt "3.5.0~~"; then
         echo "WARNING: downgrading from mosquitto-wrapping version, remove wrappers"
         rm -f "/usr/bin/${file}"
     fi
