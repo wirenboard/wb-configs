@@ -180,7 +180,7 @@ if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
 fi
 
 nm_fixes() {
-    if `dpkg --compare-versions "$2" "lt" "3.4.0"`; then
+    if dpkg --compare-versions "$2" "lt" "3.4.0"; then
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-gsm-sim1.nmconnection"
@@ -200,7 +200,7 @@ nm_fixes() {
         local ssid="WirenBoard-${short_sn}"
         sed -i "s/^ssid=Wirenboard/ssid=${ssid}/" "/etc/NetworkManager/system-connections/wb-ap.nmconnection"
 
-        systemctl restart NetworkManager
+        deb-systemd-invoke restart NetworkManager
     fi
 }
 
