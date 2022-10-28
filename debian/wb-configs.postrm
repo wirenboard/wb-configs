@@ -17,3 +17,23 @@ if [ "$1" = "purge" ]; then
 fi
 
 udevadm trigger # apply new udev rules
+
+# restore original mosquitto scripts
+# the same section is in preinst script
+mosquitto_apps=("mosquitto_sub" "mosquitto_pub" "mosquitto_rr")
+for file in "${mosquitto_apps[@]}"; do
+
+    # During remove/purge, postrm script runs after old files are deleted.
+    # When upgrading, it runs _before_ it.
+    # It's not a problem if upgrade keeps divertion of mosquitto tools,
+    # but breaks them on downgrade.
+
+    if [[ "$1" = "upgrade" ]] && dpkg --compare-versions "$2" lt "3.5.0~~"; then
+        echo "WARNING: downgrading from mosquitto-wrapping version, remove wrappers"
+        rm -f "/usr/bin/${file}"
+    fi
+
+    if [[ ! -e "/usr/bin/${file}" ]]; then
+        dpkg-divert --package wb-configs --rename --remove "/usr/bin/${file}"
+    fi
+done

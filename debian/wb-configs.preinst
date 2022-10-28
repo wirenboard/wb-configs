@@ -79,4 +79,13 @@ fi
 
 deb-systemd-invoke stop watchdog
 
+# divert /usr/bin/mosquitto_pub, /usr/bin/mosquitto_sub to use our wrapper scripts
+# the same section is in postrm script
+mosquitto_apps=("mosquitto_sub" "mosquitto_pub" "mosquitto_rr")
+for file in "${mosquitto_apps[@]}"; do
+    if [[ ! -e "/usr/bin/${file}.mosq" ]]; then
+       dpkg-divert --package wb-configs --divert "/usr/bin/${file}.mosq" --rename "/usr/bin/${file}"
+    fi
+done
+
 #DEBHELPER#
