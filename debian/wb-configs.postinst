@@ -179,6 +179,29 @@ if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
     chown -R $nginx_user:$nginx_user $nginx_uploads_dir
 fi
 
-chmod 600 /etc/NetworkManager/system-connections/wb-eth0.nmconnection
-chmod 600 /etc/NetworkManager/system-connections/wb-eth1.nmconnection
-chmod 600 /etc/NetworkManager/system-connections/wb-gsm-sim1.nmconnection
+nm_fixes() {
+    if `dpkg --compare-versions "$2" "lt" "3.4.0"`; then
+        local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
+                              "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
+                              "/etc/NetworkManager/system-connections/wb-gsm-sim1.nmconnection"
+                              "/etc/NetworkManager/system-connections/wb-gsm-sim2.nmconnection"
+                              "/etc/NetworkManager/system-connections/wb-ap.nmconnection")
+
+        # fix NetworkManager connection profiles access rights
+        for cn in ${nm_connections[@]}; do
+            chmod 600 $cn || true
+        done
+
+        # Wiren Board config for NetworkManager is now in /usr/lib/NetworkManager/conf.d/
+        rm -f /etc/NetworkManager/conf.d/wb.conf || true
+
+        # Fix NetworkManager access point name
+        local short_sn=`cat /var/lib/wirenboard/short_sn.conf`
+        local ssid="WirenBoard-${short_sn}"
+        sed -i "s/^ssid=Wirenboard/ssid=${ssid}/" "/etc/NetworkManager/system-connections/wb-ap.nmconnection"
+
+        systemctl restart NetworkManager
+    fi
+}
+
+nm_fixes
