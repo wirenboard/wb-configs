@@ -1,12 +1,12 @@
 [connection]
-id=wb-gsm-sim1
-uuid=5d4297ba-c319-4c05-a153-17cb42e6e196
+id=wb-gsm-sim2
+uuid=8b9964d4-b8dd-34d3-a3ed-481840bcf8c9
 type=gsm
 autoconnect=false
 
 [gsm]
 auto-config=true
-sim-slot=1
+sim-slot=2
 
 [ipv4]
 method=auto

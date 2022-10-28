@@ -37,3 +37,5 @@ wb-configs_*.*
 debian/wb-configs/
 debian/wb-configs-wheezy/
 debian/wb-configs-stretch/
+
+.vscode
