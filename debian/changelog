@@ -1,3 +1,9 @@
+wb-configs (3.5.1) UNRELEASED; urgency=medium
+
+  * Fix dnsmasq warning when using shared connections in NetworkManager
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Fri, 09 Dec 2022 18:22:12 +0500
+
 wb-configs (3.5.0) stable; urgency=medium
 
   * wrap mosquitto tools into our script to pass UNIX socket by default
