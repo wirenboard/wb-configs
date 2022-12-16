@@ -1,3 +1,9 @@
+wb-configs (3.5.2) UNRELEASED; urgency=medium
+
+  * Add motd banner with system information
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 16 Dec 2022 16:532:00 +0400
+
 wb-configs (3.5.1) UNRELEASED; urgency=medium
 
   * Fix dnsmasq warning when using shared connections in NetworkManager
