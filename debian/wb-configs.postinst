@@ -195,10 +195,7 @@ nm_fixes() {
         # Wiren Board config for NetworkManager is now in /usr/lib/NetworkManager/conf.d/
         rm -f /etc/NetworkManager/conf.d/wb.conf || true
 
-        # Fix NetworkManager access point name
-        local short_sn=`cat /var/lib/wirenboard/short_sn.conf`
-        local ssid="WirenBoard-${short_sn}"
-        sed -i "s/^ssid=Wirenboard/ssid=${ssid}/" "/etc/NetworkManager/system-connections/wb-ap.nmconnection"
+        /usr/lib/wb-utils/prepare/wb-prepare.sh fix_nm_ap_ssid
 
         deb-systemd-invoke restart NetworkManager || true
     fi
