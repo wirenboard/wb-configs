@@ -1,0 +1,74 @@
+#!/bin/bash
+#
+# Copyright (c) Authors: https://www.armbian.com/authors
+#
+# This file is licensed under the terms of the GNU General Public
+# License version 2. This program is licensed "as is" without any
+# warranty of any kind, whether express or implied.
+#
+
+STORAGE=/dev/mmcblk0p6
+
+function display() {
+	# $1=name $2=value $3=red_limit $4=minimal_show_limit $5=unit $6=after
+	local great=">"
+	if [[ -n "$2" && "$2" > "0" && (( "${2%.*}" -ge "$4" )) ]]; then
+		printf "%-14s" "$1:"
+		if awk "BEGIN{exit ! ($2 $great $3)}"; then echo -ne "\e[0;91m $2"; else echo -ne "\e[0;92m $2"; fi
+		printf "%-1s\x1B[0m" "$5"
+		printf "%-11s\t" "$6"
+		return 1
+	fi
+}
+
+function storage_info() {
+	RootInfo=$(df -h /)
+	root_usage=$(awk '/\// {print $(NF-1)}' <<<${RootInfo} | sed 's/%//g')
+	root_total=$(awk '/\// {print $(NF-4)}' <<<${RootInfo})
+	StorageInfo=$(df -h $STORAGE 2>/dev/null | grep $STORAGE)
+	if [[ -n "${StorageInfo}" && ${RootInfo} != *$STORAGE* ]]; then
+		storage_usage=$(awk '/\// {print $(NF-1)}' <<<${StorageInfo} | sed 's/%//g')
+		storage_total=$(awk '/\// {print $(NF-4)}' <<<${StorageInfo})
+	fi
+}
+
+storage_info
+critical_load=80
+
+UPTIME=$(LC_ALL=C uptime)
+UPT1=${UPTIME#*'up '}
+UPT2=${UPT1%'user'*}
+time=${UPT2%','*}
+time=${time//','}
+time=$(echo $time | xargs)
+load=${UPTIME#*'load average: '}
+load=${load//','}
+load=$(echo $load | cut -d" " -f1)
+[[ $load == 0.0* ]] && load=0.10
+cpucount=$(grep -c processor /proc/cpuinfo)
+
+load=$(awk '{printf("%.0f",($1/$2) * 100)}' <<< "$load $cpucount")
+
+# memory
+mem_info=$(LC_ALL=C free -w 2>/dev/null | grep "^Mem" || LC_ALL=C free | grep "^Mem")
+memory_usage=$(awk '{printf("%.0f",(($2-($4+$6+$7))/$2) * 100)}' <<<${mem_info})
+mem_info=$(echo $mem_info | awk '{print $2}')
+memory_total=$(( mem_info / 1024 ))
+
+# display info
+display "System load" "${load%% *}" "${critical_load}" "0" "%" ""
+
+printf "Up time:       \x1B[92m%s\x1B[0m\t" "$time"
+echo "" # fixed newline
+if [[ ${memory_total} -gt 1000 ]]; then
+	memory_total=$(awk '{printf("%.2f",$1/1024)}' <<<${memory_total})"G"
+else
+	memory_total+="M"
+fi
+
+display "Memory usage" "$memory_usage" "70" "0" "%" " of ${memory_total}"
+display "Usage of /" "$root_usage" "90" "1" "%" " of $root_total"
+display "/mnt/data" "$storage_usage" "90" "1" "%" " of $storage_total"
+
+echo ""
+echo ""
