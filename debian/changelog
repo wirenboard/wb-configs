@@ -4,6 +4,12 @@ wb-configs (3.6.0) UNRELEASED; urgency=medium
 
  -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 16 Dec 2022 16:532:00 +0400
 
+wb-configs (3.5.2) UNRELEASED; urgency=medium
+
+  * Fix NetworkManager access point (wb-ap) SSID
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Mon, 19 Dec 2022 13:28:00 +0400
+
 wb-configs (3.5.1) UNRELEASED; urgency=medium
 
   * Fix dnsmasq warning when using shared connections in NetworkManager
