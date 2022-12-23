@@ -179,18 +179,57 @@ if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
     chown -R $nginx_user:$nginx_user $nginx_uploads_dir
 fi
 
+#!/bin/bash
+
+# 1 - path to file
+# 2 - file to delete if first file's hash is in list
+# 3 - array of hashes
+remove_file_by_hash() {
+    local MD5=$(md5sum "$1" | cut -f 1 -d ' ')
+    declare -a ar=("${!3}")
+    for cn_hash in ${ar[@]}; do
+        if [ "$MD5" == "$cn_hash" ]; then
+            rm -f $2 || true
+            break
+        fi
+    done
+}
+
 nm_fixes() {
-    if dpkg --compare-versions "$2" "lt" "3.4.0"; then
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-gsm-sim1.nmconnection"
-                              "/etc/NetworkManager/system-connections/wb-gsm-sim2.nmconnection"
-                              "/etc/NetworkManager/system-connections/wb-ap.nmconnection")
+                              "/etc/NetworkManager/system-connections/wb-gsm-sim2.nmconnection")
 
-        # fix NetworkManager connection profiles access rights
+        local connection_hashes=("d99be5a51292b10e558a37d5766c8859"  # wb-eth0.nmconnection
+                                 "687766120810d07efd06d07b9995fdc1"  # wb-eth1.nmconnection
+                                 "1bde0e56b5ab5d9fc79daae90840d2dd"  # wb-gsm-sim1.nmconnection
+                                 "5303529f247a0e991898caa056da8d83") # wb-gsm-sim2.nmconnection
+
+        # remove old default connections
         for cn in ${nm_connections[@]}; do
-            chmod 600 $cn || true
+            if [ -f $cn ]; then
+                remove_file_by_hash $cn $cn connection_hashes[@]
+            fi
         done
+
+        # remove old wi-fi ap connection
+        local wb_ap_connection="/etc/NetworkManager/system-connections/wb-ap.nmconnection"
+        if [ -f $wb_ap_connection ]; then
+            local tmp_connection="/tmp/wb-ap.nmconnection"
+            cp -f $wb_ap_connection $tmp_connection
+            local short_sn=`wb-gen-serial -s`
+            local ssid1="WirenBoard-${short_sn}"
+            local ssid2="Wirenboard-${short_sn}"
+            # remove default SSID value as it is device specific ad affects md5 hash
+            sed -i "/${ssid1}/d" $tmp_connection
+            sed -i "/${ssid2}/d" $tmp_connection
+            # remove timestamp
+            sed -i "/timestamp/d" $tmp_connection
+            local wb_ap_hashes=("2ed8e74107f2dc68fabe96cd0fe6b61c"   # wb-ap without subnet address
+                                "325bc5bdb787e6f0ee4874163c9494da")  # wb-ap with subnet 192.168.42.1/24
+            remove_file_by_hash $tmp_connection $wb_ap_connection wb_ap_hashes[@]
+        fi
 
         # Wiren Board config for NetworkManager is now in /usr/lib/NetworkManager/conf.d/
         rm -f /etc/NetworkManager/conf.d/wb.conf || true
@@ -198,7 +237,6 @@ nm_fixes() {
         /usr/lib/wb-configs/fix_nm_ap_ssid.sh
 
         deb-systemd-invoke restart NetworkManager || true
-    fi
 }
 
 nm_fixes

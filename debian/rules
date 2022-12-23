@@ -25,3 +25,7 @@ override_dh_systemd_start:
 	dh_systemd_start --name=wb-configs-early --no-start wb-configs-early.service
 	dh_systemd_start --name=wb-configs wb-configs.service
 	dh_systemd_start --name=wb-systime-adjust --no-start wb-systime-adjust.service
+
+override_dh_fixperms:
+	dh_fixperms
+	find debian -name '*.nmconnection' -exec chmod 0600 {} +
