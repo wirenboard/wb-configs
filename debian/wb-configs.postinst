@@ -219,11 +219,9 @@ nm_fixes() {
             local tmp_connection="/tmp/wb-ap.nmconnection"
             cp -f $wb_ap_connection $tmp_connection
             local short_sn=`wb-gen-serial -s`
-            local ssid1="WirenBoard-${short_sn}"
-            local ssid2="Wirenboard-${short_sn}"
+            local ssid_regexp="Wiren[Bb]oard-${short_sn}"
             # remove default SSID value as it is device specific ad affects md5 hash
-            sed -i "/${ssid1}/d" $tmp_connection
-            sed -i "/${ssid2}/d" $tmp_connection
+            sed -i "/${ssid_regexp}/d" $tmp_connection
             # remove timestamp
             sed -i "/timestamp/d" $tmp_connection
             local wb_ap_hashes=("2ed8e74107f2dc68fabe96cd0fe6b61c"   # wb-ap without subnet address
