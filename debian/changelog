@@ -1,3 +1,9 @@
+wb-configs (3.7.0) UNRELEASED; urgency=medium
+
+  * Auto-mount MicroSD to /mnt/sdcard
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 22 Dec 2022 11:14:00 +0400
+
 wb-configs (3.6.0) UNRELEASED; urgency=medium
 
   * Add motd banner with system information
