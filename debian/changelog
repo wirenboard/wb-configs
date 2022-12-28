@@ -1,3 +1,9 @@
+wb-configs (3.8.0) stable; urgency=medium
+
+  * Enable wlan1 in NetworkManager
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Wed, 28 Dec 2022 16:35:01 +0600
+
 wb-configs (3.7.0) UNRELEASED; urgency=medium
 
   * Auto-mount MicroSD to /mnt/sdcard
