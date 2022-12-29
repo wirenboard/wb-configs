@@ -196,8 +196,8 @@ nm_fixes() {
                 local cn_calculated_hash=$(md5sum "$cn" | cut -f 1 -d ' ')
                 for cn_hash in ${connection_hashes[@]}; do
                     if [ "$cn_calculated_hash" == "$cn_hash" ]; then
-                        rm -f $cn || true
                         echo "Removing old default connection $cn"
+                        rm -f $cn || true
                         break
                     fi
                 done
