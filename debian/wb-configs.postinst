@@ -205,7 +205,14 @@ nm_fixes() {
         done
 
         # Wiren Board config for NetworkManager is now in /usr/lib/NetworkManager/conf.d/
-        rm -f /etc/NetworkManager/conf.d/wb.conf || true
+        old_wb_conf="/etc/NetworkManager/conf.d/wb.conf"
+        if [ -f $old_wb_conf ]; then
+            local wb_conf_calculated_hash=$(md5sum "$old_wb_conf" | cut -f 1 -d ' ')
+            if [ "$wb_conf_calculated_hash" == "e9f7aac3e4ff8fe00b8465958ec00da7" ]; then
+                rm -f $old_wb_conf || true
+                echo "Removing old $old_wb_conf"
+            fi
+        fi
 
         deb-systemd-invoke daemon-reload
         deb-systemd-invoke restart NetworkManager || true
