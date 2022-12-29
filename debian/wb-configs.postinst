@@ -217,6 +217,7 @@ nm_fixes() {
         # Wiren Board config for NetworkManager is now in /usr/lib/NetworkManager/conf.d/
         rm -f /etc/NetworkManager/conf.d/wb.conf || true
 
+        deb-systemd-invoke daemon-reload
         deb-systemd-invoke restart NetworkManager || true
 }
 
