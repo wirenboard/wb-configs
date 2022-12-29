@@ -23,7 +23,7 @@ fi
 wb_ap_connection_template="/usr/lib/NetworkManager/system-connections/wb-ap.nmconnection"
 wb_ap_uuid=$(awk -F '=' '$1=="uuid" {print $2}' ${wb_ap_connection_template})
 # make new nmconnection if missing
-deleted_wb_ap="/etc/NetworkManager/system-connections/d12c8d3c-1abe-4832-9b71-4ed6e3c20885.nmmeta"
+deleted_wb_ap="/etc/NetworkManager/system-connections/${wb_ap_uuid}.nmmeta"
 if [ ! -f "$wb_ap_connection" ] && [ ! -f "$deleted_wb_ap" ]; then
     ssid="WirenBoard-${short_sn}"
     cp -f $wb_ap_connection_template $wb_ap_connection
