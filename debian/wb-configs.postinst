@@ -179,8 +179,6 @@ if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
     chown -R $nginx_user:$nginx_user $nginx_uploads_dir
 fi
 
-#!/bin/bash
-
 # 1 - path to file
 # 2 - file to delete if first file's hash is in list
 # 3 - array of hashes
