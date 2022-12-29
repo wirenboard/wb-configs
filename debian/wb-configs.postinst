@@ -179,21 +179,6 @@ if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
     chown -R $nginx_user:$nginx_user $nginx_uploads_dir
 fi
 
-# 1 - path to file
-# 2 - file to delete if first file's hash is in list
-# 3 - array of hashes
-remove_file_by_hash() {
-    local MD5=$(md5sum "$1" | cut -f 1 -d ' ')
-    declare -a ar=("${!3}")
-    for cn_hash in ${ar[@]}; do
-        if [ "$MD5" == "$cn_hash" ]; then
-            rm -f $2 || true
-            echo "Removing old default connection $2"
-            break
-        fi
-    done
-}
-
 nm_fixes() {
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
@@ -208,10 +193,16 @@ nm_fixes() {
         # remove old default connections
         for cn in ${nm_connections[@]}; do
             if [ -f $cn ]; then
-                remove_file_by_hash $cn $cn connection_hashes[@]
+                local MD5=$(md5sum "$cn" | cut -f 1 -d ' ')
+                for cn_hash in ${connection_hashes[@]}; do
+                    if [ "$MD5" == "$cn_hash" ]; then
+                        rm -f $cn || true
+                        echo "Removing old default connection $cn"
+                        break
+                    fi
+                done
             fi
         done
-
 
         # Wiren Board config for NetworkManager is now in /usr/lib/NetworkManager/conf.d/
         rm -f /etc/NetworkManager/conf.d/wb.conf || true
