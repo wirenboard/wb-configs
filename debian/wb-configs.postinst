@@ -188,6 +188,7 @@ remove_file_by_hash() {
     for cn_hash in ${ar[@]}; do
         if [ "$MD5" == "$cn_hash" ]; then
             rm -f $2 || true
+            echo "Removing old default connection $2"
             break
         fi
     done
