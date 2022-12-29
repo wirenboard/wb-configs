@@ -213,26 +213,9 @@ nm_fixes() {
             fi
         done
 
-        # remove old wi-fi ap connection
-        local wb_ap_connection="/etc/NetworkManager/system-connections/wb-ap.nmconnection"
-        if [ -f $wb_ap_connection ]; then
-            local tmp_connection="/tmp/wb-ap.nmconnection"
-            cp -f $wb_ap_connection $tmp_connection
-            local short_sn=`wb-gen-serial -s`
-            local ssid_regexp="Wiren[Bb]oard-${short_sn}"
-            # remove default SSID value as it is device specific ad affects md5 hash
-            sed -i "/${ssid_regexp}/d" $tmp_connection
-            # remove timestamp
-            sed -i "/timestamp/d" $tmp_connection
-            local wb_ap_hashes=("2ed8e74107f2dc68fabe96cd0fe6b61c"   # wb-ap without subnet address
-                                "325bc5bdb787e6f0ee4874163c9494da")  # wb-ap with subnet 192.168.42.1/24
-            remove_file_by_hash $tmp_connection $wb_ap_connection wb_ap_hashes[@]
-        fi
 
         # Wiren Board config for NetworkManager is now in /usr/lib/NetworkManager/conf.d/
         rm -f /etc/NetworkManager/conf.d/wb.conf || true
-
-        /usr/lib/wb-configs/fix_nm_ap_ssid.sh
 
         deb-systemd-invoke restart NetworkManager || true
 }
