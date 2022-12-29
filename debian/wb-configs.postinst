@@ -209,8 +209,8 @@ nm_fixes() {
         if [ -f $old_wb_conf ]; then
             local wb_conf_calculated_hash=$(md5sum "$old_wb_conf" | cut -f 1 -d ' ')
             if [ "$wb_conf_calculated_hash" == "e9f7aac3e4ff8fe00b8465958ec00da7" ]; then
-                rm -f $old_wb_conf || true
                 echo "Removing old $old_wb_conf"
+                rm -f $old_wb_conf || true
             fi
         fi
 
