@@ -1,8 +1,20 @@
-wb-configs (3.7.0) stable; urgency=medium
+wb-configs (3.9.0) stable; urgency=medium
 
   * Move default NetworkManager connections to /usr/lib
 
- -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Fri, 23 Dec 2022 12:01:07 +0500
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Fri, 30 Dec 2022 09:38:05 +0500
+
+wb-configs (3.8.0) stable; urgency=medium
+
+  * Enable wlan1 in NetworkManager
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Wed, 28 Dec 2022 16:35:01 +0600
+
+wb-configs (3.7.0) stable; urgency=medium
+
+  * Auto-mount MicroSD to /mnt/sdcard
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 22 Dec 2022 11:14:00 +0400
 
 wb-configs (3.6.0) stable; urgency=medium
 
