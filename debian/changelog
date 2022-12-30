@@ -1,3 +1,9 @@
+wb-configs (3.9.2) stable; urgency=medium
+
+  * System load prints load average without conversion to %
+
+ -- Ekaterina Volkova <ekaterina.volkova@wirenboard.ru>  Thu, 29 Dec 2022 13:52:43 +0300
+
 wb-configs (3.9.1) stable; urgency=medium
 
   * Don't restart wb-configs-early.service on systemd unit file install

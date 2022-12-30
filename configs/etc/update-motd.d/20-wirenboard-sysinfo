@@ -43,11 +43,6 @@ time=${time//','}
 time=$(echo $time | xargs)
 load=${UPTIME#*'load average: '}
 load=${load//','}
-load=$(echo $load | cut -d" " -f1)
-[[ $load == 0.0* ]] && load=0.10
-cpucount=$(grep -c processor /proc/cpuinfo)
-
-load=$(awk '{printf("%.0f",($1/$2) * 100)}' <<< "$load $cpucount")
 
 # memory
 mem_info=$(LC_ALL=C free -w 2>/dev/null | grep "^Mem" || LC_ALL=C free | grep "^Mem")
@@ -56,9 +51,9 @@ mem_info=$(echo $mem_info | awk '{print $2}')
 memory_total=$(( mem_info / 1024 ))
 
 # display info
-display "System load" "${load%% *}" "${critical_load}" "0" "%" ""
-
+printf "System load:   %s\t" "$load"
 printf "Up time:       \x1B[92m%s\x1B[0m\t" "$time"
+
 echo "" # fixed newline
 if [[ ${memory_total} -gt 1000 ]]; then
 	memory_total=$(awk '{printf("%.2f",$1/1024)}' <<<${memory_total})"G"
