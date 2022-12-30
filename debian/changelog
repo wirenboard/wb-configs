@@ -1,3 +1,9 @@
+wb-configs (3.9.1) stable; urgency=medium
+
+  * Don't restart wb-configs-early.service on systemd unit file install
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 30 Dec 2022 09:24:00 +0400
+
 wb-configs (3.9.0) stable; urgency=medium
 
   * Move default NetworkManager connections to /usr/lib
