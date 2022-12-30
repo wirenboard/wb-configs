@@ -180,25 +180,42 @@ if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
 fi
 
 nm_fixes() {
-    if dpkg --compare-versions "$2" "lt" "3.4.0"; then
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-gsm-sim1.nmconnection"
-                              "/etc/NetworkManager/system-connections/wb-gsm-sim2.nmconnection"
-                              "/etc/NetworkManager/system-connections/wb-ap.nmconnection")
+                              "/etc/NetworkManager/system-connections/wb-gsm-sim2.nmconnection")
 
-        # fix NetworkManager connection profiles access rights
+        local connection_hashes=("d99be5a51292b10e558a37d5766c8859"  # wb-eth0.nmconnection
+                                 "687766120810d07efd06d07b9995fdc1"  # wb-eth1.nmconnection
+                                 "1bde0e56b5ab5d9fc79daae90840d2dd"  # wb-gsm-sim1.nmconnection
+                                 "5303529f247a0e991898caa056da8d83") # wb-gsm-sim2.nmconnection
+
+        # remove old default connections
         for cn in ${nm_connections[@]}; do
-            chmod 600 $cn || true
+            if [ -f $cn ]; then
+                local cn_calculated_hash=$(md5sum "$cn" | cut -f 1 -d ' ')
+                for cn_hash in ${connection_hashes[@]}; do
+                    if [ "$cn_calculated_hash" == "$cn_hash" ]; then
+                        echo "Removing old default connection $cn"
+                        rm -f $cn || true
+                        break
+                    fi
+                done
+            fi
         done
 
         # Wiren Board config for NetworkManager is now in /usr/lib/NetworkManager/conf.d/
-        rm -f /etc/NetworkManager/conf.d/wb.conf || true
+        old_wb_conf="/etc/NetworkManager/conf.d/wb.conf"
+        if [ -f $old_wb_conf ]; then
+            local wb_conf_calculated_hash=$(md5sum "$old_wb_conf" | cut -f 1 -d ' ')
+            if [ "$wb_conf_calculated_hash" == "e9f7aac3e4ff8fe00b8465958ec00da7" ]; then
+                echo "Removing old $old_wb_conf"
+                rm -f $old_wb_conf || true
+            fi
+        fi
 
-        /usr/lib/wb-configs/fix_nm_ap_ssid.sh
-
+        deb-systemd-invoke daemon-reload
         deb-systemd-invoke restart NetworkManager || true
-    fi
 }
 
 nm_fixes
