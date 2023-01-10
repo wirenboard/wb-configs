@@ -1,3 +1,9 @@
+wb-configs (3.9.3) stable; urgency=medium
+
+  * Backup NetworkManager connections during update using fit 
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Tue, 10 Jan 2023 11:43:29 +0500
+
 wb-configs (3.9.2) stable; urgency=medium
 
   * System load prints load average without conversion to %
