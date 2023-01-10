@@ -43,4 +43,4 @@ wb_move /etc/mosquitto/passwd/
 wb_move /etc/mosquitto/acl/
 wb_move_watch /etc/localtime
 
-wb_move_watch /etc/NetworkManager/system-connections/
+wb_move /etc/NetworkManager/system-connections/
