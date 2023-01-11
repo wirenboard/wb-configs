@@ -6,7 +6,7 @@ interface-name=rndis0
 autoconnect=true
 
 [user]
-data.read-only=true
+wb.read-only=true
 
 [ethernet]
 
