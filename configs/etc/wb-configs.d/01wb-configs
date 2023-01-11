@@ -41,7 +41,6 @@ wb_move /etc/mosquitto/conf.d/10listeners.conf
 wb_move /etc/mosquitto/conf.d/20bridges.conf
 wb_move /etc/mosquitto/passwd/
 wb_move /etc/mosquitto/acl/
-wb_move /etc/mosquitto/mosquitto.conf
 wb_move_watch /etc/localtime
 
 wb_move /etc/NetworkManager/system-connections/
