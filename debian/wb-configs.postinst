@@ -183,12 +183,16 @@ nm_fixes() {
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-gsm-sim1.nmconnection"
-                              "/etc/NetworkManager/system-connections/wb-gsm-sim2.nmconnection")
+                              "/etc/NetworkManager/system-connections/wb-gsm-sim2.nmconnection"
+                              "/etc/NetworkManager/system-connections/wb-rndis.nmconnection"
+                              "/etc/NetworkManager/system-connections/wb-ecm.nmconnection")
 
         local connection_hashes=("d99be5a51292b10e558a37d5766c8859"  # wb-eth0.nmconnection
                                  "687766120810d07efd06d07b9995fdc1"  # wb-eth1.nmconnection
                                  "1bde0e56b5ab5d9fc79daae90840d2dd"  # wb-gsm-sim1.nmconnection
-                                 "5303529f247a0e991898caa056da8d83") # wb-gsm-sim2.nmconnection
+                                 "5303529f247a0e991898caa056da8d83"  # wb-gsm-sim2.nmconnection
+                                 "6a36f2ea4321342c0156442c6bbf5d29"  # wb-rndis.nmconnection
+                                 "338ca903802b0c1efaa7325b2c254dbc") # wb-ecm.nmconnection
 
         # remove old default connections
         for cn in ${nm_connections[@]}; do
@@ -208,7 +212,7 @@ nm_fixes() {
         old_wb_conf="/etc/NetworkManager/conf.d/wb.conf"
         if [ -f $old_wb_conf ]; then
             local wb_conf_calculated_hash=$(md5sum "$old_wb_conf" | cut -f 1 -d ' ')
-            if [ "$wb_conf_calculated_hash" == "e9f7aac3e4ff8fe00b8465958ec00da7" ]; then
+            if [ "$wb_conf_calculated_hash" == "33393d5bcc60b520d94bfb0eb4535ed5" ]; then
                 echo "Removing old $old_wb_conf"
                 rm -f $old_wb_conf || true
             fi
