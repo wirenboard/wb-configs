@@ -2,7 +2,6 @@
 /etc/locale.gen.wb
 /etc/hostname.wb
 /etc/modules.wb
-/etc/mosquitto/mosquitto.conf.wb
 /etc/inittab.wb
 /etc/fstab.wb
 /etc/gai.conf.wb
