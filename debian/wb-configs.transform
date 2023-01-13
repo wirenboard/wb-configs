@@ -1,1 +1,1 @@
-/etc/mosquitto/mosquitto.conf.wb
+/etc/mosquitto/mosquitto.conf sed -i 's#log_dest file /var/log/mosquitto/mosquitto.log#log_dest syslog#'
