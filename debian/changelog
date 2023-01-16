@@ -1,6 +1,7 @@
 wb-configs (3.10.0) stable; urgency=medium
 
   * Add usb-network NM connection: wb-rndis
+  * Uncomment "bind-interfaces" option in default dnsmasq config
 
  -- Vladimir Romanov <v.romanov@wirenboard.ru>  Wed, 11 Jan 2023 15:09:12 +0300
 
