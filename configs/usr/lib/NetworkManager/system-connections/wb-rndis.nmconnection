@@ -7,6 +7,7 @@ autoconnect=true
 
 [user]
 wb.read-only=true
+wb.disable-nat=true
 
 [ethernet]
 
