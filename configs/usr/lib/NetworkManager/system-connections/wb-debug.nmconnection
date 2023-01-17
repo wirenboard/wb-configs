@@ -2,7 +2,7 @@
 id=wb-rndis
 uuid=0274fa98-fe5b-40da-bea9-aa2c8a47d0cd
 type=ethernet
-interface-name=rndis0
+interface-name=dbg0
 autoconnect=true
 
 [user]
@@ -12,8 +12,9 @@ wb.disable-nat=true
 [ethernet]
 
 [ipv4]
-address1=10.200.200.1/24,10.200.200.1
+address1=10.200.200.1/24
 method=shared
+never-default=true
 
 [ipv6]
 addr-gen-mode=stable-privacy
