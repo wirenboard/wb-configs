@@ -1,3 +1,9 @@
+wb-configs (3.10.1) stable; urgency=medium
+
+  * debug-network connection: rename; remove gateway and default route
+
+ -- Vladimir Romanov <v.romanov@wirenboard.ru>  Tue, 17 Jan 2023 22:55:23 +0300
+
 wb-configs (3.10.0) stable; urgency=medium
 
   * Add usb-network NM connection: wb-rndis
