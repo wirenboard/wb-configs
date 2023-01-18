@@ -1,6 +1,6 @@
 [connection]
 id=wb-debug
-uuid=0274fa98-fe5b-40da-bea9-aa2c8a47d0cd
+uuid=0f098677-2b49-4167-a534-207567b1751b
 type=ethernet
 interface-name=dbg0
 autoconnect=true
