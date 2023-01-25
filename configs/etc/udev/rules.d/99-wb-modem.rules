@@ -1,10 +1,5 @@
 ACTION!="add|change|move|bind", GOTO="wb_modem_end"
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="1e0e|2c7c|0e8d", GOTO="wb_usb_modem_types"
-
-# UART-modems on wb << 6.7
-SUBSYSTEMS=="tty", SYMLINK="ttyGSM", ENV{ID_MM_DEVICE_IGNORE}="1"
-
-GOTO="wb_modem_end"
+SUBSYSTEMS=="usb", GOTO="wb_usb_modem_types"
 
 LABEL="wb_usb_modem_types"
 
