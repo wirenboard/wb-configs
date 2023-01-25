@@ -1,10 +1,22 @@
 ACTION!="add|change|move|bind", GOTO="wb_modem_end"
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="1e0e", GOTO="wb_modem_types"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="1e0e|2c7c|0e8d", GOTO="wb_usb_modem_types"
+
+# UART-modems on wb << 6.7
+SUBSYSTEMS=="tty", SYMLINK="ttyGSM", ENV{ID_MM_DEVICE_IGNORE}="1"
+
 GOTO="wb_modem_end"
 
-LABEL="wb_modem_types"
+LABEL="wb_usb_modem_types"
 
-# SIMCOM A7600E-H SIM switch and mark RNDIS unmanaged for NetworkManager
+# SIMCOM SIM800C-DS: ignore
+ATTRS{idVendor}=="0e8d", ATTRS{idProduct}=="0003", ENV{ID_MM_DEVICE_IGNORE}="1"
+# SIMCOM SIM5300E: ignore
+ATTRS{idVendor}=="1e0e", ATTRS{idProduct}=="0020", ENV{ID_MM_DEVICE_IGNORE}="1"
+# SIMCOM SIM7000E: ignore
+ATTRS{idVendor}=="1e0e", ATTRS{idProduct}=="9001", ENV{ID_MM_DEVICE_IGNORE}="1"
+# SIMCOM A7600E-H: SIM switch and mark RNDIS unmanaged for NetworkManager
 ATTRS{idVendor}=="1e0e", ATTRS{idProduct}=="9011", ENV{ID_MM_SIM_SWITCH_GPIO_LABEL}="SIM_SELECT", ENV{NM_UNMANAGED}="1"
+# QUECTEL EC200T-EU: SIM switch and mark RNDIS unmanaged for NetworkManager
+ATTRS{idVendor}=="2c7c", ATTRS{idProduct}=="6026", ENV{ID_MM_DEVICE_IGNORE}="1"
 
 LABEL="wb_modem_end"
