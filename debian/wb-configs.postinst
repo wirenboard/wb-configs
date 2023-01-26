@@ -217,6 +217,7 @@ nm_fixes() {
         fi
 
         deb-systemd-invoke restart NetworkManager || true
+        deb-systemd-invoke restart dnsmasq || true
 }
 
 nm_fixes
