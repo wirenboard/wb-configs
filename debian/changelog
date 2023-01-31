@@ -1,8 +1,14 @@
-wb-configs (3.10.2) stable; urgency=medium
+wb-configs (3.10.3) stable; urgency=medium
 
   * 99-wb-modem.rules: SIM800, SIM800C-DS, SIM5300E, SIM7000E are not supported in NM+MM
 
- -- Vladimir Romanov <v.romanov@wirenboard.ru>  Tue, 24 Jan 2023 22:08:48 +0300
+ -- Vladimir Romanov <v.romanov@wirenboard.ru>  Tue, 31 Jan 2023 23:22:18 +0300
+
+wb-configs (3.10.2) stable; urgency=medium
+
+  * Restart dnsmasq on postinstall
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 26 Jan 2023 16:06:00 +0400
 
 wb-configs (3.10.1) stable; urgency=medium
 
