@@ -1,3 +1,9 @@
+wb-configs (2.3.4-wb100-70549e24) stable; urgency=medium
+
+  * branch created, changed NIC and mosquitto configs
+
+ -- Aleksandr Kazadaev  <aleksandr.kazadaev@wirenboard.com>  Mon, 13 Feb 2023 18:37:00 +0600
+
 wb-configs (2.3.4-wb100) stable; urgency=medium
 
   * fix network interface user settings applying after updating via fit
