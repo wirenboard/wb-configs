@@ -179,6 +179,30 @@ if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
     chown -R $nginx_user:$nginx_user $nginx_uploads_dir
 fi
 
+dnsmasq_backup_replace() {
+    local fname="/etc/dnsmasq.conf"
+    local old_hash="23ed4d0d1cc92ca87bd33a67e04b115f"
+
+    if [ -f $fname ]; then
+        local actual_hash=$(md5sum "$fname" | cut -f 1 -d ' ')
+        if [ "$old_hash" == "$actual_hash" ]; then
+            if [ -L $fname ]; then
+                echo "$fname is a symlink; unlinking"
+                wb_undisplace_unlink $fname ""
+            fi
+            local backup_fname="/mnt/data$fname"
+            if [ -f $backup_fname ]; then
+                echo "Found backup: $fname to $backup_fname; removing $backup_fname"
+                rm -f $backup_fname || true
+            fi
+            echo "Trigger backup of newer $fname"
+            wb-configs-early start || true
+        fi
+    fi
+}
+
+dnsmasq_backup_replace
+
 nm_fixes() {
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
