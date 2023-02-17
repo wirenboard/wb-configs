@@ -1,6 +1,5 @@
 # /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
 
-# The loopback interface
 auto lo
 iface lo inet loopback
 
@@ -13,15 +12,3 @@ iface eth0 inet static
    netmask 255.255.255.0
    gateway 192.168.0.1
    dns-nameservers 192.168.0.1 77.88.8.8
-
-iface eth1 inet dhcp
-   pre-up wb-set-mac
-   hostname WirenBoard
-
-## The gsm pptp interface
-## vvv uncomment block to enable
-
-#auto ppp0
-#iface ppp0 inet ppp
-## select provider: megafon, mts or beeline below
-#  provider megafon
