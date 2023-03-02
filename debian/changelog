@@ -1,3 +1,9 @@
+wb-configs (2.3.4-wb101) stable; urgency=medium
+
+  * Introduce additional dnsmasq config (/etc/dnsmasq.d/) with "bind-interfaces" option
+
+ -- Vladimir Romanov <v.romanov@wirenboard.ru>  Fri, 03 Mar 2023 00:31:19 +0300
+
 wb-configs (2.3.4-wb100) stable; urgency=medium
 
   * fix network interface user settings applying after updating via fit
