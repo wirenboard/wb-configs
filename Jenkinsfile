@@ -1,1 +1,1 @@
-buildDebArchAll()
+buildDebSbuild defaultTargets: 'stretch-armhf'
