@@ -21,7 +21,7 @@ done
 # So /etc/network/interfaces should be available before /mnt/data settles.
 wb_move_watch /etc/network/interfaces
 
-wb_move /etc/resolv.conf
+# wb_move /etc/resolv.conf  # disabled due to problems with static dns
 wb_move /etc/ssh
 wb_move /etc/dnsmasq.conf
 wb_move /etc/hostapd.conf
