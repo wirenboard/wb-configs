@@ -1,3 +1,9 @@
+wb-configs (2.3.4-wb101-70549e24-001) stable; urgency=medium
+
+  * Introduce additional dnsmasq config (/etc/dnsmasq.d/) with "bind-interfaces" option
+
+ -- Vladimir Romanov <v.romanov@wirenboard.ru>  Thu, 02 Mar 2023 14:23:19 +0300
+
 wb-configs (2.3.4-wb100-70549e24-001) stable; urgency=medium
 
   * add special settings
