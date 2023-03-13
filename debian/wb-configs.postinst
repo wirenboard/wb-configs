@@ -171,14 +171,6 @@ if echo "$2" | grep '~~transitional' >/dev/null; then
     wb-release -r
 fi
 
-# nginx user should has rw access to fwupdate uploads dir
-nginx_uploads_dir="/mnt/data/uploads"
-nginx_user="www-data"
-if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
-    echo "Setting ownership $nginx_user to $nginx_uploads_dir"
-    chown -R $nginx_user:$nginx_user $nginx_uploads_dir
-fi
-
 nm_fixes() {
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"

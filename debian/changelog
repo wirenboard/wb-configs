@@ -1,3 +1,9 @@
+wb-configs (3.12.0) stable; urgency=medium
+
+  * Ownership for /var/www/uploads/ is set from wb-configs-early.service (instead of postinst)
+
+ -- Vladimir Romanov <v.romanov@wirenboard.ru>  Mon, 13 Mar 2023 13:52:21 +0300
+
 wb-configs (3.11.0) stable; urgency=medium
 
   * Make /etc/network/interfaces empty by default

@@ -170,9 +170,21 @@ do_stop()
 
 }
 
+# nginx user should has rw access to fwupdate uploads dir
+set_fwupdate_permissions()
+{
+    nginx_uploads_dir="/mnt/data/uploads"
+    nginx_user="www-data"
+    if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
+        echo "Setting ownership $nginx_user to $nginx_uploads_dir"
+        chown -R $nginx_user:$nginx_user $nginx_uploads_dir
+    fi
+}
+
 case "$1" in
   start)
     do_start
+    set_fwupdate_permissions
     ;;
   latestop)
     do_stop
