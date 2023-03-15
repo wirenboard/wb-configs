@@ -3,6 +3,7 @@
 set -e
 
 MOUNT_DIR=$(mktemp -d -t "WB-RFS.XXXXXXX")
+SERIAL=$(cat "/var/lib/wirenboard/short_sn.conf")
 
 function cleanup()
 {
@@ -16,7 +17,7 @@ sudo mount "/dev/mmcblk0p3" "$MOUNT_DIR"
 
 if [ -d "$MOUNT_DIR/etc" ]; then
     echo "Status: 200"
-    echo 'Content-Disposition: attachment; filename="rootfs.tar.gz"'
+    echo "Content-Disposition: attachment; filename=\"rootfs_${SERIAL}.tar.gz\""
     echo "Content-Type: application/gzip"
     echo ""
     sudo tar -czf - "$MOUNT_DIR"
