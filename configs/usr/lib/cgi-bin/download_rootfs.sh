@@ -6,7 +6,7 @@ MOUNT_DIR=$(mktemp -d -t "WB-RFS.XXXXXXX")
 
 function cleanup()
 {
-    sudo umount $MOUNT_DIR
+    sudo umount -f $MOUNT_DIR || true
     rm -r $MOUNT_DIR
 }
 
