@@ -16,14 +16,14 @@ trap cleanup EXIT
 
 sudo mount "$ROOTFS_DEV" "$MOUNT_DIR"
 
-if [ -d "$MOUNT_DIR/etc" ]; then
+if [ -z "$(ls -A $MOUNT_DIR)" ]; then
+    echo "Status: 500"
+    echo ""
+    echo "Error mounting rootfs"
+else
     echo "Status: 200"
     echo "Content-Disposition: attachment; filename=\"rootfs_${SERIAL}.tar.gz\""
     echo "Content-Type: application/gzip"
     echo ""
     sudo tar -czf - "$MOUNT_DIR"
-else
-    echo "Status: 500"
-    echo ""
-    echo "Error mounting rootfs"
 fi
