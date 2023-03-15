@@ -4,6 +4,7 @@ set -e
 
 MOUNT_DIR=$(mktemp -d -t "WB-RFS.XXXXXXX")
 SERIAL=$(cat "/var/lib/wirenboard/short_sn.conf")
+ROOTFS_DEV=$(mount | grep "on / type ext4" | awk '{print $1}')
 
 function cleanup()
 {
@@ -13,7 +14,7 @@ function cleanup()
 
 trap cleanup EXIT
 
-sudo mount "/dev/mmcblk0p3" "$MOUNT_DIR"
+sudo mount "$ROOTFS_DEV" "$MOUNT_DIR"
 
 if [ -d "$MOUNT_DIR/etc" ]; then
     echo "Status: 200"
