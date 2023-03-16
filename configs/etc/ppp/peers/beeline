@@ -28,7 +28,7 @@ lcp-echo-interval 10
 lcp-echo-failure 3
 holdoff 10
 
-init "/usr/bin/wb-gsm restart_if_broken"
+init "WB_GSM_INTERACTIVE= /usr/bin/wb-gsm restart_if_broken"
 
 user beeline
 connect "/usr/sbin/chat -v -f /etc/chatscripts/beeline"
