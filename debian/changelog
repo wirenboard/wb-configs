@@ -1,3 +1,9 @@
+wb-configs (3.12.2) stable; urgency=medium
+
+  * add apt pin for Wiren Board experimental repos
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Thu, 16 Mar 2023 16:30:51 +0600
+
 wb-configs (3.12.1) stable; urgency=medium
 
   * Ownership for /var/www/uploads/ is set from wb-configs-early.service (instead of postinst)
