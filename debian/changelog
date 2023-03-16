@@ -1,7 +1,7 @@
 wb-configs (3.12.2) stable; urgency=medium
 
-  * Add WB_GSM_INTERACTIVE env var to .profile
-  * Unset WB_GSM_INTERACTIVE env var in all ppp peers
+  * Add WBGSM_INTERACTIVE env var to /etc/profile.d
+  * Unset WBGSM_INTERACTIVE env var in all ppp peers
 
  -- Vladimir Romanov <v.romanov@wirenboard.ru>  Wed, 15 Mar 2023 12:37:28 +0300
 
