@@ -1,4 +1,4 @@
-wb-configs (3.12.2) stable; urgency=medium
+wb-configs (3.13.0) stable; urgency=medium
 
   * add apt pin for Wiren Board experimental repos
 
