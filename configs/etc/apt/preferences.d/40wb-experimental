@@ -1,0 +1,3 @@
+Package: *
+Pin: release o=wirenboard,a=experimental.*
+Pin-Priority: 991

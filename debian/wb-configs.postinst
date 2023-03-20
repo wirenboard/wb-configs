@@ -220,4 +220,13 @@ nm_fixes() {
         deb-systemd-invoke restart NetworkManager || true
 }
 
+# manually unsetting WBGSM_INTERACTIVE var for all ppp-peers to allow launch ppp-connection via pon/poff
+ppp_peers_fixes()
+{
+    for fname in $(ls -d /etc/ppp/peers/*); do
+        sed -i 's#"/usr/bin/wb-gsm\s#"WBGSM_INTERACTIVE= /usr/bin/wb-gsm #g' $fname
+    done
+}
+
 nm_fixes
+ppp_peers_fixes
