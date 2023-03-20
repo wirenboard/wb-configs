@@ -1,3 +1,10 @@
+wb-configs (3.13.1) stable; urgency=medium
+
+  * Add WBGSM_INTERACTIVE env var to /etc/profile.d
+  * Unset WBGSM_INTERACTIVE env var in all ppp peers
+
+ -- Vladimir Romanov <v.romanov@wirenboard.ru>  Mon, 20 Mar 2023 10:37:28 +0300
+
 wb-configs (3.13.0) stable; urgency=medium
 
   * add apt pin for Wiren Board experimental repos
