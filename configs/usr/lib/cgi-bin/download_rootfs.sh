@@ -25,5 +25,6 @@ else
     echo "Content-Disposition: attachment; filename=\"rootfs_${SERIAL}.tar.gz\""
     echo "Content-Type: application/gzip"
     echo ""
-    sudo tar -czf - "$MOUNT_DIR"
+    cd "$MOUNT_DIR"
+    sudo tar -czf - . | pigz
 fi
