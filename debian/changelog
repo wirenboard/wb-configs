@@ -1,3 +1,9 @@
+wb-configs (3.13.2) stable; urgency=medium
+
+  * add apt pin to ignore wb-release-info from experimental repos
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Wed, 22 Mar 2023 14:23:49 +0600
+
 wb-configs (3.13.1) stable; urgency=medium
 
   * Add WBGSM_INTERACTIVE env var to /etc/profile.d
