@@ -1,3 +1,3 @@
-@Library("wbci@tmp/webconn/alpine-builder") _
+@Library("wbci@feature/alpine-builder-support") _
 
 buildDebArchAll()
