@@ -27,5 +27,5 @@ else
     echo "Content-Type: application/gzip"
     echo ""
     cd "$MOUNT_DIR"
-    sudo tar -cf - * | pigz
+    sudo tar --exclude='tmp' --exclude='var/tmp' -cf - * | pigz
 fi
