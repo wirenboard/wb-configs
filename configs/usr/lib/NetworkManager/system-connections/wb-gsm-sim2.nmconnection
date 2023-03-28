@@ -4,6 +4,9 @@ uuid=8b9964d4-b8dd-34d3-a3ed-481840bcf8c9
 type=gsm
 autoconnect=false
 
+[user]
+wb.read-only=true
+
 [gsm]
 auto-config=true
 sim-slot=2
