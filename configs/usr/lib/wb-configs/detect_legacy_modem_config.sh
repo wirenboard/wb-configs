@@ -17,12 +17,12 @@ provider_has_wbgsm() {
 for ppp_string in "${ppp_strings[@]}"; do
 case "$ppp_string" in
 explicit_wbgsm_call)
-    echo "Explicit wb-gsm call found in ppp interface configured in /etc/network/interfaces, disabling ModemManager"
+    echo "Explicit wb-gsm call found in ppp interface configured in /etc/network/interfaces, not starting ModemManager"
     exit 1;
     ;;
 *)
     if provider_has_wbgsm "$ppp_string"; then
-        echo "wb-gsm is called in provider $ppp_string used in /etc/network/interfaces, disabling ModemManager"
+        echo "wb-gsm is called in provider $ppp_string used in /etc/network/interfaces, not starting ModemManager"
         exit 1;
     fi
     ;;
