@@ -34,12 +34,11 @@ class DiskFieldStorage(FieldStorage):
     """
 
     def make_file(self):
-        location = TMP_DIR # has rw access & excluded from wb-watch-update
+        location = TMP_DIR  # has rw access & excluded from wb-watch-update
         if self._binary_file:
             return tempfile.TemporaryFile("wb+", dir=location)
         else:
-            return tempfile.TemporaryFile("w+",
-                encoding=self.encoding, newline = '\n', dir=location)
+            return tempfile.TemporaryFile("w+", encoding=self.encoding, newline="\n", dir=location)
 
 
 form = DiskFieldStorage(encoding="utf-8")
