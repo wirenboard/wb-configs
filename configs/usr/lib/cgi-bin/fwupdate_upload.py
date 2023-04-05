@@ -5,8 +5,11 @@ import sys
 import tempfile
 from cgi import FieldStorage
 
+if os.path.islink("/var/run/wb-watch-update.dir"):
+    RW_DIR = os.path.realpath("/var/run/wb-watch-update.dir")
+else:
+    RW_DIR = os.environ.get("UPLOADS_DIR", "/var/www/uploads")  # nginx user should has rw access
 
-RW_DIR = os.environ.get("UPLOADS_DIR", "/var/www/uploads")  # nginx user should has rw access
 TMP_DIR = os.path.join(RW_DIR, "state", "tmp")  # excluded from wb-watch-update
 os.makedirs(TMP_DIR, exist_ok=True)
 
