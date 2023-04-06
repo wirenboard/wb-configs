@@ -1,3 +1,9 @@
+wb-configs (3.13.1-wb102) stable; urgency=medium
+
+  * fwupdate_upload: single rootfs update scheme support
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Thu, 20 Apr 2023 19:03:31 +0600
+
 wb-configs (3.13.1-wb101) stable; urgency=medium
 
   * set Wi-Fi AP channel to 1 explicitly (channels 6 and 13 seems to be
