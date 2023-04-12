@@ -1,3 +1,9 @@
+wb-configs (3.15.1) stable; urgency=medium
+
+  * forbid wb-release-info installation from testing sets
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Wed, 12 Apr 2023 12:27:13 +0600
+
 wb-configs (3.15.0) stable; urgency=medium
 
   * fwupdate_upload: single rootfs update scheme support
