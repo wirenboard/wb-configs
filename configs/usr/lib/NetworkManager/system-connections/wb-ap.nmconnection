@@ -6,6 +6,8 @@ autoconnect=true
 interface-name=wlan0
 
 [wifi]
+band=bg
+channel=1
 mode=ap
 powersave=2
 ssid=@SSID@
