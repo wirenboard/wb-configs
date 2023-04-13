@@ -16,6 +16,11 @@ if [ -f $wb_ap_connection ]; then
         rm -f $wb_ap_connection || true
     fi
 
+    # remove old wb-ap without channel
+    if [ "$MD5" == "f2a720dc98d3764efab777f060ca79c4" ]; then
+        rm -f $wb_ap_connection || true
+    fi
+
     # Bad generated ssid
     grep -q -x -F "ssid=WirenBoard-" "$wb_ap_connection" && rm -f $wb_ap_connection
 fi

@@ -1,3 +1,10 @@
+wb-configs (3.15.2) stable; urgency=medium
+
+  * set Wi-Fi AP channel to 1 explicitly (channels 6 and 13 seems to be
+    broken at least on some devices)
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Thu, 13 Apr 2023 18:16:34 +0600
+
 wb-configs (3.15.1) stable; urgency=medium
 
   * forbid wb-release-info installation from testing sets
