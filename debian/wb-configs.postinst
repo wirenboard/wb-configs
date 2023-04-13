@@ -184,13 +184,15 @@ nm_fixes() {
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-gsm-sim1.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-gsm-sim2.nmconnection"
-                              "/etc/NetworkManager/system-connections/wb-rndis.nmconnection")
+                              "/etc/NetworkManager/system-connections/wb-rndis.nmconnection"
+                              "/etc/NetworkManager/system-connections/wb-ap.nmconnection")
 
         local connection_hashes=("d99be5a51292b10e558a37d5766c8859"  # wb-eth0.nmconnection
                                  "687766120810d07efd06d07b9995fdc1"  # wb-eth1.nmconnection
                                  "1bde0e56b5ab5d9fc79daae90840d2dd"  # wb-gsm-sim1.nmconnection
                                  "5303529f247a0e991898caa056da8d83"  # wb-gsm-sim2.nmconnection
-                                 "6a36f2ea4321342c0156442c6bbf5d29") # wb-rndis.nmconnection
+                                 "6a36f2ea4321342c0156442c6bbf5d29"  # wb-rndis.nmconnection
+                                 "f2a720dc98d3764efab777f060ca79c4") # wb-ap.nmconnection without channel
 
         # remove old default connections
         for cn in ${nm_connections[@]}; do
