@@ -1,3 +1,10 @@
+wb-configs (3.13.1-wb101) stable; urgency=medium
+
+  * set Wi-Fi AP channel to 1 explicitly (channels 6 and 13 seems to be
+    broken at least on some devices)
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Thu, 13 Apr 2023 18:16:34 +0600
+
 wb-configs (3.13.1-wb100) stable; urgency=medium
 
   * do not start ModemManager explicitly if modem is configured via
