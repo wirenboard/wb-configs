@@ -1,3 +1,11 @@
+wb-configs (3.13.1-70549e24-001) stable; urgency=medium
+
+  * Backported from wb-2304 testing:
+    * fwupdate_upload: single rootfs update scheme support
+  * add special settings
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Wed, 29 Mar 2023 13:59:30 +0600
+
 wb-configs (3.13.1) stable; urgency=medium
 
   * Add WBGSM_INTERACTIVE env var to /etc/profile.d
