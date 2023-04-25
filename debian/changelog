@@ -1,3 +1,9 @@
+wb-configs (2.3.4-wb103) stable; urgency=medium
+
+  * add debian-security from archive to prevent downgrades
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Tue, 25 Apr 2023 12:04:46 +0600
+
 wb-configs (2.3.4-wb102) stable; urgency=medium
 
   * stretch repos moved to archive.debian.org
