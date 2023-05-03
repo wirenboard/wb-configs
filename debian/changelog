@@ -1,6 +1,6 @@
 wb-configs (3.15.3) stable; urgency=medium
 
-  * Add /etc/systemd/ntp-units.d/10-ntp.list to make timedatectl aware of ntp.service
+  * Add /usr/lib/systemd/ntp-units.d/10-ntp.list to make timedatectl aware of ntp.service
 
  -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Wed, 03 Apr 2023 17:15:00 +0400
 
