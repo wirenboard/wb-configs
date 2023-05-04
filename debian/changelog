@@ -1,3 +1,9 @@
+wb-configs (3.15.4) stable; urgency=medium
+
+  * Udev: add specific tag to WB-internal modems
+
+ -- Vladimir Romanov <v.romanov@wirenboard.ru>  Thu, 04 May 2023 13:36:12 +0300
+
 wb-configs (3.15.3) stable; urgency=medium
 
   * Add /usr/lib/systemd/ntp-units.d/10-ntp.list to make timedatectl aware of ntp.service
