@@ -1,3 +1,9 @@
+wb-configs (3.13.1-wb103) stable; urgency=medium
+
+  * Add /usr/lib/systemd/ntp-units.d/10-ntp.list to make timedatectl aware of ntp.service
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Wed, 03 May 2023 17:15:00 +0400
+
 wb-configs (3.13.1-wb102) stable; urgency=medium
 
   * fwupdate_upload: single rootfs update scheme support
