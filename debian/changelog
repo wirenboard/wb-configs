@@ -1,4 +1,4 @@
-wb-configs (3.15.4) stable; urgency=medium
+wb-configs (3.16.0) stable; urgency=medium
 
   * Udev: add specific tag to WB-internal modems
 
