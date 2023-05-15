@@ -3,6 +3,14 @@ SUBSYSTEMS=="usb", GOTO="wb_usb_modem_types"
 
 LABEL="wb_usb_modem_types"
 
+# Add tag to WB internal modems
+ENV{OF_COMPATIBLE_0}=="wirenboard,wbc-usb", ENV{ID_MM_PHYSDEV_UID}="wbc"
+ENV{OF_COMPATIBLE_1}=="wirenboard,wbc-usb", ENV{ID_MM_PHYSDEV_UID}="wbc"
+ENV{OF_COMPATIBLE_2}=="wirenboard,wbc-usb", ENV{ID_MM_PHYSDEV_UID}="wbc"
+ENV{OF_COMPATIBLE_3}=="wirenboard,wbc-usb", ENV{ID_MM_PHYSDEV_UID}="wbc"
+ENV{OF_COMPATIBLE_4}=="wirenboard,wbc-usb", ENV{ID_MM_PHYSDEV_UID}="wbc"
+ENV{OF_COMPATIBLE_5}=="wirenboard,wbc-usb", ENV{ID_MM_PHYSDEV_UID}="wbc"
+
 # SIMCOM SIM800C-DS: ignore
 ATTRS{idVendor}=="0e8d", ATTRS{idProduct}=="0003", ENV{ID_MM_DEVICE_IGNORE}="1"
 # SIMCOM SIM5300E: ignore
@@ -10,11 +18,8 @@ ATTRS{idVendor}=="1e0e", ATTRS{idProduct}=="0020", ENV{ID_MM_DEVICE_IGNORE}="1"
 # SIMCOM SIM7000E: ignore
 ATTRS{idVendor}=="1e0e", ATTRS{idProduct}=="9001", ENV{ID_MM_DEVICE_IGNORE}="1"
 # SIMCOM A7600E-H: SIM switch and mark RNDIS unmanaged for NetworkManager
-ATTRS{idVendor}=="1e0e", ATTRS{idProduct}=="9011", ENV{ID_MM_SIM_SWITCH_GPIO_LABEL}="SIM_SELECT", ENV{NM_UNMANAGED}="1"
+ATTRS{idVendor}=="1e0e", ATTRS{idProduct}=="9011", ENV{ID_MM_PHYSDEV_UID}=="wbc", ENV{ID_MM_SIM_SWITCH_GPIO_LABEL}="SIM_SELECT", ENV{NM_UNMANAGED}="1"
 # QUECTEL EC200T-EU: SIM switch and mark RNDIS unmanaged for NetworkManager
 ATTRS{idVendor}=="2c7c", ATTRS{idProduct}=="6026", ENV{ID_MM_DEVICE_IGNORE}="1"
-
-# Add tag to WB internal modems
-ENV{OF_COMPATIBLE_0}=="wirenboard,wbc-usb", ENV{ID_MM_PHYSDEV_UID}="wbc"
 
 LABEL="wb_modem_end"
