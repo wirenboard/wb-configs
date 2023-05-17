@@ -1,6 +1,6 @@
 wb-configs (3.16.0) stable; urgency=medium
 
-  * Udev: add specific tag ("wbc") to WB-internal modems
+  * Udev: add ModemManager specific tag ("wbc") to WB-internal modems. mmcli -m wbc could be used to manage the modem
 
  -- Vladimir Romanov <v.romanov@wirenboard.ru>  Thu, 04 May 2023 13:36:12 +0300
 
