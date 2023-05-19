@@ -230,3 +230,20 @@ ppp_peers_fixes()
 
 nm_fixes
 ppp_peers_fixes
+
+add_mmc_mount_options(){
+    awk '{ 
+    EMMC_REGEX="^(\/dev\/mmcblk0p2|\/dev\/mmcblk0p5|\/dev\/mmcblk0p6)"
+    options=$4
+    if ($1 ~ EMMC_REGEX)
+       if (options !~ "(discard)")
+          options="discard,"options;
+       if (options !~ "(noatime)")
+          options="noatime,"options;
+    printf "%-20s %-20s %-10s %-70s %-10s %-10s\n", $1, $2, $3, options, $5, $6;
+    }' /etc/fstab > tmp
+
+    mv tmp /etc/fstab
+}
+
+add_mmc_mount_options
