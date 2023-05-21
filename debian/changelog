@@ -1,3 +1,9 @@
+wb-configs (3.16.7) stable; urgency=medium
+
+  * Add /bin/ path to tar, mount and umount
+
+ -- Ekaterina Volkova <ekaterina.volkova@wirenboard.ru>  Sun, 21 May 2023 12:31:42 +0300
+
 wb-configs (3.16.0) stable; urgency=medium
 
   * Udev: add ModemManager specific tag ("wbc") to WB-internal modems. mmcli -m wbc could be used to manage the modem
