@@ -46,15 +46,16 @@ if "file" not in form.keys():  # get("file") does not work (due to FieldStorage 
     _error("Incorrect request")
 
 # handle "expand_rootfs" POST argument
-flags_file = os.path.join(RW_DIR, 'install_update.web.flags')
 if "expand_rootfs" in form.keys() and str(form.getvalue("expand_rootfs")) == 'true':
+    # we need to update-with-reboot in order to expand rootfs, so we're changing output directory to .wb_update
+    RW_DIR = "/mnt/data/.wb-update/"
+    # create flags file
+    flags_file = os.path.join(RW_DIR, 'install_update.web.flags')
     sys.stdout.write("X-Flags-File: " + flags_file + "\r\n")
     with open(flags_file, "w") as flags_file_h:
         flags_file_h.write('--force-repartition')
     with open(flags_file, "r") as flags_file_h:
         sys.stdout.write("X-Flag-File-Contents: " + flags_file_h.read() + "\r\n")
-elif os.path.exists(flags_file):
-    os.unlink(flags_file)
 
 # handle upload
 uploading_file = form["file"]
