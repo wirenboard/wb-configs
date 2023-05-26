@@ -49,6 +49,7 @@ if "file" not in form.keys():  # get("file") does not work (due to FieldStorage 
 if "expand_rootfs" in form.keys() and str(form.getvalue("expand_rootfs")) == 'true':
     # we need to update-with-reboot in order to expand rootfs, so we're changing output directory to .wb_update
     RW_DIR = "/mnt/data/.wb-update/"
+    os.makedirs(RW_DIR, exist_ok=True)
     # create flags file
     flags_file = os.path.join(RW_DIR, 'install_update.web.flags')
     sys.stdout.write("X-Flags-File: " + flags_file + "\r\n")
