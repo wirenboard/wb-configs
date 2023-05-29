@@ -1,8 +1,14 @@
-wb-configs (3.17.0) stable; urgency=medium
+wb-configs (3.18.0) stable; urgency=medium
 
-  * Add web-update feature to expand rootfs from web UI
+  * Add web-update option to expand rootfs from web UI
 
  -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Fri, 26 May 2023 15:45 +0600
+
+wb-configs (3.17.0) stable; urgency=medium
+
+  * Add discard and noatime mmc mount options
+
+ -- Ekaterina Volkova <ekaterina.volkova@wirenboard.com>  Fri, 19 May 2023 10:40:51 +0300
 
 wb-configs (3.16.0) stable; urgency=medium
 
