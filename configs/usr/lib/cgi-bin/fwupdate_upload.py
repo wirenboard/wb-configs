@@ -52,11 +52,8 @@ if "expand_rootfs" in form.keys() and str(form.getvalue("expand_rootfs")) == 'tr
     os.makedirs(RW_DIR, exist_ok=True)
     # create flags file
     flags_file = os.path.join(RW_DIR, 'install_update.web.flags')
-    sys.stdout.write("X-Flags-File: " + flags_file + "\r\n")
     with open(flags_file, "w") as flags_file_h:
         flags_file_h.write('--force-repartition')
-    with open(flags_file, "r") as flags_file_h:
-        sys.stdout.write("X-Flag-File-Contents: " + flags_file_h.read() + "\r\n")
 
 # handle upload
 uploading_file = form["file"]
