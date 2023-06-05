@@ -249,3 +249,10 @@ add_mmc_mount_options(){
 }
 
 add_mmc_mount_options
+
+mosquitto_fixes()
+{
+    sed -i 's#log_dest file /var/log/mosquitto/mosquitto.log#log_dest syslog#' /etc/mosquitto/mosquitto.conf
+}
+
+mosquitto_fixes
