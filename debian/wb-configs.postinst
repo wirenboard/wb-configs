@@ -252,8 +252,11 @@ add_mmc_mount_options
 
 mosquitto_fixes()
 {
-    sed -i 's#log_dest file /var/log/mosquitto/mosquitto.log#log_dest syslog#' /etc/mosquitto/mosquitto.conf
-    deb-systemd-invoke restart mosquitto
+    MOSQUITTO_CONF="/etc/mosquitto/mosquitto.conf"
+    if ! grep -q "log_dest file /var/log/mosquitto/mosquitto.log" $MOSQUITTO_CONF; then
+        sed -i 's#log_dest file /var/log/mosquitto/mosquitto.log#log_dest syslog#' $MOSQUITTO_CONF
+        deb-systemd-invoke restart mosquitto
+    fi
 }
 
 mosquitto_fixes
