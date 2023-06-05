@@ -115,7 +115,6 @@ wb-configs (3.10.0) stable; urgency=medium
   * Uncomment "bind-interfaces" option in default dnsmasq config
 
  -- Vladimir Romanov <v.romanov@wirenboard.ru>  Wed, 11 Jan 2023 15:09:12 +0300
->>>>>>> master
 
 wb-configs (3.9.4) stable; urgency=medium
 
