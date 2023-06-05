@@ -20,3 +20,15 @@ if [[ -n "$REPO_PREFIX" ]]; then
 (prefix \u001b[1m\u001b[37m${REPO_PREFIX}\u001b[0m)"
 	echo -e "Don't use it in production!\n"
 fi
+
+mapfile -t SETS < <(sed -n 's/^deb.*deb.wirenboard.com.*experimental\.\(.*\) main.*/\1/p' /etc/apt/sources.list.d/*)
+
+if [[ "${#SETS[@]}" -ne 0 ]]; then
+	echo -e "This Wiren Board uses \u001b[1m\u001b[33mEXPERIMENTAL testing sets\u001b[0m:\n"
+
+    for set in "${SETS[@]}"; do
+        echo -e " - $set"
+    done
+
+	echo -e "\nBe careful using it in production!\n"
+fi

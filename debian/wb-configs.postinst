@@ -183,12 +183,14 @@ nm_fixes() {
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-gsm-sim1.nmconnection"
-                              "/etc/NetworkManager/system-connections/wb-gsm-sim2.nmconnection")
+                              "/etc/NetworkManager/system-connections/wb-gsm-sim2.nmconnection"
+                              "/etc/NetworkManager/system-connections/wb-rndis.nmconnection")
 
         local connection_hashes=("d99be5a51292b10e558a37d5766c8859"  # wb-eth0.nmconnection
                                  "687766120810d07efd06d07b9995fdc1"  # wb-eth1.nmconnection
                                  "1bde0e56b5ab5d9fc79daae90840d2dd"  # wb-gsm-sim1.nmconnection
-                                 "5303529f247a0e991898caa056da8d83") # wb-gsm-sim2.nmconnection
+                                 "5303529f247a0e991898caa056da8d83"  # wb-gsm-sim2.nmconnection
+                                 "6a36f2ea4321342c0156442c6bbf5d29") # wb-rndis.nmconnection
 
         # remove old default connections
         for cn in ${nm_connections[@]}; do
@@ -214,7 +216,36 @@ nm_fixes() {
             fi
         fi
 
+        deb-systemd-invoke restart dnsmasq || true
         deb-systemd-invoke restart NetworkManager || true
 }
 
+# manually unsetting WBGSM_INTERACTIVE var for all ppp-peers to allow launch ppp-connection via pon/poff
+ppp_peers_fixes()
+{
+    for fname in $(ls -d /etc/ppp/peers/*); do
+        sed -i 's#"/usr/bin/wb-gsm\s#"WBGSM_INTERACTIVE= /usr/bin/wb-gsm #g' $fname
+    done
+}
+
 nm_fixes
+ppp_peers_fixes
+
+add_mmc_mount_options(){
+    awk '{ 
+    EMMC_REGEX="^(\/dev\/mmcblk0p2|\/dev\/mmcblk0p5|\/dev\/mmcblk0p6)"
+    TIME_OPTION_REGEX="(noatime|atime|relatime)"
+    options=$4
+    if ($1 ~ EMMC_REGEX){
+       if (options !~ "(discard)")
+          options="discard,"options;
+       if (options !~ TIME_OPTION_REGEX)
+          options="noatime,"options;
+    }
+    printf "%-20s %-20s %-10s %-70s %-10s %-10s\n", $1, $2, $3, options, $5, $6;
+    }' /etc/fstab > /tmp/fstab_tmp
+
+    mv /tmp/fstab_tmp /etc/fstab
+}
+
+add_mmc_mount_options
