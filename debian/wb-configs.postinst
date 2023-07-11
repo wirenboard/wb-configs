@@ -253,8 +253,16 @@ add_mmc_mount_options
 mosquitto_fixes()
 {
     MOSQUITTO_CONF="/etc/mosquitto/mosquitto.conf"
+    local restart_required=0
     if grep -q "log_dest file /var/log/mosquitto/mosquitto.log" $MOSQUITTO_CONF; then
         sed -i 's#log_dest file /var/log/mosquitto/mosquitto.log#log_dest syslog#' $MOSQUITTO_CONF
+        restart_required=1
+    fi
+    if grep -q "pid_file /var/run/mosquitto.pid" $MOSQUITTO_CONF; then
+        sed -i 's#pid_file /var/run/mosquitto.pid#pid_file /run/mosquitto/mosquitto.pid#' $MOSQUITTO_CONF
+        restart_required=1
+    fi
+    if [ $restart_required -eq 1 ]; then
         deb-systemd-invoke restart mosquitto
     fi
 }
