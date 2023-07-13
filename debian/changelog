@@ -1,3 +1,9 @@
+wb-configs (3.13.1-wb104) stable; urgency=medium
+
+  * mosquitto: fix pid_file path after upgrade of mosquitto from 1.x to 2.x
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Tue, 11 Jul 2023 13:24:00 +0400
+
 wb-configs (3.13.1-wb103) stable; urgency=medium
 
   * Add /usr/lib/systemd/ntp-units.d/10-ntp.list to make timedatectl aware of ntp.service

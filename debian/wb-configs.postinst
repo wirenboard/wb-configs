@@ -230,3 +230,14 @@ ppp_peers_fixes()
 
 nm_fixes
 ppp_peers_fixes
+
+mosquitto_fixes()
+{
+    MOSQUITTO_CONF="/etc/mosquitto/mosquitto.conf"
+    if grep -q "pid_file /var/run/mosquitto.pid" $MOSQUITTO_CONF; then
+        sed -i 's#pid_file /var/run/mosquitto.pid#pid_file /run/mosquitto/mosquitto.pid#' $MOSQUITTO_CONF
+        deb-systemd-invoke restart mosquitto
+    fi
+}
+
+mosquitto_fixes
