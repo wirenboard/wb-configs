@@ -263,7 +263,7 @@ mosquitto_fixes()
         restart_required=1
     fi
     if [ $restart_required -eq 1 ]; then
-        deb-systemd-invoke restart mosquitto
+        deb-systemd-invoke restart mosquitto || true
     fi
 }
 
