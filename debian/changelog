@@ -1,3 +1,9 @@
+wb-configs (3.18.3) stable; urgency=medium
+
+  * Ignore routes to down links
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Tue, 18 Jul 2023 11:39:29 +0500
+
 wb-configs (3.18.2) stable; urgency=medium
 
   * Add /bin/ path to tar, mount and umount
