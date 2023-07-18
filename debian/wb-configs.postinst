@@ -263,7 +263,11 @@ mosquitto_fixes()
         restart_required=1
     fi
     if [ $restart_required -eq 1 ]; then
-        deb-systemd-invoke restart mosquitto
+        if [ "$(deb-systemd-invoke is-enabled mosquitto)" != "masked" ]; then
+            deb-systemd-invoke restart mosquitto
+        else
+            echo "Mosquitto is masked, skipping restart"
+        fi
     fi
 }
 
