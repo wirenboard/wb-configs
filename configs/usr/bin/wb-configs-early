@@ -40,6 +40,10 @@ wb_fix_data_file()
             echo "$src: saving backup to ${src}.default"
             cp -aH "$f" "${src}.default"
         fi
+    else
+        if [[ ! -L "${src}" ]]; then
+            cp -aH "${src}" `dirname "${dst}"` || true
+        fi
     fi
 }
 
