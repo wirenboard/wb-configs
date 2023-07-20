@@ -42,6 +42,7 @@ wb_fix_data_file()
         fi
     else
         if [[ ! -L "${src}" ]]; then
+            echo "$dst already exists, but $src is not a symlink"
             cp -aH "${src}" `dirname "${dst}"` || true
         fi
     fi
