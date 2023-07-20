@@ -1,3 +1,10 @@
+wb-configs (2.3.4-wb104) stable; urgency=medium
+
+  * nginx: change fwupdate-uploading backend from nginx upload module to python cgi
+  * fwupdate_upload: single rootfs update scheme support
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Wed, 19 Jul 2022 11:14:00 +0400
+
 wb-configs (2.3.4-wb103) stable; urgency=medium
 
   * add debian-security from archive to prevent downgrades
