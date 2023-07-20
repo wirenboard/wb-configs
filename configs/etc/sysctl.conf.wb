@@ -1,2 +1,1 @@
 vm.swappiness = 1
-net.ipv4.conf.default.ignore_routes_with_linkdown = 1
