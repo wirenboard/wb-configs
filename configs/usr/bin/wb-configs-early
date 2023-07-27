@@ -40,6 +40,11 @@ wb_fix_data_file()
             echo "$src: saving backup to ${src}.default"
             cp -aH "$f" "${src}.default"
         fi
+    else
+        if [[ ! -L "${src}" ]]; then
+            echo "$dst already exists, but $src is not a symlink"
+            cp -aH "${src}" `dirname "${dst}"` || true
+        fi
     fi
 }
 
