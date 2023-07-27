@@ -1,8 +1,14 @@
-wb-configs (3.18.5) stable; urgency=medium
+wb-configs (3.18.6) stable; urgency=medium
 
   * mosquitto: move /etc/mosquitto/conf.d to /mnt/data
 
- -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Mon, 17 Jul 2023 17:13:00 +0400
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 27 Jul 2023 17:13:00 +0400
+
+wb-configs (3.18.5) stable; urgency=medium
+
+  * Fix deb/changelog
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Tue, 25 Jul 2023 20:02:00 +0400
 
 wb-configs (3.18.4) stable; urgency=medium
 
@@ -32,7 +38,7 @@ wb-configs (3.18.0) stable; urgency=medium
 
   * Add web-update option to expand rootfs from web UI
 
- -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Fri, 26 May 2023 15:45 +0600
+ -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Fri, 26 May 2023 15:45:00 +0600
 
 wb-configs (3.17.0) stable; urgency=medium
 
@@ -82,7 +88,7 @@ wb-configs (3.14.0) stable; urgency=medium
 
   * Add feature to download rootfs archive via web UI
 
- -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Tue, 14 Mar 2023 21:14 +0600
+ -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Tue, 14 Mar 2023 21:14:00 +0600
 
 wb-configs (3.13.1) stable; urgency=medium
 
@@ -192,7 +198,7 @@ wb-configs (3.6.0) stable; urgency=medium
 
   * Add motd banner with system information
 
- -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 16 Dec 2022 16:532:00 +0400
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 16 Dec 2022 16:53:00 +0400
 
 wb-configs (3.5.2) stable; urgency=medium
 
@@ -552,7 +558,7 @@ wb-configs (1.76.2) stable; urgency=critical
 
  -- Nikita Maslov <n.maslov@contactless.ru>  Thu, 28 Jun 2018 12:08:07 +0300
 
-wb-configs (1.76.1) stable; urgent=medium
+wb-configs (1.76.1) stable; urgency=medium
 
   * add logrotate conf for /var/log/messages
 
@@ -564,31 +570,31 @@ wb-configs (1.76) stable; urgency=medium
 
  -- Evgeny Boger <boger@contactless.ru>  Fri, 01 Jun 2018 22:29:36 +0300
 
-wb-configs (1.75.4) stable; urgent=medium
+wb-configs (1.75.4) stable; urgency=medium
 
   * change debian repo url to stable
 
  -- Evgeny Boger <boger@contactless.ru>  Wed, 28 Mar 2018 15:03:22 +0300
 
-wb-configs (1.75.3) stable; urgent=medium
+wb-configs (1.75.3) stable; urgency=medium
 
   * wb-watch-configs moved
 
  -- Attila Door <a.door@contactless.ru>  Wed, 28 Mar 2018 15:03:22 +0300
 
-wb-configs (1.75.2) stable; urgent=medium
+wb-configs (1.75.2) stable; urgency=medium
 
   * add ssh config to displace list
 
  -- Attila Door <a.door@contactless.ru>  Wed, 21 Mar 2018 15:03:22 +0300
 
-wb-configs (1.75.1) stable; urgent=medium
+wb-configs (1.75.1) stable; urgency=medium
 
   * add networking service systemd config to stretch configs
 
  -- Attila Door <a.door@contactless.ru>  Wed, 21 Mar 2018 15:03:22 +0300
 
-wb-configs (1.75.0) stable; urgent=medium
+wb-configs (1.75.0) stable; urgency=medium
 
   * add wb-configs-stretch and wheezy
 
