@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Evgeny Boger <boger@contactless.ru>
 Build-Depends: debhelper (>= 10), config-package-dev (>= 5.0)
 Standards-Version: 3.9.4
-Homepage: https://github.com/contactless/wb-configs
+Homepage: https://github.com/wirenboard/wb-configs
 
 Package: wb-configs
 Architecture: all
