@@ -256,7 +256,7 @@ mosquitto_fixes()
                            "/etc/mosquitto/passwd.conf"
                            "/etc/mosquitto/conf.d/auth.conf"
                            "/etc/mosquitto/conf.d/bridge.conf"
-                           "/etc/mosquitto/conf.d/listener.conf")
+                           "/etc/mosquitto/conf.d/listeners.conf")
 
     local mosquitto_hashes=("d41d8cd98f00b204e9800998ecf8427e"  # acl.conf
                             "d41d8cd98f00b204e9800998ecf8427e"  # passwd.conf
