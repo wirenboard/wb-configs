@@ -265,16 +265,18 @@ mosquitto_fixes()
                             "a0ebda1c941a9314890d51bcaa80601e") # listener.conf
 
     # remove mosquitto 1.x configs if not modified by user
-    for mc in ${mosquitto_confs[@]}; do
+    for i in ${!mosquitto_confs[@]}; do
+        local mc=${mosquitto_confs[$i]}
         if [ -f $mc ]; then
             local mc_calculated_hash=$(md5sum "$mc" | cut -f 1 -d ' ')
-            for mc_hash in ${mosquitto_hashes[@]}; do
-                if [ "$mc_calculated_hash" == "$mc_hash" ]; then
-                    echo "Removing mosquitto 1.x config $mc"
-                    rm -f $mc $mc.default || true
-                    break
-                fi
-            done
+            local mc_hash=${mosquitto_hashes[$i]}
+            if [ "$mc_calculated_hash" == "$mc_hash" ]; then
+                echo "Removing mosquitto 1.x config $mc"
+                rm -f $mc $mc.default || true
+            else
+                echo "Backup mosquitto 1.x config $mc"
+                mv $mc $mc.old
+            fi
         fi
     done
 
