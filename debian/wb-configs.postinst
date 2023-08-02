@@ -269,6 +269,8 @@ mosquitto_fixes()
             echo "Mosquitto is masked, skipping restart"
         fi
     fi
+
+    /usr/lib/wb-configs/fix_mosquitto.sh
 }
 
 mosquitto_fixes
