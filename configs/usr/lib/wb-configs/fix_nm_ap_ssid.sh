@@ -1,5 +1,7 @@
 #!/bin/bash
 
+wb_ap_ssid_prefix="${WB_AP_SSID_PREFIX:-WirenBoard}"
+
 # remove old wi-fi ap connection
 wb_ap_connection="/etc/NetworkManager/system-connections/wb-ap.nmconnection"
 short_sn=`wb-gen-serial -s`
@@ -30,7 +32,7 @@ wb_ap_uuid=$(awk -F '=' '$1=="uuid" {print $2}' ${wb_ap_connection_template})
 # make new nmconnection if missing
 deleted_wb_ap="/etc/NetworkManager/system-connections/${wb_ap_uuid}.nmmeta"
 if [ ! -f "$wb_ap_connection" ] && [ ! -f "$deleted_wb_ap" ]; then
-    ssid="WirenBoard-${short_sn}"
+    ssid="${wb_ap_ssid_prefix}-${short_sn}"
     cp -f $wb_ap_connection_template $wb_ap_connection
     sed -i "s/^ssid=@SSID@$/ssid=${ssid}/" "$wb_ap_connection"
 fi
