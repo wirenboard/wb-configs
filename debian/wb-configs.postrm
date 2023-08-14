@@ -37,3 +37,20 @@ for file in "${mosquitto_apps[@]}"; do
         dpkg-divert --package wb-configs --rename --remove "/usr/bin/${file}"
     fi
 done
+
+# restore original mosquitto conf.d directory to support switching between testing and stable (wb-2307)
+# (it would be better to fix wb_move function in wb-configs-early, but it requires changes in stable release)
+# can be removed with next stable release
+if [ -L /etc/mosquitto/conf.d ] && [ "$(readlink /etc/mosquitto/conf.d)" = "/mnt/data/etc/mosquitto/conf.d" ]; then
+    rm /etc/mosquitto/conf.d
+    rsync -av --exclude=00default_listener.conf --exclude=10listeners.conf --exclude=20bridges.conf /mnt/data/etc/mosquitto/conf.d /etc/mosquitto
+    if [ -f /mnt/data/etc/mosquitto/conf.d/00default_listener.conf ]; then
+        ln -Tfs /mnt/data/etc/mosquitto/conf.d/00default_listener.conf /etc/mosquitto/conf.d/00default_listener.conf
+    fi
+    if [ -f /mnt/data/etc/mosquitto/conf.d/10listeners.conf ]; then
+        ln -Tfs /mnt/data/etc/mosquitto/conf.d/10listeners.conf /etc/mosquitto/conf.d/10listeners.conf
+    fi
+    if [ -f /mnt/data/etc/mosquitto/conf.d/20bridges.conf ]; then
+        ln -Tfs /mnt/data/etc/mosquitto/conf.d/20bridges.conf /etc/mosquitto/conf.d/20bridges.conf
+    fi
+fi
