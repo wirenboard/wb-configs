@@ -1,3 +1,9 @@
+wb-configs (3.18.11) stable; urgency=medium
+
+  * use Wiren Board debian mirror instead of Debian CDN by default
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Mon, 21 Aug 2023 18:14:36 +0600
+
 wb-configs (3.18.10) stable; urgency=medium
 
   * Restore /etc/mosquitto/conf.d folder in .postrm
