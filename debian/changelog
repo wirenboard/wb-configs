@@ -1,3 +1,10 @@
+wb-configs (3.18.5-wb101) stable; urgency=medium
+
+  * don't allow serial terminal to change baudrate to 9600
+  * backport from testing 3.18.12
+
+ -- Evgeny Boger <boger@wirenboard.com>  Thu, 21 Sep 2023 17:07:51 +0300
+
 wb-configs (3.18.5-wb100) stable; urgency=medium
 
   * Get wb-ap SSID prefix from env variable
