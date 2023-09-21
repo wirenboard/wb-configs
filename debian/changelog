@@ -1,4 +1,4 @@
-wb-configs (3.18.12) UNRELEASED; urgency=medium
+wb-configs (3.18.12) stable; urgency=medium
 
   * don't allow serial terminal to change baudrate to 9600
 
