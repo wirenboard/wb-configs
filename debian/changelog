@@ -1,3 +1,9 @@
+wb-configs (3.18.12) stable; urgency=medium
+
+  * don't allow serial terminal to change baudrate to 9600
+
+ -- Evgeny Boger <boger@wirenboard.com>  Thu, 21 Sep 2023 17:07:51 +0300
+
 wb-configs (3.18.11) stable; urgency=medium
 
   * use Wiren Board debian mirror instead of Debian CDN by default
