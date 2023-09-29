@@ -1,3 +1,9 @@
+wb-configs (3.19.0) stable; urgency=medium
+
+  * Support RTL8733BU
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Thu, 28 Sep 2023 10:49:38 +0500
+
 wb-configs (3.18.12) stable; urgency=medium
 
   * don't allow serial terminal to change baudrate to 9600
