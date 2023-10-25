@@ -1,3 +1,9 @@
+wb-configs (3.19.1) stable; urgency=medium
+
+  * Add fcgiwrap override. Prefork 2 fcgiwrap processes
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Tue, 03 Oct 2023 12:14:12 +0500
+
 wb-configs (3.19.0) stable; urgency=medium
 
   * Support RTL8733BU
