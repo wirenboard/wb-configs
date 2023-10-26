@@ -1,3 +1,9 @@
+wb-configs (3.19.2) stable; urgency=medium
+
+  * fix_mosquitto.sh: don't move config if .keep file exists
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 26 Oct 2023 18:02:00 +0400
+
 wb-configs (3.19.1) stable; urgency=medium
 
   * Add fcgiwrap override. Prefork 2 fcgiwrap processes
