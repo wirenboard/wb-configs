@@ -21,9 +21,11 @@ for i in ${!mosquitto_confs[@]}; do
         if [ "$mc_calculated_hash" == "$mc_hash" ]; then
             echo "Removing mosquitto 1.x config $mc"
             rm -f $mc $mc.default || true
-        else
+        elif [ ! -f $mc.keep ]; then
             echo "Backup mosquitto 1.x config $mc"
             mv $mc $mc.old
+        else
+            echo "Keep config $mc"
         fi
     fi
 done
