@@ -56,9 +56,9 @@ if do_factory_reset or do_expand_rootfs:
     flags_file = os.path.join(RW_DIR, 'install_update.web.flags')
     with open(flags_file, "w") as flags_file_h:
         if do_factory_reset:
-            flags_file_h.write('--factoryreset')
+            flags_file_h.write('--factoryreset ')
         if do_expand_rootfs:
-            flags_file_h.write('--force-repartition')
+            flags_file_h.write('--force-repartition ')
 
 # handle upload
 uploading_file = form["file"]
