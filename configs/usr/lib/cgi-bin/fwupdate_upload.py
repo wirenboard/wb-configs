@@ -45,15 +45,20 @@ form = DiskFieldStorage(encoding="utf-8")
 if "file" not in form.keys():  # get("file") does not work (due to FieldStorage internals)
     _error("Incorrect request")
 
-# handle "expand_rootfs" POST argument
-if "expand_rootfs" in form.keys() and str(form.getvalue("expand_rootfs")) == 'true':
+# handle extra POST arguments
+do_expand_rootfs = "expand_rootfs" in form.keys() and str(form.getvalue("expand_rootfs")) == 'true'
+do_factory_reset = "factory_reset" in form.keys() and str(form.getvalue("factory_reset")) == 'true'
+if do_factory_reset or do_expand_rootfs:
     # we need to update-with-reboot in order to expand rootfs, so we're changing output directory to .wb_update
     RW_DIR = "/mnt/data/.wb-update/"
     os.makedirs(RW_DIR, exist_ok=True)
     # create flags file
     flags_file = os.path.join(RW_DIR, 'install_update.web.flags')
     with open(flags_file, "w") as flags_file_h:
-        flags_file_h.write('--force-repartition')
+        if do_factory_reset:
+            flags_file_h.write('--factoryreset')
+        if do_expand_rootfs:
+            flags_file_h.write('--force-repartition')
 
 # handle upload
 uploading_file = form["file"]
