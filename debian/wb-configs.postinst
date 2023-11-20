@@ -274,3 +274,12 @@ mosquitto_fixes()
 }
 
 mosquitto_fixes
+
+make_factoryreset_fit_accessible()
+{
+    if [ -f /mnt/data/.wb-restore/factoryreset.fit ]; then
+        chmod 744 /mnt/data/.wb-restore/factoryreset.fit
+    fi
+}
+
+make_factoryreset_fit_accessible
