@@ -41,9 +41,9 @@ wb_fix_data_file()
             cp -aH "$f" "${src}.default"
         fi
     else
-        if [[ ! -L "${src}" ]]; then
-            echo "$dst already exists, but $src is not a symlink"
-            cp -aH "${src}" `dirname "${dst}"` || true
+        if [[ -d "${src}" ]] && [[ ! -L "${src}" ]]; then
+            echo "$dst already exists, but $src is not a symlink, copy missing files"
+            cp -anH "${src}" `dirname "${dst}"` || true
         fi
     fi
 }
