@@ -2,7 +2,13 @@ wb-configs (3.20.0) stable; urgency=medium
 
   * add openssl config with atecc engine description
 
- -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Wed, 15 Nov 2023 01:10:08 +0600
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Tue, 21 Nov 2023 17:01:23 +0600
+
+wb-configs (3.19.3) stable; urgency=medium
+
+  * Fix configs overwriting after update using fit
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Fri, 17 Nov 2023 10:17:38 +0500
 
 wb-configs (3.19.2) stable; urgency=medium
 
