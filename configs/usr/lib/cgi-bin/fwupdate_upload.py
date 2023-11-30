@@ -4,6 +4,19 @@ import os
 import sys
 import tempfile
 from cgi import FieldStorage
+import traceback
+
+
+def get_rw_dir():
+    if os.path.islink("/var/run/wb-watch-update.dir"):
+        return os.path.realpath("/var/run/wb-watch-update.dir")
+    else:
+        return os.environ.get("UPLOADS_DIR", "/var/www/uploads")  # nginx user should has rw access
+
+
+def get_tmp_dir(RW_DIR):
+    return os.path.join(RW_DIR, "state", "tmp")  # excluded from wb-watch-update
+    return
 
 
 def _error(msg=""):
@@ -14,7 +27,6 @@ def _error(msg=""):
 def _die(msg=""):
     sys.stdout.write("Status: 500 Internal Server Error\r\n\r\nInternal Server Error: %s" % msg)
     sys.exit(1)
-
 
 
 def to_chunks(fp, chunk_size=8192):
@@ -31,8 +43,9 @@ class DiskFieldStorage(FieldStorage):
     Which is not appropriate due to the lack of free space on wb
     """
 
+
     def make_file(self):
-        location = TMP_DIR  # has rw access & excluded from wb-watch-update
+        location = get_tmp_dir(get_rw_dir())  # has rw access & excluded from wb-watch-update
         if self._binary_file:
             return tempfile.TemporaryFile("wb+", dir=location)
         else:
@@ -40,14 +53,11 @@ class DiskFieldStorage(FieldStorage):
 
 
 def main():
-    if os.path.islink("/var/run/wb-watch-update.dir"):
-        RW_DIR = os.path.realpath("/var/run/wb-watch-update.dir")
-    else:
-        RW_DIR = os.environ.get("UPLOADS_DIR", "/var/www/uploads")  # nginx user should has rw access
 
-    TMP_DIR = os.path.join(RW_DIR, "state", "tmp")  # excluded from wb-watch-update
+    RW_DIR = get_rw_dir()
+    TMP_DIR = get_tmp_dir(RW_DIR)
+
     os.makedirs(TMP_DIR, exist_ok=True)
-
 
     form = DiskFieldStorage(encoding="utf-8")
     if "file" not in form.keys():  # get("file") does not work (due to FieldStorage internals)
@@ -85,4 +95,4 @@ def main():
 try:
     main()
 except Exception as e:
-    _die(str(e))
+    _die(str(e) + "\n" + traceback.format_exc())
