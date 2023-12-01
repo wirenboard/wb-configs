@@ -1,3 +1,9 @@
+wb-configs (2.3.4-wb104) stable; urgency=medium
+
+  * add openssl config with atecc engine description
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.ru>  Fri, 01 Dec 2023 17:19:13 +0600
+
 wb-configs (2.3.4-wb103) stable; urgency=medium
 
   * add debian-security from archive to prevent downgrades
