@@ -4,7 +4,6 @@ import os
 import sys
 import tempfile
 from cgi import FieldStorage
-import traceback
 
 
 def get_rw_dir():

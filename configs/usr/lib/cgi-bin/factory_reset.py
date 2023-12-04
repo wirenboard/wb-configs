@@ -51,12 +51,6 @@ def main():
     with open(DST_FIT, "ab") as fp:
         pass
 
-    # copy factoryreset.fit to RW_DIR
-    # fname = "webupd.fit"
-    # with open("/mnt/data/.wb-restore/factoryreset.fit", "rb") as fp_upload:
-    #     with open(os.path.join(RW_DIR, fname), "wb") as fp_save:  # wb-watch-update triggers on fd close
-    #         for chunk in to_chunks(fp_upload):
-    #             fp_save.write(chunk)
     sys.stdout.write("Status: 200\r\n\r\n")
 
 
