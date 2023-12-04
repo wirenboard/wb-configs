@@ -16,7 +16,6 @@ def get_rw_dir():
 
 def get_tmp_dir(RW_DIR):
     return os.path.join(RW_DIR, "state", "tmp")  # excluded from wb-watch-update
-    return
 
 
 def _error(msg=""):
@@ -95,4 +94,4 @@ def main():
 try:
     main()
 except Exception as e:
-    _die(str(e) + "\n" + traceback.format_exc())
+    _die(str(e))
