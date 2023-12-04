@@ -280,13 +280,3 @@ mosquitto_fixes()
 }
 
 mosquitto_fixes
-
-make_factoryreset_fit_accessible()
-{
-    if [ -f /mnt/data/.wb-restore/factoryreset.fit ]; then
-        chown root:www-data /mnt/data/.wb-restore/factoryreset.fit
-        chmod 0660 /mnt/data/.wb-restore/factoryreset.fit
-    fi
-}
-
-make_factoryreset_fit_accessible

@@ -40,7 +40,7 @@ def main():
     # create flags file
     FLAGS_FILE = os.path.join(RW_DIR, 'install_update.web.flags')
     with open(FLAGS_FILE, "w") as flags_file_h:
-        flags_file_h.write('--factoryreset ')
+        flags_file_h.write('--factoryreset --from-emmc-factoryreset ')
 
     # make hardlink to factoryreset.fit
     SRC_FIT = "/mnt/data/.wb-restore/factoryreset.fit"
