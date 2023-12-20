@@ -2,6 +2,9 @@
 
 wb_ap_ssid_prefix="${WB_AP_SSID_PREFIX:-WirenBoard}"
 
+# find RTL8723BU
+old_wifi=$(lsusb -d'0bda:b720')
+
 # remove old wi-fi ap connection
 wb_ap_connection="/etc/NetworkManager/system-connections/wb-ap.nmconnection"
 short_sn=`wb-gen-serial -s`
@@ -13,6 +16,7 @@ if [ -f $wb_ap_connection ]; then
     # remove timestamp
     sed -i "/timestamp/d" $tmp_connection
     MD5=$(md5sum "$tmp_connection" | cut -f 1 -d ' ')
+
     # remove old wb-ap without subnet address
     if [ "$MD5" == "2ed8e74107f2dc68fabe96cd0fe6b61c" ]; then
         rm -f $wb_ap_connection || true
@@ -23,8 +27,15 @@ if [ -f $wb_ap_connection ]; then
         rm -f $wb_ap_connection || true
     fi
 
+    # remove old wb-ap with band and channels
+    if [ -z "$old_wifi"] && [ "$MD5" == "1737c3e9aa4a887f59235c6b4867fa5d" ]; then
+        rm -f $wb_ap_connection || true
+    fi
+
     # Bad generated ssid
-    grep -q -x -F "ssid=WirenBoard-" "$wb_ap_connection" && rm -f $wb_ap_connection
+    if [ -f $wb_ap_connection ]; then
+        grep -q -x -F "ssid=WirenBoard-" "$wb_ap_connection" && rm -f $wb_ap_connection
+    fi
 fi
 
 wb_ap_connection_template="/usr/lib/NetworkManager/system-connections/wb-ap.nmconnection"
@@ -35,4 +46,10 @@ if [ ! -f "$wb_ap_connection" ] && [ ! -f "$deleted_wb_ap" ]; then
     ssid="${wb_ap_ssid_prefix}-${short_sn}"
     cp -f $wb_ap_connection_template $wb_ap_connection
     sed -i "s/^ssid=@SSID@$/ssid=${ssid}/" "$wb_ap_connection"
+
+    # remove band and channel for new chipset
+    if [ -z "$old_wifi"]; then
+        sed -i "/channel=1/d" "$wb_ap_connection"
+        sed -i "/band=bg/d" "$wb_ap_connection"
+    fi
 fi
