@@ -42,9 +42,9 @@ if [ -f $wb_ap_connection ]; then
     sed -i "/timestamp/d" $tmp_connection
     MD5=$(md5sum "$tmp_connection" | cut -f 1 -d ' ')
 
-    should_delete_config $MD5 $wifi_module && {
+    if should_delete_config $MD5 $wifi_module; then
         rm -f $wb_ap_connection || true
-    }
+    fi
 
     # Bad generated ssid
     if [ -f $wb_ap_connection ]; then
