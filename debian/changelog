@@ -1,6 +1,6 @@
 wb-configs (3.21.2) stable; urgency=medium
 
-  * 
+  * Increase mosquitto max_inflight_messages limit
 
  -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Tue, 23 Jan 2024 14:30:57 +0500
 
