@@ -8,4 +8,4 @@ rm_conffile /etc/mosquitto/conf.d/auth.conf 3.0.0~
 rm_conffile /etc/mosquitto/conf.d/listeners.conf 3.0.0~
 rm_conffile /etc/mosquitto/conf.d/bridge.conf 3.0.0~
 rm_conffile /etc/mosquitto/conf.d/bridge.conf.example 3.0.0~
-rm_conffile /etc/mosquitto/conf.d/30limits.conf
+rm_conffile /etc/mosquitto/conf.d/30limits.conf 3.22.0~
