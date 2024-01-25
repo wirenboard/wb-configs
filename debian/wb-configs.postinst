@@ -271,7 +271,7 @@ mosquitto_fixes()
         restart_required=1
     fi
     if ! grep -q -F "include_dir /usr/share/wb-configs/mosquitto" $MOSQUITTO_CONF; then
-        sed -i '/include_dir \/etc\/mosquitto\/conf.d/iinclude_dir \/usr\/share\/wb-configs\/mosquitto' $MOSQUITTO_CONF
+        sed -i '\#include_dir /etc/mosquitto/conf.d#iinclude_dir /usr/share/wb-configs/mosquitto' $MOSQUITTO_CONF
         restart_required=1
     fi
     if [ $restart_required -eq 1 ]; then
