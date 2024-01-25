@@ -1,3 +1,9 @@
+wb-configs (3.22.0) stable; urgency=medium
+
+  * Move Wirenboard specific mosquitto configs to /usr/share/wb-configs/mosquitto
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Thu, 25 Jan 2024 09:51:27 +0500
+
 wb-configs (3.21.2) stable; urgency=medium
 
   * Increase mosquitto max_inflight_messages limit
