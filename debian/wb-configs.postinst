@@ -84,6 +84,7 @@ wb_check_undisplace_unlink_from()
 
 if [ "$1" = "configure" ]; then
     wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
+    wb_check_undisplace_unlink_from /etc/ssl/openssl.cnf "" wb-configs "3.20.0"
 fi
 
 #DEBHELPER#
@@ -177,12 +178,6 @@ nginx_user="www-data"
 if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
     echo "Setting ownership $nginx_user to $nginx_uploads_dir"
     chown -R $nginx_user:$nginx_user $nginx_uploads_dir
-fi
-
-if groups www-data | grep -q -v i2c; then
-    echo "Adding www-data user to i2c group (allow access to ATECC module)"
-    usermod -a -G i2c www-data
-    deb-systemd-invoke restart nginx
 fi
 
 nm_fixes() {

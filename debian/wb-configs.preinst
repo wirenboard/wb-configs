@@ -66,8 +66,13 @@ wb_check_undisplace_unlink_from()
     fi
 }
 
-if [ "$1" = "upgrade" ] && dpkg --compare-versions "$2" "lt" "1.75.4"; then
-    wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
+if [ "$1" = "upgrade" ]; then
+    if dpkg --compare-versions "$2" "lt" "1.75.4"; then
+        wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
+    fi
+    if dpkg --compare-versions "$2" "lt" "3.20.0"; then
+        wb_check_undisplace_unlink_from /etc/ssl/openssl.cnf "" wb-configs "3.20.0"
+    fi
 fi
 
 # if wb-configs is upgraded with newer mosquitto, schedule service restarts
