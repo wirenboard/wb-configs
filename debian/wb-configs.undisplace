@@ -2,3 +2,4 @@
 /lib/systemd/system/networking.service.wb
 /root/.config/mosquitto_sub.wb
 /root/.config/mosquitto_pub.wb
+/etc/ssl/openssl.cnf.wb

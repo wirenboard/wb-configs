@@ -179,12 +179,6 @@ if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
     chown -R $nginx_user:$nginx_user $nginx_uploads_dir
 fi
 
-if groups www-data | grep -q -v i2c; then
-    echo "Adding www-data user to i2c group (allow access to ATECC module)"
-    usermod -a -G i2c www-data
-    deb-systemd-invoke restart nginx
-fi
-
 nm_fixes() {
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
