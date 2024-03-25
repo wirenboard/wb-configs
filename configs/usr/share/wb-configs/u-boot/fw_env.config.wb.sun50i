@@ -7,4 +7,4 @@
 
 
 # MTD device name   Device offset   Env. size   Flash sector size
-/dev/mmcblk0        0x88000         0x20000
+/dev/mmcblk0        0xF0000         0x10000
