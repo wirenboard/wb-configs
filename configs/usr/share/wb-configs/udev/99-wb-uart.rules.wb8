@@ -1,7 +1,8 @@
 KERNEL=="ttyS0", SUBSYSTEM=="tty", SYMLINK+="ttyCONSOLE", GROUP="tty"
+KERNEL=="ttyS1", SUBSYSTEM=="tty", SYMLINK+="ttyRS485-2", GROUP="dialout"
 KERNEL=="ttyS2", SUBSYSTEM=="tty", SYMLINK+="ttyRS485-1", GROUP="dialout"
-KERNEL=="ttyS7", SUBSYSTEM=="tty", SYMLINK+="ttyMOD1", GROUP="dialout"
-KERNEL=="ttyS4", SUBSYSTEM=="tty", SYMLINK+="ttyRS485-2", GROUP="dialout"
-KERNEL=="ttyS6", SUBSYSTEM=="tty", SYMLINK+="ttyMOD2", GROUP="dialout"
-KERNEL=="ttyS5", SUBSYSTEM=="tty", SYMLINK+="ttyMOD3", GROUP="dialout"
-KERNEL=="ttyS3", SUBSYSTEM=="tty", SYMLINK+="ttyMOD4", GROUP="dialout"
+
+#KERNEL=="ttyS7", SUBSYSTEM=="tty", SYMLINK+="ttyMOD1", GROUP="dialout"
+#KERNEL=="ttyS6", SUBSYSTEM=="tty", SYMLINK+="ttyMOD2", GROUP="dialout"
+#KERNEL=="ttyS5", SUBSYSTEM=="tty", SYMLINK+="ttyMOD3", GROUP="dialout"
+#KERNEL=="ttyS3", SUBSYSTEM=="tty", SYMLINK+="ttyMOD4", GROUP="dialout"
