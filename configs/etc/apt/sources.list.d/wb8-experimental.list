@@ -1,1 +1,1 @@
-deb http://deb.wirenboard.com/all experimental.wb8 main
+deb [trusted=yes] http://deb.wirenboard.com/all experimental.wb8 main
