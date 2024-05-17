@@ -102,7 +102,7 @@ install_rules() {
 
 if of_machine_match "wirenboard,wirenboard-8xx"; then
     install_rules 99-wb-uart wb8
-    install_rules 99-wb-ethernet wb8
+    install_rules 99-wb-ethernet wb8xx
 elif of_machine_match "wirenboard,wirenboard-720"; then
     install_rules 99-wb-uart wb72
     install_rules 99-wb-ethernet wb72
