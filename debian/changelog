@@ -1,3 +1,15 @@
+wb-configs (3.23.1) stable; urgency=medium
+
+  * add UART symlinks on WB8
+
+ -- Evgeny Boger <boger@wirenboard.com>  Fri, 17 May 2024 11:56:10 +0300
+
+wb-configs (3.23.0) stable; urgency=medium
+
+  * add Wiren Board 8 support
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.com>  Wed, 13 Mar 2024 20:29:45 +0500
+
 wb-configs (3.22.1) stable; urgency=medium
 
   * remove openssl config with atecc engine description
