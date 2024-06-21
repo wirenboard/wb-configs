@@ -1,3 +1,9 @@
+wb-configs (3.24.0) stable; urgency=medium
+
+  * fwupdate_upload: handle update from cloud ("from_cloud" flag)
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 23 May 2024 19:34:18 +0300
+
 wb-configs (3.23.1) stable; urgency=medium
 
   * add UART symlinks on WB8
