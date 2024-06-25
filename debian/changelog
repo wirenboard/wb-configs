@@ -1,3 +1,9 @@
+wb-configs (3.25.0) stable; urgency=medium
+
+  * add download_configs and download_everything backends
+
+ -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Tue, 25 Jun 2024 17:43:18 +0500
+
 wb-configs (3.24.0) stable; urgency=medium
 
   * fwupdate_upload: handle update from cloud ("from_cloud" flag)
