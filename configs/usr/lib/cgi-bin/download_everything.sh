@@ -10,4 +10,4 @@ echo "Content-Disposition: attachment; filename=\"everything_${SERIAL}_${date}.t
 echo "Content-Type: application/octet-stream"
 echo ""
 cd "$MOUNT_DIR"
-sudo tar -cf - / | pigz
+sudo tar --one-file-system -cf - / /mnt/data | pigz
