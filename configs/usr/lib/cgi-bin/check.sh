@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CHECK_SERVER="http://10.200.10.232:8222"
+CHECK_SERVER="http://nexus.lostpoint.ru:2517"
 
 send_output() {
     echo "Status: $1"
