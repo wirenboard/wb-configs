@@ -1,0 +1,2 @@
+KERNELS == "5020000.ethernet", SUBSYSTEM == "net", NAME = "eth0"
+KERNELS == "5030000.ethernet", SUBSYSTEM == "net", NAME = "eth1"

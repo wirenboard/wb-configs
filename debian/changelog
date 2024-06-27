@@ -4,6 +4,36 @@ wb-configs (3.26.0) stable; urgency=medium
 
  -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Fri, 17 May 2024 12:00:00 +0500
 
+wb-configs (3.25.1) stable; urgency=medium
+
+  * remove debian/source/format file, no functional changes
+
+ -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Tue, 25 Jun 2024 21:01:18 +0500
+
+wb-configs (3.25.0) stable; urgency=medium
+
+  * add download_configs and download_everything backends
+
+ -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Tue, 25 Jun 2024 17:43:18 +0500
+
+wb-configs (3.24.0) stable; urgency=medium
+
+  * fwupdate_upload: handle update from cloud ("from_cloud" flag)
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 23 May 2024 19:34:18 +0300
+
+wb-configs (3.23.1) stable; urgency=medium
+
+  * add UART symlinks on WB8
+
+ -- Evgeny Boger <boger@wirenboard.com>  Fri, 17 May 2024 11:56:10 +0300
+
+wb-configs (3.23.0) stable; urgency=medium
+
+  * add Wiren Board 8 support
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.com>  Wed, 13 Mar 2024 20:29:45 +0500
+
 wb-configs (3.22.1) stable; urgency=medium
 
   * remove openssl config with atecc engine description
