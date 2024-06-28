@@ -9,6 +9,13 @@ send_output() {
     echo "$2"
 }
 
+jq -e '.probeOpenPorts==true' /etc/wb-security.conf  >/dev/null || {
+    mosquitto_pub -d -p 1883 -t "/rpc/v1/exp-check" -r -m '{"result": "not found"}' 2>&1
+    send_output 200 "Check disabled in config"
+    exit 0
+}
+
+
 SERIAL=$(cat "/var/lib/wirenboard/short_sn.conf")
 URL="${HTTP_SCHEME}://${HTTP_HOST}/"
 
