@@ -12,7 +12,7 @@ send_output() {
 SERIAL=$(cat "/var/lib/wirenboard/short_sn.conf")
 URL="${HTTP_SCHEME}://${HTTP_HOST}/"
 
-data=$(curl --silent --show-error --fail -X POST -o /dev/stdout -d "serial=${SERIAL}&url=${URL}" "${CHECK_SERVER}/probe/")
+data=$(curl --connect-timeout 120 --max-time 120 --silent --show-error --fail -X POST -o /dev/stdout -d "serial=${SERIAL}&url=${URL}" "${CHECK_SERVER}/probe/")
 if [ $? -ne 0 ]; then
     send_output 503 "Failed to get response from upstream"
     exit 0
