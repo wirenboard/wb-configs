@@ -1,3 +1,9 @@
+wb-configs (3.26.2) stable; urgency=medium
+
+  * port probe: hide banner on cooldown
+
+ -- Evgeny Boger <boger@wirenboard.com>  Sun, 30 Jun 2024 01:42:07 +0300
+
 wb-configs (3.26.1) stable; urgency=medium
 
   * fix default wb_security.conf
