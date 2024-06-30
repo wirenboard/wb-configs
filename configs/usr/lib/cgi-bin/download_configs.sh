@@ -11,5 +11,4 @@ echo "Content-Type: application/octet-stream"
 echo ""
 cd "$MOUNT_DIR"
 sudo tar --exclude='/var/tmp' --exclude='/var/log' -cf - \
-	/etc /mnt/data/etc /var /mnt/data/root/zigbee2mqtt/data /mnt/data/makesimple/.SprutHub | pigz
-
+	/etc /mnt/data/etc /var /mnt/data/root/zigbee2mqtt/data /mnt/data/makesimple/.SprutHub | pigz -p $(($(nproc --all)/2))

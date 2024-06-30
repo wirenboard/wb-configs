@@ -27,5 +27,5 @@ else
     echo "Content-Type: application/octet-stream"
     echo ""
     cd "$MOUNT_DIR"
-    sudo tar --exclude='tmp' --exclude='var/tmp' -cf - * | pigz
+    sudo tar --exclude='tmp' --exclude='var/tmp' -cf - * | pigz -p $(($(nproc --all)/2))
 fi
