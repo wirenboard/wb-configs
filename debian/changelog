@@ -1,3 +1,9 @@
+wb-configs (3.26.3) stable; urgency=medium
+
+  * web ui backups: limit number of used cores to half of present in system
+
+ -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Mon, 1 Jul 2024 0:44:00 +0500
+
 wb-configs (3.26.2) stable; urgency=medium
 
   * port probe: hide banner on cooldown
