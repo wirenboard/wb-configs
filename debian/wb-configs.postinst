@@ -273,7 +273,7 @@ mosquitto_fixes()
         restart_required=1
     fi
     if grep -q "^listener 18883$" $LISTENERS_CONF; then
-    	sed -i '/^listener 18883$/clistener 18883 127.0.0.1\nsocket_domain ipv4' $LISTENERS_CONF
+    	sed -i '/^listener 18883$/clistener 18883 lo' $LISTENERS_CONF
     	restart_required=1
     fi
     if [ $restart_required -eq 1 ]; then

@@ -1,6 +1,6 @@
 wb-configs (3.26.5) stable; urgency=medium
 
-  * mosquitto: disabled websocket 18883 port for security reasons
+  * mosquitto: disabled public websocket 18883 port for security reasons
 
  -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Wed, 4 Jul 2024 11:50:00 +0500
 
