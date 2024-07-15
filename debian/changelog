@@ -1,3 +1,9 @@
+wb-configs (3.23.1-wb104+1) stable; urgency=medium
+
+  * try watchdog service script to check emmc health
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.com>  Mon, 15 Jul 2024 20:51:58 +0500
+
 wb-configs (3.23.1-wb104) stable; urgency=medium
 
   * add Node.js 20.x repository
