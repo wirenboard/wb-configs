@@ -1,3 +1,9 @@
+wb-configs (3.26.6) stable; urgency=medium
+
+  * nginx: fix config warning
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 12 Jul 2024 00:30:00 +0400
+
 wb-configs (3.26.5) stable; urgency=medium
 
   * mosquitto: disabled public websocket 18883 port for security reasons
