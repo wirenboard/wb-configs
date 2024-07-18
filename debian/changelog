@@ -1,3 +1,9 @@
+wb-configs (3.26.8) stable; urgency=medium
+
+  * Use mosquitto unix socket for publishing open ports checking results
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Thu, 18 Jul 2024 18:16:51 +0500
+
 wb-configs (3.26.7) stable; urgency=medium
 
   * nginx: fix proxy_pass for /mqtt
