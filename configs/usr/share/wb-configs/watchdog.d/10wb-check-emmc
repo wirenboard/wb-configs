@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Reset controller if eMMC failed (I/O errors)
+
+dd if=/bin/true of=/dev/null iflag=direct 2>/dev/null || exit 255

@@ -1,3 +1,9 @@
+wb-configs (3.27.0) stable; urgency=medium
+
+  * add watchdog service script to check emmc health
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.com>  Tue, 23 Jul 2024 12:05:05 +0500
+
 wb-configs (3.26.8) stable; urgency=medium
 
   * Use mosquitto unix socket for publishing open ports checking results
