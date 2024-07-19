@@ -184,6 +184,13 @@ if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
     chown -R $nginx_user:$nginx_user $nginx_uploads_dir
 fi
 
+# grant access fastcgi sripts to mosquitto's unix socket
+chgrp mosquitto /run/mosquitto
+chmod g+x /run/mosquitto
+usermod -a -G mosquitto $nginx_user 
+# restart fcgiwrap to apply group changes
+deb-systemd-invoke restart fcgiwrap || true
+
 nm_fixes() {
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"
                               "/etc/NetworkManager/system-connections/wb-eth1.nmconnection"
