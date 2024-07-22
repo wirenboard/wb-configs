@@ -1,3 +1,9 @@
+wb-configs (3.22.1-wb104) stable; urgency=medium
+
+  * Use mosquitto unix socket for publishing open ports checking results
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Fri, 19 Jul 2024 17:17:10 +0500
+
 wb-configs (3.22.1-wb103) stable; urgency=medium
 
   * add remote probe to check for open ports
