@@ -1,3 +1,9 @@
+wb-configs (3.28.0) stable; urgency=medium
+
+  * add wb-uart udev rules for wb85x
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Wed, 31 Jul 2024 17:02:01 +0300
+
 wb-configs (3.27.0) stable; urgency=medium
 
   * add watchdog service script to check emmc health
