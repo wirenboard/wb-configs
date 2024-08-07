@@ -100,7 +100,10 @@ install_rules() {
 	ucf --debconf-ok "$RULES_DIR/$1.rules.$2" "$RULES_DST_DIR/$1.rules"
 }
 
-if of_machine_match "wirenboard,wirenboard-84x"; then
+if of_machine_match "wirenboard,wirenboard-85x"; then
+    install_rules 99-wb-uart wb85x
+    install_rules 99-wb-ethernet wb8xx
+elif of_machine_match "wirenboard,wirenboard-84x"; then
     install_rules 99-wb-uart wb84x
     install_rules 99-wb-ethernet wb8xx
 elif of_machine_match "wirenboard,wirenboard-720"; then

@@ -1,3 +1,9 @@
+wb-configs (3.28.0) stable; urgency=medium
+
+  * add wb-uart udev rules for wb85x
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Wed, 07 Aug 2024 12:02:01 +0300
+
 wb-configs (3.27.1) stable; urgency=medium
 
   * nginx: check for broken symlinks in /etc/nginx/sites-enabled
