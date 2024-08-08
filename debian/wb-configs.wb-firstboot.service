@@ -1,0 +1,15 @@
+[Unit]
+Description=run scripts at WB's first boot (or after FR); place scripts to /etc/wb-firstboot.d/
+Conflicts=shutdown.target
+After=first-boot-complete.target wb-init.service wb-configs.service watchdog.service
+Wants=first-boot-complete.target
+RefuseManualStop=true
+ConditionFirstBoot=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/wb-firstboot
+
+[Install]
+WantedBy=multi-user.target
