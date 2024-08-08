@@ -1,3 +1,10 @@
+wb-configs (3.29.0) stable; urgency=medium
+
+  * introduce wb-firstboot service: place scripts (executed only in firstboot) to /etc/wb-firstboot.d
+  * migrate udev rules installation to wb-firstboot
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 08 Aug 2024 16:42:08 +0300
+
 wb-configs (3.28.0) stable; urgency=medium
 
   * add wb-uart udev rules for wb85x
