@@ -1,7 +1,0 @@
-#!/bin/bash
-
-for item in /etc/wb-firstboot.d/*; do
-    grep -q '\.dpkg-old$' <<< "$item" && continue
-    echo "Running $item ..."
-    source "$item"
-done

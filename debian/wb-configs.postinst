@@ -89,7 +89,7 @@ if [ "$1" = "configure" ]; then
 fi
 
 # install hw-specific udev rules
-source /etc/wb-firstboot.d/01udev-rules
+. /etc/wb-prepare.d/01udev-rules
 
 if dpkg-query -s rsyslog >/dev/null 2>/dev/null; then
     rm -f /etc/logrotate.d/messages

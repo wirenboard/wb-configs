@@ -1,7 +1,6 @@
 wb-configs (3.29.0) stable; urgency=medium
 
-  * introduce wb-firstboot service: place scripts (executed only in firstboot) to /etc/wb-firstboot.d
-  * migrate udev rules installation to wb-firstboot
+  * migrate udev rules installation to wb-prepare.d
 
  -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 08 Aug 2024 16:42:08 +0300
 
