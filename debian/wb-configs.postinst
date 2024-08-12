@@ -91,6 +91,8 @@ fi
 #DEBHELPER#
 . /etc/wb-prepare.d/01udev-rules # install hw-specific udev rules
 
+echo "-------- BANG" >> /bang.txt
+
 if dpkg-query -s rsyslog >/dev/null 2>/dev/null; then
     rm -f /etc/logrotate.d/messages
 fi
