@@ -88,8 +88,8 @@ if [ "$1" = "configure" ]; then
     wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
 fi
 
-# install hw-specific udev rules
-. /etc/wb-prepare.d/01udev-rules
+#DEBHELPER#
+. /etc/wb-prepare.d/01udev-rules # install hw-specific udev rules
 
 if dpkg-query -s rsyslog >/dev/null 2>/dev/null; then
     rm -f /etc/logrotate.d/messages
