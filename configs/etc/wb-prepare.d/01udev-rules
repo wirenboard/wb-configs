@@ -1,0 +1,43 @@
+#!/bin/bash
+
+. /usr/lib/wb-utils/wb_env.sh
+wb_source "of"
+
+RULES_DST_DIR=/etc/udev/rules.d
+RULES_DIR=/usr/share/wb-configs/udev/
+
+# Args:
+# - rules file (e.g. "99-wb-uart")
+# - suffix (e.g. "wb5")
+install_rules() {
+	ucf --debconf-ok "$RULES_DIR/$1.rules.$2" "$RULES_DST_DIR/$1.rules"
+}
+
+if of_machine_match "wirenboard,wirenboard-85x"; then
+    install_rules 99-wb-uart wb85x
+    install_rules 99-wb-ethernet wb8xx
+elif of_machine_match "wirenboard,wirenboard-84x"; then
+    install_rules 99-wb-uart wb84x
+    install_rules 99-wb-ethernet wb8xx
+elif of_machine_match "wirenboard,wirenboard-720"; then
+    install_rules 99-wb-uart wb72
+    install_rules 99-wb-ethernet wb72
+elif of_machine_match "contactless,imx6ul-wirenboard670"; then
+    install_rules 99-wb-uart wb67
+    install_rules 99-wb-ethernet wb6
+elif of_machine_match "contactless,imx6ul-wirenboard60"; then
+    install_rules 99-wb-uart wb6
+    install_rules 99-wb-ethernet wb6
+elif of_machine_match "contactless,imx28-wirenboard50"; then
+    install_rules 99-wb-uart wb5
+elif of_machine_match "contactless,imx23-wirenboard41"; then
+    install_rules 99-wb-uart wb4
+elif of_machine_match "contactless,imx23-wirenboard32"; then
+    install_rules 99-wb-uart wb3
+elif of_machine_match "contactless,imx23-wirenboard28"; then
+    install_rules 99-wb-uart wb2
+else
+    install_rules 99-wb-uart default
+fi
+
+udevadm trigger # apply new udev rules
