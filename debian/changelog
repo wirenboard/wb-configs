@@ -1,3 +1,9 @@
+wb-configs (3.30.0) stable; urgency=medium
+
+  * disable persistence in mosquitto.conf by default
+
+ -- Nikita Maslov <nikita.maslov@wirenboard.com>  Mon, 26 Aug 2024 10:52:35 +0500
+
 wb-configs (3.29.0) stable; urgency=medium
 
   * migrate udev rules installation to wb-prepare.d
