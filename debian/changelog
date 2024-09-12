@@ -1,3 +1,9 @@
+wb-configs (3.30.0) stable; urgency=medium
+
+  * remove nodesource
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Wed, 11 Sep 2024 17:45:00 +0400
+
 wb-configs (3.29.0) stable; urgency=medium
 
   * migrate udev rules installation to wb-prepare.d
