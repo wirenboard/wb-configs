@@ -2,6 +2,7 @@ rm_conffile /etc/kernel/postinst.d/zImage-uboot
 rm_conffile /etc/init.d/wb-configs 1.76~
 rm_conffile /etc/apt/sources.list.d/contactless.list 1.76~
 rm_conffile /etc/apt/sources.list.d/wheezy-backports.list 1.76~
+rm_conffile /etc/apt/sources.list.d/nodesource.list 3.30.1~
 rm_conffile /etc/apt/preferences 1.78~
 rm_conffile /etc/preferences 1.78~
 rm_conffile /etc/mosquitto/conf.d/auth.conf 3.0.0~
