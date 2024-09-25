@@ -8,7 +8,7 @@ Homepage: https://github.com/wirenboard/wb-configs
 
 Package: wb-configs
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 4.23.0~~), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15),
+Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 4.24.0~~), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15),
          linux-image-wb2 | linux-image-wb6 (>= 5.10.35-wb127~~) | linux-image-wb7 (>= 5.10.35-wb127~~) | linux-image-wb8,
          fcgiwrap, wb-update-manager, sudo, pigz
 Pre-Depends: wb-update-manager
