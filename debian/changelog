@@ -1,4 +1,4 @@
-wb-configs (3.28.0-wb101) stable; urgency=medium
+wb-configs (3.28.0-wb100) stable; urgency=medium
 
   * Minor fix to check.sh error reporting
 
