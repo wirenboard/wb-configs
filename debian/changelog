@@ -1,3 +1,9 @@
+wb-configs (3.28.0-wb101) stable; urgency=medium
+
+  * Minor fix to check.sh error reporting
+
+ -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Thu, 26 Sep 2024 16:11:00 +0500
+
 wb-configs (3.28.0) stable; urgency=medium
 
   * add wb-uart udev rules for wb85x
