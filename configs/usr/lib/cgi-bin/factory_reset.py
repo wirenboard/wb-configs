@@ -38,7 +38,7 @@ def main():
     os.makedirs(RW_DIR, exist_ok=True)
 
     # open/close it for writing to trigger wb-watch-update's special mode
-    USE_FACTORY_FIT_FLAG = "%swb_use_factory_fit.flag" % RW_DIR
+    USE_FACTORY_FIT_FLAG = os.path.join(RW_DIR, "wb_use_factory_fit.flag")
     with open(USE_FACTORY_FIT_FLAG, "ab") as fp:
         pass
 
