@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 . /usr/lib/wb-utils/wb_env.sh
 wb_source "of"
 
