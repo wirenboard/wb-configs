@@ -1,3 +1,9 @@
+wb-configs (3.30.3) stable; urgency=medium
+
+  * Fix package maintainer scripts
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 03 Oct 2024 16:23:00 +0400
+
 wb-configs (3.30.2) stable; urgency=medium
 
   * Minor fix to check.sh error reporting
