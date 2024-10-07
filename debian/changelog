@@ -1,3 +1,9 @@
+wb-configs (3.31.0) stable; urgency=medium
+
+  * support factory-fit immutable attr
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 03 Oct 2024 17:01:02 +0300
+
 wb-configs (3.30.2) stable; urgency=medium
 
   * Minor fix to check.sh error reporting
