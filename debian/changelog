@@ -1,3 +1,9 @@
+wb-configs (3.32.0) stable; urgency=medium
+
+  * wb85x: ttyWBE0 -> ttyMOD1; ttyWBE1 -> ttyMOD2
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 17 Oct 2024 17:45:44 +0300
+
 wb-configs (3.31.0) stable; urgency=medium
 
   * support factory-fit immutable attr
