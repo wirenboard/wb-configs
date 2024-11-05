@@ -1,8 +1,44 @@
-wb-configs (3.30.0) stable; urgency=medium
+wb-configs (3.34.0) stable; urgency=medium
 
   * disable persistence in mosquitto.conf by default
 
  -- Nikita Maslov <nikita.maslov@wirenboard.com>  Mon, 26 Aug 2024 10:52:35 +0500
+
+wb-configs (3.33.0) stable; urgency=medium
+
+  * Add user to mosquitto group (need for wb-cloud-agent vulnerability message in webui)
+
+ -- Anton Tarasov <anton.tarasov@wirenboard.com>  Mon, 21 Oct 2024 16:00:00 +0300
+
+wb-configs (3.32.0) stable; urgency=medium
+
+  * wb85x: ttyWBE0 -> ttyMOD1; ttyWBE1 -> ttyMOD2
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 17 Oct 2024 17:45:44 +0300
+
+wb-configs (3.31.0) stable; urgency=medium
+
+  * support factory-fit immutable attr
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 03 Oct 2024 17:01:02 +0300
+
+wb-configs (3.30.2) stable; urgency=medium
+
+  * Minor fix to check.sh error reporting
+
+ -- Aleksandr Kazadaev <aleksandr.kazadaev@wirenboard.com>  Thu, 26 Sep 2024 16:11:00 +0500
+
+wb-configs (3.30.1) stable; urgency=medium
+
+  * Fix removing nodesource
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 12 Sep 2024 18:23:00 +0400
+
+wb-configs (3.30.0) stable; urgency=medium
+
+  * remove nodesource
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Wed, 11 Sep 2024 17:45:00 +0400
 
 wb-configs (3.29.0) stable; urgency=medium
 
