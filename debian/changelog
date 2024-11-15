@@ -1,3 +1,9 @@
+wb-configs (3.34.1) stable; urgency=medium
+
+  * remove nodesource keyring
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 15 Nov 2024 22:15:00 +0400
+
 wb-configs (3.34.0) stable; urgency=medium
 
   * disable persistence in mosquitto.conf by default
