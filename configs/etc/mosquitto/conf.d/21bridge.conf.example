@@ -1,13 +1,12 @@
-connection wb_devices_cloud.wb_SERIAL
-address contactless.ru
+# See https://mosquitto.org/man/mosquitto-conf-5.html for more information
+
+connection bridge1
+# address of server
+address 10.0.0.105
 notifications true
-notification_topic /client/wb_SERIAL/bridge_status
-keepalive_interval 20
-restart_timeout 20
+notification_topic /clientnotification/bridge1_status
+remote_username test
+remote_password wbpassword
 
-topic /devices/#  both 2 "" /client/wb_SERIAL
-topic /config/#  both 2 "" /client/wb_SERIAL
-topic /rpc/#  both 2 "" /client/wb_SERIAL
-
-username wb_SERIAL
-password PASSWORD
+# avoid using QoS 1 and 2 here
+topic /temp1/# both 0 /devices /controller
