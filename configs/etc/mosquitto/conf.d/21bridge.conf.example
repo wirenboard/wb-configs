@@ -1,4 +1,4 @@
-# See https://mosquitto.org/man/mosquitto-conf-5.html for more information
+# See https://mosquitto.org/man/mosquitto-conf-5.html and https://wirenboard.com/wiki/MQTT or more information
 
 connection bridge1
 # address of server
