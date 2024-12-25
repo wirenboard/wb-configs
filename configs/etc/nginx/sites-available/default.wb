@@ -34,13 +34,26 @@ server {
 	# Make site accessible from http://localhost/
 	server_name localhost;
 
+	auth_request /auth/check;
+	auth_request_set $homeui_user $upstream_http_homeui_user;
+
 	location / {
 		index index.html;
 		try_files $uri $uri/ /index.html;
 		add_header Cache-Control "no-store, no-cache, must-revalidate";
+		error_page 401 @error401;
 	}
 
-	location ~* \.(js|jpg|jpeg|gif|png|svg|css)$ {
+	location /index.html {
+		sub_filter_once on;
+		sub_filter '<head>' '</head><script language="javascript">localStorage.setItem("user_type", "$homeui_user");</script>';
+	}
+
+	location ~ ^/(favicon\.ico|robots\.txt|images\/logo\.svg)$ {
+		auth_request off;
+	}
+
+	location ~* \.(js|jpg|jpeg|gif|png|svg|css|json)$ {
 		add_header Cache-Control "max-age=31536000";
 	}
 
@@ -164,5 +177,69 @@ server {
 	    proxy_http_version 1.1;
 	    proxy_set_header Upgrade $http_upgrade;
 	    proxy_set_header Connection upgrade;
+	}
+
+	location /auth/check {
+		internal;
+		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/auth.py;
+		fastcgi_param SCRIPT_NAME auth.py;
+		fastcgi_param REQUEST_URI $request_uri;
+		fastcgi_param ACTION check_auth;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+	}
+
+	location /auth/user {
+		limit_except POST {
+			deny all;
+		}
+		gzip off;
+		auth_request off;
+
+		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/auth.py;
+		fastcgi_param SCRIPT_NAME auth.py;
+		fastcgi_param ACTION auth_setup;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+	}
+
+	location /login {
+		auth_request off;
+		if ($request_method = POST) {
+			rewrite ^ /login_script last;
+		}
+		try_files $uri $uri.html;
+	}
+
+	location /login_script {
+		internal;
+		auth_request off;
+		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/auth.py;
+		fastcgi_param SCRIPT_NAME auth.py;
+		fastcgi_param ACTION login;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		auth_request_set $saved_set_cookie $upstream_http_set_cookie;
+		add_header Set-Cookie $saved_set_cookie;
+	}
+
+	location /logout {
+		limit_except POST {
+			deny all;
+		}
+		add_header Set-Cookie "id=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		return 200;
+	}
+
+	location /not_configured_users {
+		limit_except GET {
+			deny all;
+		}
+
+		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/auth.py;
+		fastcgi_param SCRIPT_NAME auth.py;
+		fastcgi_param ACTION not_configured_users;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+	}
+
+	location @error401 {
+		return 302 /login;
 	}
 }

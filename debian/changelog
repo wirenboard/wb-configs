@@ -1,3 +1,9 @@
+wb-configs (3.35.0) stable; urgency=medium
+
+  * Add authentication for Homeui
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Mon, 16 Dec 2024 12:06:04 +0500
+
 wb-configs (3.34.2) stable; urgency=medium
 
   * Update 21bridge.conf.example
