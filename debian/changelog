@@ -1,10 +1,3 @@
-wb-configs (3.34.3) stable; urgency=medium
-
-  * Add a 'crda' package for regional settings. Set a global regional setting
-    for Wifi on KZ.
-
- -- Anton <anton.tarasov@wirenboard.com>  Thu, 26 Dec 2024 11:18:59 +0300
-
 wb-configs (3.34.2) stable; urgency=medium
 
   * Update 21bridge.conf.example
