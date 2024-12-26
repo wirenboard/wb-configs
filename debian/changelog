@@ -1,3 +1,16 @@
+wb-configs (3.34.4) stable; urgency=medium
+
+  * Revert of 804b59681c3b6e5f9a2f485ce251e5eebfef3c6c, no functional changes
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 26 dec 2024 11:45:23 +0300
+
+wb-configs (3.34.3) stable; urgency=medium
+
+  * Add a 'crda' package for regional settings. Set a global regional setting
+    for Wifi on KZ.
+
+ -- Anton <anton.tarasov@wirenboard.com>  Thu, 26 Dec 2024 11:18:59 +0300
+
 wb-configs (3.34.2) stable; urgency=medium
 
   * Update 21bridge.conf.example
