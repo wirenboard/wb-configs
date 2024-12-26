@@ -276,7 +276,7 @@ def main():
     action = os.environ.get("ACTION")
     if action not in action_methods:
         raise ValueError("Invalid action")
-    con = sqlite3.connect("/var/wb-webui.conf.d/users.db")
+    con = sqlite3.connect("/var/wb-webui/users.db")
     action_methods[action](con)
 
 
