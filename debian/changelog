@@ -1,4 +1,4 @@
-wb-configs (3.34.5) stable; urgency=medium
+wb-configs (3.35.0) stable; urgency=medium
 
   * Add a 'crda' package for regional settings. Set a global regional setting for Wifi on KZ.
 
