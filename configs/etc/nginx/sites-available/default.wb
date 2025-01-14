@@ -34,10 +34,10 @@ server {
 	# Make site accessible from http://localhost/
 	server_name localhost;
 
-	auth_request /auth/check;
-	auth_request_set $homeui_user $upstream_http_homeui_user;
-
 	location / {
+		set $required_user_type "user";
+		auth_request /auth/check;
+
 		index index.html;
 		try_files $uri $uri/ /index.html;
 		add_header Cache-Control "no-store, no-cache, must-revalidate";
@@ -45,8 +45,12 @@ server {
 	}
 
 	location /index.html {
+		set $required_user_type "user";
+		auth_request /auth/check;
+		auth_request_set $homeui_user_type $upstream_http_user_type;
+
 		sub_filter_once on;
-		sub_filter '<head>' '</head><script language="javascript">localStorage.setItem("user_type", "$homeui_user");</script>';
+		sub_filter '<head>' '</head><script language="javascript">localStorage.setItem("user_type", "$homeui_user_type");</script>';
 	}
 
 	location ~ ^/(favicon\.ico|robots\.txt|images\/logo\.svg)$ {
@@ -54,6 +58,9 @@ server {
 	}
 
 	location ~* \.(js|jpg|jpeg|gif|png|svg|css|json)$ {
+		set $required_user_type "user";
+		auth_request /auth/check;
+
 		add_header Cache-Control "max-age=31536000";
 	}
 
@@ -62,6 +69,9 @@ server {
         limit_except GET {
             deny all;
         }
+
+        set $required_user_type "user";
+        auth_request /auth/check;
 
         fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/check.sh;
         fastcgi_param HTTP_SCHEME $scheme;
@@ -81,6 +91,8 @@ server {
             deny all;
         }
 
+        auth_request /auth/check;
+
         fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/download_rootfs.sh;
         fastcgi_param SCRIPT_NAME download_rootfs.sh;
         fastcgi_param QUERY_STRING $query_string;
@@ -99,6 +111,8 @@ server {
             deny all;
         }
 
+        auth_request /auth/check;
+
         fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/download_configs.sh;
         fastcgi_param SCRIPT_NAME download_configs.sh;
         fastcgi_param QUERY_STRING $query_string;
@@ -116,6 +130,8 @@ server {
         limit_except GET {
             deny all;
         }
+
+        auth_request /auth/check;
 
         fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/download_everything.sh;
         fastcgi_param SCRIPT_NAME download_everything.sh;
@@ -138,6 +154,8 @@ server {
 
 		gzip off;
 
+		auth_request /auth/check;
+
 		fastcgi_param UPLOADS_DIR /var/www/uploads;
 		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/fwupdate_upload.py;
 		fastcgi_param SCRIPT_NAME fwupdate_upload.py;
@@ -158,6 +176,8 @@ server {
 		}
 		gzip off;
 
+		auth_request /auth/check;
+
 		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/factory_reset.py;
 		fastcgi_param SCRIPT_NAME factory_reset.py;
 		fastcgi_param QUERY_STRING $query_string;
@@ -169,10 +189,15 @@ server {
 	}
 
 	location /fwupdate/progress {
+		auth_request /auth/check;
+
 		report_uploads fwupdate;
 	}
 
 	location /mqtt {
+	    set $required_user_type "user";
+	    auth_request /auth/check;
+
 	    proxy_pass http://127.0.0.1:18883;
 	    proxy_http_version 1.1;
 	    proxy_set_header Upgrade $http_upgrade;
@@ -181,23 +206,15 @@ server {
 
 	location /auth/check {
 		internal;
-		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/auth.py;
-		fastcgi_param SCRIPT_NAME auth.py;
-		fastcgi_param REQUEST_URI $request_uri;
-		fastcgi_param ACTION check_auth;
-		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		proxy_pass http://localhost:8180/check_auth;
+		proxy_pass_request_body off;
+		proxy_set_header Content-Length "";
+		proxy_set_header Required-User-Type $required_user_type;
 	}
 
 	location /auth/users {
-		gzip off;
-		auth_request off;
-
-		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/auth.py;
-		fastcgi_param SCRIPT_NAME auth.py;
-		fastcgi_param REQUEST_URI $request_uri;
-		fastcgi_param REQUEST_METHOD $request_method;
-		fastcgi_param ACTION users;
-		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		auth_request off; # authentication is managed in the backend
+		proxy_pass http://localhost:8180/users;
 	}
 
 	location /login {
@@ -210,16 +227,11 @@ server {
 
 	location /login_script {
 		internal;
-		auth_request off;
-		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/auth.py;
-		fastcgi_param SCRIPT_NAME auth.py;
-		fastcgi_param ACTION login;
-		fastcgi_pass unix:/var/run/fcgiwrap.socket;
-		auth_request_set $saved_set_cookie $upstream_http_set_cookie;
-		add_header Set-Cookie $saved_set_cookie;
+		proxy_pass http://localhost:8180/login;
 	}
 
 	location /logout {
+		auth_request off;
 		limit_except POST {
 			deny all;
 		}
@@ -228,14 +240,9 @@ server {
 	}
 
 	location /auth/check_config {
-		limit_except GET {
-			deny all;
-		}
-
-		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/auth.py;
-		fastcgi_param SCRIPT_NAME auth.py;
-		fastcgi_param ACTION check_config;
-		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		set $required_user_type "user";
+		auth_request /auth/check;
+		proxy_pass http://localhost:8180/check_config;
 	}
 
 	location @error401 {
