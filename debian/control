@@ -19,7 +19,8 @@ Depends: ${shlibs:Depends},
          fcgiwrap,
          wb-update-manager,
          sudo,
-         pigz
+         pigz,
+         crda
 Pre-Depends: wb-update-manager
 Provides: ${diverted-files}, mqtt-wss
 Conflicts: ${diverted-files}, mqtt-wss, wb-homa-adc (<< 1.9.2), wb-homa-gpio (<< 1.14), wb-mqtt-serial(<< 1.14.2), wb-rules(<< 1.5.1), busybox-syslogd (<< 9:1.0~dummy), nginx-common (<< 1.7.11)
