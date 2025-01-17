@@ -206,10 +206,11 @@ server {
 
 	location /auth/check {
 		internal;
-		proxy_pass http://localhost:8180/check_auth;
+		client_max_body_size 1000M;
 		proxy_pass_request_body off;
 		proxy_set_header Content-Length "";
 		proxy_set_header Required-User-Type $required_user_type;
+		proxy_pass http://localhost:8180/check_auth;
 	}
 
 	location /auth/users {

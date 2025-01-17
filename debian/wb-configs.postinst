@@ -154,10 +154,6 @@ chgrp mosquitto /run/mosquitto
 chmod g+x /run/mosquitto
 usermod -a -G mosquitto $nginx_user
 
-# grant access fastcgi sripts to /var/wb-webui
-chgrp $nginx_user /var/wb-webui
-chmod g+wx /var/wb-webui
-
 # restart fcgiwrap to apply group changes
 deb-systemd-invoke restart fcgiwrap || true
 
