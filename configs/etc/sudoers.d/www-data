@@ -1,1 +1,1 @@
-www-data ALL = (root) NOPASSWD: /usr/bin/tar,/usr/bin/mount,/usr/bin/umount,/bin/tar,/bin/mount,/bin/umount
+www-data ALL = (root) NOPASSWD: /usr/bin/tar,/usr/bin/mount,/usr/bin/umount,/bin/tar,/bin/mount,/bin/umount,/usr/bin/wb-gen-serial

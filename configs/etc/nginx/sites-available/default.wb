@@ -40,7 +40,7 @@ server {
 		add_header Cache-Control "no-store, no-cache, must-revalidate";
 	}
 
-	location ~* \.(js|jpg|jpeg|gif|png|svg|css)$ {
+	location ~* \.(js|jpg|jpeg|gif|png|svg|css|json)$ {
 		add_header Cache-Control "max-age=31536000";
 	}
 
@@ -49,6 +49,9 @@ server {
         limit_except GET {
             deny all;
         }
+
+        set $required_user_type "user";
+        auth_request /auth/check;
 
         fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/check.sh;
         fastcgi_param HTTP_SCHEME $scheme;
@@ -68,6 +71,8 @@ server {
             deny all;
         }
 
+        auth_request /auth/check;
+
         fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/download_rootfs.sh;
         fastcgi_param SCRIPT_NAME download_rootfs.sh;
         fastcgi_param QUERY_STRING $query_string;
@@ -86,6 +91,8 @@ server {
             deny all;
         }
 
+        auth_request /auth/check;
+
         fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/download_configs.sh;
         fastcgi_param SCRIPT_NAME download_configs.sh;
         fastcgi_param QUERY_STRING $query_string;
@@ -103,6 +110,8 @@ server {
         limit_except GET {
             deny all;
         }
+
+        auth_request /auth/check;
 
         fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/download_everything.sh;
         fastcgi_param SCRIPT_NAME download_everything.sh;
@@ -125,6 +134,8 @@ server {
 
 		gzip off;
 
+		auth_request /auth/check;
+
 		fastcgi_param UPLOADS_DIR /var/www/uploads;
 		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/fwupdate_upload.py;
 		fastcgi_param SCRIPT_NAME fwupdate_upload.py;
@@ -145,6 +156,8 @@ server {
 		}
 		gzip off;
 
+		auth_request /auth/check;
+
 		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/factory_reset.py;
 		fastcgi_param SCRIPT_NAME factory_reset.py;
 		fastcgi_param QUERY_STRING $query_string;
@@ -156,13 +169,77 @@ server {
 	}
 
 	location /fwupdate/progress {
+		auth_request /auth/check;
+
 		report_uploads fwupdate;
 	}
 
 	location /mqtt {
+	    set $required_user_type "user";
+	    auth_request /auth/check;
+
 	    proxy_pass http://127.0.0.1:18883;
 	    proxy_http_version 1.1;
 	    proxy_set_header Upgrade $http_upgrade;
 	    proxy_set_header Connection upgrade;
+	}
+
+	location /auth/check {
+		internal;
+		client_max_body_size 1000M;
+		proxy_pass_request_body off;
+		proxy_set_header Content-Length "";
+		proxy_set_header Required-User-Type $required_user_type;
+		proxy_pass http://localhost:8180/check_auth;
+	}
+
+	location /auth/users {
+		auth_request off; # authentication is managed in the backend
+		proxy_pass http://localhost:8180/users;
+	}
+
+	location /login {
+		auth_request off;
+		limit_except POST {
+			deny all;
+		}
+		proxy_set_header X-Forwarded-Scheme $scheme;
+		proxy_pass http://localhost:8180/login;
+	}
+
+	location /logout {
+		auth_request off;
+		limit_except POST {
+			deny all;
+		}
+		add_header Set-Cookie "id=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		return 200;
+	}
+
+	location /auth/who_am_i {
+		auth_request off;
+		proxy_pass http://localhost:8180/who_am_i;
+	}
+
+	location /https/redirect {
+		auth_request off;
+		limit_except GET {
+			deny all;
+		}
+		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/https_redirect.sh;
+		fastcgi_param SCRIPT_NAME https_redirect.sh;
+		fastcgi_param HTTP_HOST_IP $server_addr;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+	}
+
+	location /https/check {
+		auth_request off;
+		limit_except GET {
+			deny all;
+		}
+
+		add_header Content-Type text/plain;
+		add_header 'Access-Control-Allow-Origin' '*' always;
+		return 200;
 	}
 }
