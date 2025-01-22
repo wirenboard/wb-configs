@@ -19,6 +19,10 @@
 
 upload_progress fwupdate 1M;
 
+upstream wb-homeui-auth {
+    server unix:/tmp/wb-homeui-auth.socket;
+}
+
 server {
 	#listen   80; ## listen for ipv4; this line is default and implied
 	#listen   [::]:80 default_server ipv6only=on; ## listen for ipv6
@@ -190,12 +194,12 @@ server {
 		proxy_pass_request_body off;
 		proxy_set_header Content-Length "";
 		proxy_set_header Required-User-Type $required_user_type;
-		proxy_pass http://localhost:8180/check_auth;
+		proxy_pass http://wb-homeui-auth/check_auth;
 	}
 
 	location /auth/users {
 		auth_request off; # authentication is managed in the backend
-		proxy_pass http://localhost:8180/users;
+		proxy_pass http://wb-homeui-auth/users;
 	}
 
 	location /login {
@@ -204,7 +208,7 @@ server {
 			deny all;
 		}
 		proxy_set_header X-Forwarded-Scheme $scheme;
-		proxy_pass http://localhost:8180/login;
+		proxy_pass http://wb-homeui-auth/login;
 	}
 
 	location /logout {
@@ -218,7 +222,7 @@ server {
 
 	location /auth/who_am_i {
 		auth_request off;
-		proxy_pass http://localhost:8180/who_am_i;
+		proxy_pass http://wb-homeui-auth/who_am_i;
 	}
 
 	location /https/redirect {
