@@ -19,8 +19,8 @@
 
 upload_progress fwupdate 1M;
 
-upstream wb-homeui-auth {
-    server unix:/tmp/wb-homeui-auth.socket;
+upstream wb-homeui-back {
+    server unix:/tmp/wb-homeui.socket;
 }
 
 server {
@@ -194,12 +194,12 @@ server {
 		proxy_pass_request_body off;
 		proxy_set_header Content-Length "";
 		proxy_set_header Required-User-Type $required_user_type;
-		proxy_pass http://wb-homeui-auth/check_auth;
+		proxy_pass http://wb-homeui-back/auth/check;
 	}
 
 	location /auth/users {
 		auth_request off; # authentication is managed in the backend
-		proxy_pass http://wb-homeui-auth/users;
+		proxy_pass http://wb-homeui-back/users;
 	}
 
 	location /login {
@@ -208,7 +208,7 @@ server {
 			deny all;
 		}
 		proxy_set_header X-Forwarded-Scheme $scheme;
-		proxy_pass http://wb-homeui-auth/login;
+		proxy_pass http://wb-homeui-back/auth/login;
 	}
 
 	location /logout {
@@ -216,34 +216,23 @@ server {
 		limit_except POST {
 			deny all;
 		}
-		add_header Set-Cookie "id=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-		return 200;
+		proxy_pass http://wb-homeui-back/auth/logout;
 	}
 
 	location /auth/who_am_i {
 		auth_request off;
-		proxy_pass http://wb-homeui-auth/who_am_i;
+		limit_except GET {
+			deny all;
+		}
+		proxy_pass http://wb-homeui-back/auth/who_am_i;
 	}
 
-	location /https/redirect {
+	location /device/info {
 		auth_request off;
 		limit_except GET {
 			deny all;
 		}
-		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/https_redirect.sh;
-		fastcgi_param SCRIPT_NAME https_redirect.sh;
-		fastcgi_param HTTP_HOST_IP $server_addr;
-		fastcgi_pass unix:/var/run/fcgiwrap.socket;
-	}
-
-	location /https/check {
-		auth_request off;
-		limit_except GET {
-			deny all;
-		}
-
-		add_header Content-Type text/plain;
-		add_header 'Access-Control-Allow-Origin' '*' always;
-		return 200;
+		proxy_set_header X-Forwarded-Host-Ip $server_addr;
+		proxy_pass http://wb-homeui-back/device/info;
 	}
 }
