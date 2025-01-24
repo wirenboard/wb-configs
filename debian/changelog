@@ -1,3 +1,15 @@
+wb-configs (3.37.0) stable; urgency=medium
+
+  * Add HTTPS redirect for Homeui
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Tue, 21 Jan 2025 11:16:12 +0500
+
+wb-configs (3.36.0) stable; urgency=medium
+
+  * Add authentication for Homeui
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Mon, 16 Dec 2024 12:06:04 +0500
+
 wb-configs (3.35.0) stable; urgency=medium
 
   * Add a 'crda' package for regional settings. Set a global regional setting for Wifi on KZ.

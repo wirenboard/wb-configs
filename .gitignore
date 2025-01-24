@@ -39,3 +39,4 @@ debian/wb-configs-wheezy/
 debian/wb-configs-stretch/
 
 .vscode
+.config
