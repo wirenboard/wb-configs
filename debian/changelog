@@ -1,3 +1,9 @@
+wb-configs (3.36.0) stable; urgency=medium
+
+  * Add eth0 & eth1 ip addrs to motd
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 23 Jan 2025 18:12:01 +0300
+
 wb-configs (3.35.0) stable; urgency=medium
 
   * Add a 'crda' package for regional settings. Set a global regional setting for Wifi on KZ.
