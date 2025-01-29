@@ -1,3 +1,10 @@
+wb-configs (3.37.1) stable; urgency=medium
+
+  * Check ssl cert for homeui at connectivity change
+  * Request a new cert, if < 15 days left
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Tue, 18 Feb 2025 12:10:02 +0300
+
 wb-configs (3.37.0) stable; urgency=medium
 
   * Add HTTPS redirect for Homeui

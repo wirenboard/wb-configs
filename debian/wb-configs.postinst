@@ -264,3 +264,6 @@ mosquitto_fixes()
 }
 
 mosquitto_fixes
+
+deb-systemd-invoke daemon-reload || true
+deb-systemd-invoke enable --now NetworkManager-dispatcher.service || true
