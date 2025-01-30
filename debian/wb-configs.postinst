@@ -265,18 +265,5 @@ mosquitto_fixes()
 
 mosquitto_fixes
 
-add_https_certbot()
-{
-    short_sn=$(wb-gen-serial -s | awk '{print tolower($0)}')
-    ssl_str="$short_sn.ip.xcvb.win"
-    nginx_str="server_name *.$ssl_str;"
-
-    if ! grep -q "$nginx_str" /etc/nginx/sites-available/default; then
-        certbot certonly --nginx --server https://acme.xcvb.win/directory  --register-unsafely-without-email --agree-tos -n -d "*.$ssl_str"
-
-        sed -i "s/root \/var\/www;/\ root \/var\/www;\n$nginx_str listen 80; listen 443 ssl; ssl_certificate \/etc\/letsencrypt\/live\/$ssl_str\/fullchain.pem; ssl_certificate_key \/etc\/letsencrypt\/live\/$ssl_str\/privkey.pem; include \/etc\/letsencrypt\/options-ssl-nginx.conf; ssl_dhparam \/etc\/letsencrypt\/ssl-dhparams.pem;/" /etc/nginx/sites-available/default
-        deb-systemd-invoke restart nginx
-    fi
-}
-
-add_https_certbot
+deb-systemd-invoke daemon-reload || true
+deb-systemd-invoke enable --now NetworkManager-dispatcher.service || true
