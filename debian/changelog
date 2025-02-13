@@ -1,3 +1,9 @@
+wb-configs (3.37.0) stable; urgency=medium
+
+  * Set the system locale to en_US.UTF-8 by default to ensure correct rendering of pseudographics when connecting from SSH clients on Windows.
+
+ -- Anton <anton.tarasov@wirenboard.com>  Thu, 13 Feb 2025 11:08:46 +0300
+
 wb-configs (3.36.0) stable; urgency=medium
 
   * Add eth0 & eth1 ip addrs to motd
