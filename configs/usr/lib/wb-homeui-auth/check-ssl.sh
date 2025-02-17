@@ -11,7 +11,7 @@ else
     short_sn=$(wb-gen-serial -s | awk '{print tolower($0)}')
 fi
 
-DOMAIN="$short_sn.ip.wirenboard.com"
+DOMAIN="*.$short_sn.ip.wirenboard.com"
 SSL_CERT_PATH="/etc/ssl/sslip.pem"
 SSL_CERT_KEY_PATH="/etc/ssl/sslip.key"
 DHPARAM_PATH="/etc/ssl/dhparam.pem"
@@ -69,20 +69,18 @@ fi
 
 echo "Successfully got certificate"
 cat "${SCRATCH}" | jq -r '.fullchain_pem' > $SSL_CERT_PATH
-mv $SSL_CERT_KEY_PATH
+mv $KEY $SSL_CERT_KEY_PATH
 
 setup_nginx()
 {
     mkdir -p /etc/nginx/ssl/
     cat > /etc/nginx/ssl/auth.conf <<EOL
 
-        server_name *.$DOMAIN;
+        server_name $DOMAIN;
         listen 80;
         listen 443 ssl;
         ssl_certificate $SSL_CERT_PATH;
         ssl_certificate_key $SSL_CERT_KEY_PATH;
-        include /etc/letsencrypt/options-ssl-nginx.conf;
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
         ssl_session_cache shared:le_nginx_SSL:10m;
         ssl_session_timeout 1440m;
         ssl_session_tickets off;
@@ -91,7 +89,7 @@ setup_nginx()
         ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384";
         ssl_dhparam $DHPARAM_PATH;
 EOL
-    openssl dhparam -out $DHPARAM_PATH 4096
+    openssl dhparam -out $DHPARAM_PATH 256
     systemctl restart nginx
 }
 
