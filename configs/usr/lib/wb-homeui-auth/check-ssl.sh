@@ -21,7 +21,7 @@ KEY=/tmp/private.key
 DEVICE_ORIGINAL_CERT=/etc/ssl/certs/device_bundle.crt.pem
 CERT_FOR_REQUEST=/var/run/shm/device_bundle.crt.pem
 
-openssl x509 -checkend $((60*60*24*300))  -noout -in $SSL_CERT_PATH && {
+openssl x509 -checkend $((60*60*24*30))  -noout -in $SSL_CERT_PATH && {
     echo "The certificate won't expire soon, exiting"
     exit 0
 }
