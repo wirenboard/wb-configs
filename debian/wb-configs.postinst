@@ -104,8 +104,6 @@ if [[ -f /etc/motd ]] && [[ $(sha256sum /etc/motd | head -c 6) == 'a37897' ]]; t
     ln -s /var/run/motd /etc/motd
 fi
 
-deb-systemd-invoke reload nginx || true
-
 # comment old patched mosquitto's `allow_anonymous_localhost` out
 # or it will break new mosquitto launch
 OPT_REGEX='^\s*\(allow_anonymous_localhost\)'
@@ -140,21 +138,6 @@ if echo "$2" | grep '~~transitional' >/dev/null; then
     echo "Generating new APT preferences according to installed release info"
     wb-release -r
 fi
-
-# nginx user should has rw access to fwupdate uploads dir
-nginx_uploads_dir="/mnt/data/uploads"
-nginx_user="www-data"
-if [[ -d $nginx_uploads_dir ]] && $(id -u $nginx_user > /dev/null 2>&1); then
-    echo "Setting ownership $nginx_user to $nginx_uploads_dir"
-    chown -R $nginx_user:$nginx_user $nginx_uploads_dir
-fi
-
-# grant access fastcgi sripts to mosquitto's unix socket
-chgrp mosquitto /run/mosquitto
-chmod g+x /run/mosquitto
-usermod -a -G mosquitto $nginx_user 
-# restart fcgiwrap to apply group changes
-deb-systemd-invoke restart fcgiwrap || true
 
 nm_fixes() {
         local nm_connections=("/etc/NetworkManager/system-connections/wb-eth0.nmconnection"

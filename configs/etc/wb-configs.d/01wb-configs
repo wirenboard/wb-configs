@@ -31,11 +31,8 @@ wb_move /var/lib/mosquitto
 wb_move /root/
 wb_move_nosavefiles /var/cache/apt/             # just fat, move it out
 wb_move_nosavefiles /var/lib/apt/lists/			# -//-
-wb_move_nosavefiles /var/www/uploads/ /uploads  # here will be firmware updates
 
 wb_move /etc/lirc/lircd.conf.d/
-wb_move /etc/nginx/passwd
-wb_move /etc/nginx/sites-enabled/
 wb_move /etc/mosquitto/conf.d/
 wb_move /etc/mosquitto/passwd/
 wb_move /etc/mosquitto/acl/
