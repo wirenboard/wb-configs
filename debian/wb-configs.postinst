@@ -86,6 +86,18 @@ wb_check_undisplace_unlink_from()
 
 if [ "$1" = "configure" ]; then
     wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
+
+     if ! grep -qE '^[[:space:]]*(LANG|LC_ALL)=' /etc/default/locale 2>/dev/null; then
+        echo "No locale set in /etc/default/locale. Setting en_US.UTF-8..."
+
+        # Generate locale:
+        locale-gen en_US.UTF-8 || true
+
+        # Update locale settings in /etc/default/locale
+        update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+    else
+        echo "Locale is already set, skipping..."
+    fi
 fi
 
 #DEBHELPER#
