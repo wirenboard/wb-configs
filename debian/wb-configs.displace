@@ -16,7 +16,6 @@
 /etc/ppp/chap-secrets.wb
 /etc/ppp/ip-up.d/0000usepeerdns.wb
 
-/etc/nginx/sites-available/default.wb
 /etc/nfc/libnfc.conf.wb
 
 /etc/lirc/hardware.conf.wb
