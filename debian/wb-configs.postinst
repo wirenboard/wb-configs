@@ -239,6 +239,23 @@ add_mmc_mount_options(){
 
 add_mmc_mount_options
 
+extended_rootfs_fix(){
+    # If the system has been converted to a single large ROOTFS, 
+    # the partition /dev/mmcblk0p6 no longer exists.
+    FSTAB="/etc/fstab"
+    PARTITION="/dev/mmcblk0p6"
+
+    if [ -b "$PARTITION" ]; then
+        echo "Partition $PARTITION exists. Uncommenting in $FSTAB."
+        sed -i "\|^[[:space:]]*#\?[[:space:]]*$PARTITION|{s|^[[:space:]]*#\+[[:space:]]*||;t}" "$FSTAB"
+    else
+        echo "Partition $PARTITION not found. Commenting in $FSTAB."
+        sed -i "\|^[[:space:]]*#\?[[:space:]]*$PARTITION|{s|^[[:space:]]*#\+[[:space:]]*||;t;s|^|#|}" "$FSTAB"
+    fi
+}
+
+extended_rootfs_fix
+
 mosquitto_fixes()
 {
     MOSQUITTO_CONF="/etc/mosquitto/mosquitto.conf"
