@@ -247,9 +247,17 @@ extended_rootfs_fix(){
 
     if [ -b "$PARTITION" ]; then
         echo "Partition $PARTITION exists. Uncommenting in $FSTAB."
+        # Возвращаю свап на /dev/mmcblk0p5:
+        sed -i 's|/dev/mmcblk0p3|/dev/mmcblk0p5|g' "$FSTAB"
+        
+        # Раскомментируею строку с /dev/mmcblk0p6, если она закомментирована:
         sed -i "\|^[[:space:]]*#\?[[:space:]]*$PARTITION|{s|^[[:space:]]*#\+[[:space:]]*||;t}" "$FSTAB"
     else
         echo "Partition $PARTITION not found. Commenting in $FSTAB."
+        # Меняю свап с /dev/mmcblk0p5 на /dev/mmcblk0p3:
+        sed -i 's|/dev/mmcblk0p5|/dev/mmcblk0p3|g' "$FSTAB"
+        
+        # Комментируем строку с /dev/mmcblk0p6 (если вдруг не закомментирована):
         sed -i "\|^[[:space:]]*#\?[[:space:]]*$PARTITION|{s|^[[:space:]]*#\+[[:space:]]*||;t;s|^|#|}" "$FSTAB"
     fi
 }
