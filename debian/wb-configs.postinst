@@ -239,6 +239,31 @@ add_mmc_mount_options(){
 
 add_mmc_mount_options
 
+extended_rootfs_fix(){
+    # If the system has been converted to a single large ROOTFS, 
+    # the partition /dev/mmcblk0p6 no longer exists.
+    FSTAB="/etc/fstab"
+    PARTITION="/dev/mmcblk0p6"
+
+    if [ -b "$PARTITION" ]; then
+        echo "Partition $PARTITION exists. Uncommenting in $FSTAB."
+        # Возвращаю свап на /dev/mmcblk0p5:
+        sed -i 's|/dev/mmcblk0p3|/dev/mmcblk0p5|g' "$FSTAB"
+        
+        # Раскомментируею строку с /dev/mmcblk0p6, если она закомментирована:
+        sed -i "\|^[[:space:]]*#\?[[:space:]]*$PARTITION|{s|^[[:space:]]*#\+[[:space:]]*||;t}" "$FSTAB"
+    else
+        echo "Partition $PARTITION not found. Commenting in $FSTAB."
+        # Меняю свап с /dev/mmcblk0p5 на /dev/mmcblk0p3:
+        sed -i 's|/dev/mmcblk0p5|/dev/mmcblk0p3|g' "$FSTAB"
+        
+        # Комментируем строку с /dev/mmcblk0p6 (если вдруг не закомментирована):
+        sed -i "\|^[[:space:]]*#\?[[:space:]]*$PARTITION|{s|^[[:space:]]*#\+[[:space:]]*||;t;s|^|#|}" "$FSTAB"
+    fi
+}
+
+extended_rootfs_fix
+
 mosquitto_fixes()
 {
     MOSQUITTO_CONF="/etc/mosquitto/mosquitto.conf"
