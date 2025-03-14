@@ -1,3 +1,9 @@
+wb-configs (3.37.2) stable; urgency=medium
+
+  * Disable default route on dbg0
+
+ -- Ekaterina Volkova <ekaterina.volkova@wirenboard.com>  Fri, 14 Mar 2025 10:46:47 +0300
+
 wb-configs (3.37.1) stable; urgency=medium
 
   * Change the locale setting in favor of executing the postinit-script
