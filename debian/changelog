@@ -1,3 +1,9 @@
+wb-configs (3.38.0) stable; urgency=medium
+
+  * Remove wb-mqtt-homeui related configs and scripts
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Thu, 27 Mar 2025 15:09:17 +0500
+
 wb-configs (3.37.2) stable; urgency=medium
 
   * Disable default route on dbg0
