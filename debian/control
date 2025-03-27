@@ -1,7 +1,7 @@
 Source: wb-configs
 Section: config
 Priority: extra
-Maintainer: Evgeny Boger <boger@contactless.ru>
+Maintainer: Wiren Board team <info@wirenboard.com>
 Build-Depends: debhelper (>= 10), config-package-dev (>= 5.0)
 Standards-Version: 3.9.4
 Homepage: https://github.com/wirenboard/wb-configs
@@ -10,11 +10,11 @@ Package: wb-configs
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 4.24.0~~), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15),
          linux-image-wb2 | linux-image-wb6 (>= 5.10.35-wb127~~) | linux-image-wb7 (>= 5.10.35-wb127~~) | linux-image-wb8,
-         fcgiwrap, wb-update-manager, sudo, pigz, crda
+         wb-update-manager, sudo, crda
 Pre-Depends: wb-update-manager
 Provides: ${diverted-files}, mqtt-wss
 Conflicts: ${diverted-files}, mqtt-wss, wb-homa-adc (<< 1.9.2), wb-homa-gpio (<< 1.14), wb-mqtt-serial(<< 1.14.2), wb-rules(<< 1.5.1), busybox-syslogd (<< 9:1.0~dummy), nginx-common (<< 1.7.11)
-Breaks: wb-configs-stretch (<< 3.0.0), wb-mqtt-homeui (<< 2.92.0)
+Breaks: wb-configs-stretch (<< 3.0.0), wb-mqtt-homeui (<< 2.115.0~~)
 Recommends: wb-essential, wb-suite, figlet
 Replaces: mqtt-wss, wb-configs-stretch (<< 3.0.0)
 Description: Default common config files for Wiren Board
