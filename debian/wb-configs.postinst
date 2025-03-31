@@ -245,15 +245,24 @@ extended_rootfs_fix(){
     FSTAB="/etc/fstab"
     PARTITION="/dev/mmcblk0p6"
 
+    # Так как конфиг у нас в configs/etc/fstab.wb, то меняю его седом:
+    # Если существует 6й раздел:
     if [ -b "$PARTITION" ]; then
-        echo "Partition $PARTITION exists. Uncommenting in $FSTAB."
+        # СТАРАЯ РАЗМЕТКА ДИСКА
+        
+        # Меняю rootfs с /dev/mmcblk0p4 на /dev/mmcblk0p2:
+        sed -i 's|/dev/mmcblk0p4|/dev/mmcblk0p2|g' "$FSTAB"
+        
         # Возвращаю свап на /dev/mmcblk0p5:
         sed -i 's|/dev/mmcblk0p3|/dev/mmcblk0p5|g' "$FSTAB"
         
         # Раскомментируею строку с /dev/mmcblk0p6, если она закомментирована:
         sed -i "\|^[[:space:]]*#\?[[:space:]]*$PARTITION|{s|^[[:space:]]*#\+[[:space:]]*||;t}" "$FSTAB"
     else
-        echo "Partition $PARTITION not found. Commenting in $FSTAB."
+        # НОВАЯ РАЗМЕТКА ДИСКА С ОДНИМ РАЗДЕЛОМ ПОД ROTTFS
+        # Меняю rootfs с /dev/mmcblk0p2 на /dev/mmcblk0p4:
+        sed -i 's|/dev/mmcblk0p2|/dev/mmcblk0p4|g' "$FSTAB"
+
         # Меняю свап с /dev/mmcblk0p5 на /dev/mmcblk0p3:
         sed -i 's|/dev/mmcblk0p5|/dev/mmcblk0p3|g' "$FSTAB"
         
