@@ -238,29 +238,29 @@ extended_rootfs_fix(){
     FSTAB="/etc/fstab"
     PARTITION="/dev/mmcblk0p6"
 
-    # Так как конфиг у нас в configs/etc/fstab.wb, то меняю его седом:
+    # Хотя у нас конфиг configs/etc/fstab.wb - перезатираю его, так как
+    # коллегам не нравится sed...
+    #
     # Если существует 6й раздел:
     if [ -b "$PARTITION" ]; then
         # СТАРАЯ РАЗМЕТКА ДИСКА
-        
-        # Меняю rootfs с /dev/mmcblk0p4 на /dev/mmcblk0p2:
-        sed -i 's|/dev/mmcblk0p4|/dev/mmcblk0p2|g' "$FSTAB"
-        
-        # Возвращаю свап на /dev/mmcblk0p5:
-        sed -i 's|/dev/mmcblk0p3|/dev/mmcblk0p5|g' "$FSTAB"
-        
-        # Раскомментируею строку с /dev/mmcblk0p6, если она закомментирована:
-        sed -i "\|^[[:space:]]*#\?[[:space:]]*$PARTITION|{s|^[[:space:]]*#\+[[:space:]]*||;t}" "$FSTAB"
+        cat <<-EOF > $FSTAB
+			/dev/mmcblk0p2       /                    auto       discard,errors=remount-ro,noatime                                      0          1
+			/dev/mmcblk0p5       none                 swap       noatime,discard,errors=remount-ro                                      0          0
+			/dev/mmcblk0p6       /mnt/data            auto       noatime,discard,nofail                                                 0          2
+			/dev/mmcblk1p1       /mnt/sdcard          auto       nofail,x-systemd.automount,x-systemd.device-timeout=2                  0          2
+			/mnt/data/var/log    /var/log             none       bind                                                                   0          0
+			configfs             /sys/kernel/config   configfs   defaults                                                               0
+EOF
     else
         # НОВАЯ РАЗМЕТКА ДИСКА С ОДНИМ РАЗДЕЛОМ ПОД ROTTFS
-        # Меняю rootfs с /dev/mmcblk0p2 на /dev/mmcblk0p4:
-        sed -i 's|/dev/mmcblk0p2|/dev/mmcblk0p4|g' "$FSTAB"
-
-        # Меняю свап с /dev/mmcblk0p5 на /dev/mmcblk0p3:
-        sed -i 's|/dev/mmcblk0p5|/dev/mmcblk0p3|g' "$FSTAB"
-        
-        # Комментируем строку с /dev/mmcblk0p6 (если вдруг не закомментирована):
-        sed -i "\|^[[:space:]]*#\?[[:space:]]*$PARTITION|{s|^[[:space:]]*#\+[[:space:]]*||;t;s|^|#|}" "$FSTAB"
+        cat <<-EOF > $FSTAB
+			/dev/mmcblk0p3       none                 swap       noatime,discard,errors=remount-ro                                      0          0
+			/dev/mmcblk0p4       /                    auto       discard,errors=remount-ro,noatime                                      0          1
+			/dev/mmcblk1p1       /mnt/sdcard          auto       nofail,x-systemd.automount,x-systemd.device-timeout=2                  0          2
+			/mnt/data/var/log    /var/log             none       bind                                                                   0          0
+			configfs             /sys/kernel/config   configfs   defaults                                                               0
+EOF
     fi
 }
 
