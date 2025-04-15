@@ -1,0 +1,17 @@
+Types: deb
+URIs: http://debian-mirror.wirenboard.com/debian/
+Suites: trixie
+Components: main
+Signed-By:
+
+Types: deb
+URIs: http://debian-mirror.wirenboard.com/debian/
+Suites: trixie-updates
+Components: main
+Signed-By:
+
+Types: deb
+URIs: http://debian-mirror.wirenboard.com/debian-security/
+Suites: trixie-security
+Components: main
+Signed-By:
