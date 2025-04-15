@@ -1,0 +1,3 @@
+Package: curl libcurl4t64 libngtcp2-16 libnghttp3-9
+Pin: release n=trixie-backports
+Pin-Priority: 990
