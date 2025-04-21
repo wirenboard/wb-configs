@@ -1,3 +1,9 @@
+wb-configs (3.38.1) stable; urgency=medium
+
+  * Fix hosts in postinst
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Mon, 21 Apr 2025 11:30:00 +0400
+
 wb-configs (3.38.0) stable; urgency=medium
 
   * Remove wb-mqtt-homeui related configs and scripts

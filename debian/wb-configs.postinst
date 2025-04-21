@@ -269,3 +269,17 @@ mosquitto_fixes()
 }
 
 mosquitto_fixes
+
+wb_fix_hosts()
+{
+    hostname=$(cat /etc/hostname)
+    if [[ $hostname =~ wirenboard-[0-9A-Z]{2,8} ]]; then
+        hostname_search_string=$(awk -v hostname_pattern="$hostname" '$0~hostname_pattern {f=1} $0!~hostname_pattern {f=0} f {print 0}' /etc/hosts.wb)
+        if [ -z "$hostname_search_string" ]; then
+            sed -i "1i 127.0.0.1    ${hostname}" /etc/hosts.wb
+            systemd-cat echo "Add $hostname to /etc/hosts.wb list"
+        fi
+    fi
+}
+
+wb_fix_hosts
