@@ -1,5 +1,0 @@
-busybox-syslogd-dummy (9:1.0~dummy) UNRELEASED; urgency=medium
-
-  * dummy
-
- -- Nikita Maslov <nikita.maslov@wirenboard.com>  Thu, 18 Feb 2021 16:08:07 +0300
