@@ -266,6 +266,19 @@ mosquitto_fixes()
     fi
 
     /usr/lib/wb-configs/fix_mosquitto.sh
+
+    # Fix permissions for default ACL and password files
+    MOSQUITTO_ACL_CONF="/etc/mosquitto/acl/default.conf"
+    MOSQUITTO_PASSWD_CONF="/etc/mosquitto/passwd/default.conf"
+
+    chmod 0700 $MOSQUITTO_ACL_CONF
+    chmod 0700 $MOSQUITTO_PASSWD_CONF
+
+    chgrp mosquitto $MOSQUITTO_ACL_CONF
+    chgrp mosquitto $MOSQUITTO_PASSWD_CONF
+
+    chown mosquitto $MOSQUITTO_ACL_CONF
+    chown mosquitto $MOSQUITTO_PASSWD_CONF
 }
 
 mosquitto_fixes
