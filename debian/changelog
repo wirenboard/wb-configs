@@ -1,3 +1,9 @@
+wb-configs (3.38.2) stable; urgency=medium
+
+  * Add fstab file for extended rootfs and changed how this fstab is selected
+
+ -- Anton Tarasov <anton.tarasov@wirenboard.com>  Tue, 29 Apr 2025 11:06:07 +0300
+
 wb-configs (3.38.1) stable; urgency=medium
 
   *  Change the fstab fix for extended rootfs from sed to a dumb insertion of the entire file
