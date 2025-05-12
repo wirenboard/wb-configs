@@ -40,4 +40,4 @@ else
     install_rules 99-wb-uart default
 fi
 
-udevadm trigger # apply new udev rules
+udevadm control --reload-rules; udevadm trigger # apply new udev rules
