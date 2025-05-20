@@ -7,4 +7,6 @@
 
 
 # MTD device name   Device offset   Env. size   Flash sector size
-/dev/mmcblk0        0x88000         0x20000
+/dev/mmcblk0        0x200000         0x20000
+
+# TODO: think about old & new env compatibilities in production
