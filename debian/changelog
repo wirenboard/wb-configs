@@ -1,3 +1,9 @@
+wb-configs (3.38.3) stable; urgency=medium
+
+  * Fix mosquitto configs from wb-configs-early.service
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 22 May 2025 18:23:00 +0400
+
 wb-configs (3.38.2) stable; urgency=medium
 
   * Fix udev rules triggering at firstboot
