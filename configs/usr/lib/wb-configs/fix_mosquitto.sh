@@ -11,7 +11,7 @@ if grep -q "pid_file /var/run/mosquitto.pid" $MOSQUITTO_CONF; then
     sed -i 's#pid_file /var/run/mosquitto.pid#pid_file /run/mosquitto/mosquitto.pid#' $MOSQUITTO_CONF
     restart_required=1
 fi
-if ! grep -q -F "include_dir /usr/share/wb-configs/mosquitto" $MOSQUITTO_CONF; then
+if ! grep -q -E "^[[:space:]]*include_dir /usr/share/wb-configs/mosquitto" $MOSQUITTO_CONF; then
     sed -i '\#include_dir /etc/mosquitto/conf.d#iinclude_dir /usr/share/wb-configs/mosquitto' $MOSQUITTO_CONF
     restart_required=1
 fi
