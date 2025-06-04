@@ -16,7 +16,10 @@ elif of_machine_match "fsl,imx28" || of_machine_match "fsl,imx23"; then
 else
     FVER="default"
 fi
-cp "${UBOOT_DIR}/${UBOOT_FNAME}.${FVER}" "/etc/${UBOOT_FNAME}"
+
+if ! of_has_prop "wirenboard" "uboot-env-offset" || ! of_has_prop "wirenboard" "uboot-env-size"; then
+    cp "${UBOOT_DIR}/${UBOOT_FNAME}.${FVER}" "/etc/${UBOOT_FNAME}"
+fi
 
 ours=.wb
 theirs=.wb-orig
