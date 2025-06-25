@@ -1,0 +1,5 @@
+dir-or-file-in-home
+non-etc-file-marked-as-conffile
+package-installs-apt-preferences
+package-installs-apt-sources
+udev-rule-in-etc

@@ -29,3 +29,6 @@ override_dh_systemd_start:
 override_dh_fixperms:
 	dh_fixperms
 	find debian -name '*.nmconnection' -exec chmod 0600 {} +
+
+override_dh_installinit:
+	dh_installinit --noscripts
