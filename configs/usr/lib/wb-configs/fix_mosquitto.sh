@@ -15,8 +15,12 @@ if ! grep -q -E "^[[:space:]]*include_dir /usr/share/wb-configs/mosquitto" $MOSQ
     sed -i '\#include_dir /etc/mosquitto/conf.d#iinclude_dir /usr/share/wb-configs/mosquitto' $MOSQUITTO_CONF
     restart_required=1
 fi
+if ! grep -q -E "^[[:space:]]*include_dir /usr/share/wb-configs/mosquitto-post" $MOSQUITTO_CONF; then
+    sed -i '/include_dir \/etc\/mosquitto\/conf.d/a include_dir /usr/share/wb-configs/mosquitto-post' $MOSQUITTO_CONF
+    restart_required=1
+fi
 if grep -q "persistence .*" $MOSQUITTO_CONF; then
-    sed -i 's@persistence .*@# persistence is disabled by default. enable in /etc/mosquitto/conf.d/000persistence.conf@' $MOSQUITTO_CONF
+    sed -i '/persistence .*/c# persistence is disabled by default. enable in /etc/mosquitto/conf.d/000persistence.conf' $MOSQUITTO_CONF
     restart_required=1
 fi
 if grep -q "^listener 18883$" $LISTENERS_CONF; then
