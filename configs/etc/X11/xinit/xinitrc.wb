@@ -1,0 +1,65 @@
+#!/bin/sh
+xset s off          # Disable screensaver
+xset -dpms          # Disable Display Power Management Signaling
+xset s noblank      # Disable blank screen
+
+# If mouse cursour hide -> run hidder app:
+mouse=$(jq -r '.mod4.options.mouse // "hide"' /etc/wb-hardware.conf 2>/dev/null)
+if [ -z "$mouse" ] || [ "$mouse" = "hide" ]; then
+    # Hide cursor:
+    unclutter -idle 0 &
+fi
+
+# Run WM
+matchbox-window-manager &
+
+# wait run WM
+sleep 1
+
+# Read URL from /etc/wb-hardware.conf:
+url=$(jq -r '.mod4.options.url // "http://localhost"' /etc/wb-hardware.conf 2>/dev/null)
+
+# If zero URL -> set default URL:
+if [ -z "$url" ] || [ "$url" = "null" ]; then
+    url="http://localhost"
+fi
+
+PROFILE_NAME="wirenboard"
+PROFILE_DIR="/root/.mozilla/firefox/${PROFILE_NAME}"
+
+if [ ! -d "$PROFILE_DIR" ]; then
+    # Profile not found. Create profile $PROFILE_NAME:
+    firefox --no-remote -CreateProfile "$PROFILE_NAME $PROFILE_DIR"
+
+    # The Firefox --CreateProfile command may finish before the profile directory is actually created.
+    # So we need to explicitly check that the directory exists before continuing.
+
+    # TODO:
+    # Currently, a simple loop with sleep is used to wait for the directory to appear —
+    # it's a working but not very reliable solution.
+    # It should be replaced with a cleaner approach, such as using inotify or another method,
+    # to avoid unnecessary delays or potential issues.
+    for i in $(seq 1 10); do
+        [ -d "$PROFILE_DIR" ] && break
+        sleep 0.5
+    done
+
+    # Create user.js with settings:
+    cat <<- 'EOF' > "$PROFILE_DIR/user.js"
+	user_pref("browser.sessionstore.resume_from_crash", false);
+	user_pref("browser.shell.checkDefaultBrowser", false);
+	user_pref("toolkit.startup.max_resumed_crashes", 0);
+EOF
+fi
+
+# Remove session files:
+rm -f "$PROFILE_DIR/sessionstore.js" \
+      "$PROFILE_DIR/sessionstore.bak"
+
+if [ -d "$PROFILE_DIR/sessionstore-backups" ]; then
+    rm -f "$PROFILE_DIR/sessionstore-backups/"*.jsonlz4
+fi
+
+# Run FireFox in kiosk mode:
+firefox --no-remote --kiosk --profile "$PROFILE_DIR" "$url"
+
