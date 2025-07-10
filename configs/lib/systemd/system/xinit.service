@@ -1,6 +1,6 @@
 [Unit]
 Description=Looped xinit launcher
-After=graphical.target
+After=multi-user.target
 ConditionPathExists=/usr/bin/xinit
 
 [Service]
