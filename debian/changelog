@@ -1,3 +1,9 @@
+wb-configs (3.41.0) stable; urgency=medium
+
+  *  Add configs for start xinit and firefox in kiosk mode
+
+ -- Anton Tarasov <anton.tarasov@wirenboard.com>  Thu, 10 Jul 2025 18:12:33 +0300
+
 wb-configs (3.40.0) stable; urgency=medium
 
   * Add /usr/share/wb-configs/mosquitto-post directory for adding configs after user defined

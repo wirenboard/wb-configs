@@ -1,0 +1,14 @@
+[Unit]
+Description=Looped xinit launcher
+After=graphical.target
+ConditionPathExists=/usr/bin/xinit
+
+[Service]
+ExecStart=/usr/bin/xinit
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
