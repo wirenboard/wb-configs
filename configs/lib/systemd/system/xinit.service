@@ -1,0 +1,15 @@
+[Unit]
+Description=Looped xinit launcher
+After=multi-user.target
+ConditionPathExists=/usr/bin/xinit
+ConditionPathExists=/dev/fb0
+
+[Service]
+ExecStart=/usr/bin/xinit /etc/X11/xinit/xinitrc.wb
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
