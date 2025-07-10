@@ -101,6 +101,10 @@ if [ "$1" = "configure" ]; then
     else
         echo "Locale is already set, skipping..."
     fi
+
+    echo "Enable and start xinit service..."
+    deb-systemd-helper enable xinit.service >/dev/null || true
+    deb-systemd-invoke start xinit.service || true
 fi
 
 #DEBHELPER#
