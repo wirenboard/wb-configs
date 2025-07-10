@@ -4,7 +4,7 @@ After=graphical.target
 ConditionPathExists=/usr/bin/xinit
 
 [Service]
-ExecStart=/usr/bin/xinit /etc/X11/xinit/xinitrc
+ExecStart=/usr/bin/xinit /etc/X11/xinit/xinitrc.wb
 Restart=always
 RestartSec=3
 StandardOutput=journal
