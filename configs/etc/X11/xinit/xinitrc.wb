@@ -20,6 +20,9 @@ if [ -z "$url" ] || [ "$url" = "null" ]; then
     url="http://localhost"
 fi
 
+# Clean last firefox session:
+rm -rf /root/.mozilla/
+
 # Run FireFox in kiosk mode:
 firefox --kiosk "$url"
 
