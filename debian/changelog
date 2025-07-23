@@ -1,3 +1,9 @@
+wb-configs (3.38.3-wb100) stable; urgency=medium
+
+  * Remove bullseye-backports apt source
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Tue, 22 Jul 2025 17:35:00 +0400
+
 wb-configs (3.38.3) stable; urgency=medium
 
   * Fix mosquitto configs from wb-configs-early.service
