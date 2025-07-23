@@ -1,3 +1,9 @@
+wb-configs (3.41.0) stable; urgency=medium
+
+  * Remove bullseye-backports apt source
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Tue, 22 Jul 2025 17:35:00 +0400
+
 wb-configs (3.40.0) stable; urgency=medium
 
   * Add /usr/share/wb-configs/mosquitto-post directory for adding configs after user defined
