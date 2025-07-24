@@ -1,3 +1,9 @@
+wb-configs (3.42.0) stable; urgency=medium
+
+  * add extended rootfs support
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Wed, 23 Jul 2025 15:10:00 +0400
+
 wb-configs (3.41.0) stable; urgency=medium
 
   * Remove bullseye-backports apt source
