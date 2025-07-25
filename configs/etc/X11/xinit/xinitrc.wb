@@ -3,8 +3,12 @@ xset s off          # Disable screensaver
 xset -dpms          # Disable Display Power Management Signaling
 xset s noblank      # Disable blank screen
 
-# Hide cursor:
-unclutter -idle 0 &
+# If mouse cursour hide -> run hidder app:
+mouse=$(jq -r '.mod4.options.mouse // "hide"' /etc/wb-hardware.conf 2>/dev/null)
+if [ -z "$mouse" ] || [ "$mouse" = "hide" ]; then
+    # Hide cursor:
+    unclutter -idle 0 &
+fi
 
 # Run WM
 matchbox-window-manager &
