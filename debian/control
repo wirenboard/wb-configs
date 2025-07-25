@@ -10,7 +10,7 @@ Package: wb-configs
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ucf, wb-utils (>= 4.24.0~~), inotify-tools, mosquitto (>= 1.4.7-1), watchdog (>= 5.15),
          linux-image-wb2 | linux-image-wb6 (>= 5.10.35-wb127~~) | linux-image-wb7 (>= 5.10.35-wb127~~) | linux-image-wb8,
-         wb-update-manager, sudo, crda
+         wb-update-manager, sudo, crda, jq
 Pre-Depends: wb-update-manager
 Provides: ${diverted-files}, mqtt-wss
 Conflicts: ${diverted-files}, mqtt-wss, wb-homa-adc (<< 1.9.2), wb-homa-gpio (<< 1.14), wb-mqtt-serial(<< 1.14.2), wb-rules(<< 1.5.1), busybox-syslogd (<< 9:1.0~dummy), nginx-common (<< 1.7.11)
