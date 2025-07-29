@@ -23,6 +23,7 @@ wb_move_watch /etc/network/interfaces
 
 wb_move /etc/resolv.conf
 wb_move /etc/ssh
+wb_move /etc/ssmtp
 wb_move /etc/dnsmasq.conf
 wb_move /etc/hostapd.conf
 wb_move /var/lib/wirenboard
