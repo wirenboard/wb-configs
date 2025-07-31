@@ -1,3 +1,9 @@
+wb-configs (3.43.0) stable; urgency=medium
+
+  * Add configs and service for start xinit and firefox in kiosk mode
+
+ -- Anton Tarasov <anton.tarasov@wirenboard.com>  Thu, 31 Jul 2025 17:08:51 +0300
+
 wb-configs (3.42.0) stable; urgency=medium
 
   * add extended rootfs support
