@@ -218,7 +218,7 @@ ppp_peers_fixes
 
 add_mmc_mount_options(){
     awk '{ 
-    EMMC_REGEX="^(\/dev\/mmcblk0p2|\/dev\/mmcblk0p5|\/dev\/mmcblk0p6)"
+    EMMC_REGEX="^(/dev/mmcblk0p2|/dev/mmcblk0p5|/dev/mmcblk0p6)"
     TIME_OPTION_REGEX="(noatime|atime|relatime)"
     options=$4
     if ($1 ~ EMMC_REGEX){
