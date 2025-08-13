@@ -1,0 +1,36 @@
+#!/bin/sh
+# Disables bgscan for all wpa_supplicant profiles on the given interface.
+# Works only for STA (managed) mode. For iwd — simply does nothing.
+
+IFACE="$1"; STATE="$2"
+
+# Only interested in the moment when the interface is up:
+[ "$STATE" = "up" ] || exit 0
+
+# Must be STA (managed), otherwise exit (AP/monitor/p2p are not needed):
+TYPE="$(iw dev "$IFACE" info 2>/dev/null | awk '/type/ {print $2}')"
+[ "$TYPE" = "managed" ] || exit 0
+
+# wpa_cli must be available and a live supplicant must exist for this interface
+command -v wpa_cli >/dev/null 2>&1 || exit 0
+wpa_cli -i "$IFACE" ping >/dev/null 2>&1 || exit 0
+
+# Small retry: right after "up", CURRENT may not yet be marked:
+NET_ID=""
+tries=5
+while [ $tries -gt 0 ]; do
+    NET_ID="$(wpa_cli -i "$IFACE" list_networks 2>/dev/null \
+        | awk '$4=="[CURRENT]"{print $1; exit}')"
+    [ -n "$NET_ID" ] && break
+    sleep 0.2
+    tries=$((tries-1))
+done
+
+# If there is no current network — nothing to do:
+[ -n "$NET_ID" ] || exit 0
+
+# Disable bgscan (background scans) only for the current profile
+wpa_cli -i "$IFACE" set_network "$NET_ID" bgscan "" >/dev/null 2>&1
+
+exit 0
+
