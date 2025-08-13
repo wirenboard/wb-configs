@@ -1,3 +1,9 @@
+wb-configs (3.45.0) stable; urgency=medium
+
+  * Cleanup crash/session markers to prevent recovery prompts for FireFox
+
+ -- Anton Tarasov <anton.tarasov@wirenboard.com>  Wed, 13 Aug 2025 20:21:12 +0300
+
 wb-configs (3.44.0) stable; urgency=medium
 
   * Disable bgscan on STA interfaces
