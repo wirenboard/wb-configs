@@ -1,3 +1,9 @@
+wb-configs (3.44.1) stable; urgency=medium
+
+  * Move nmtui wrapper to /usr/bin and add alias
+
+ -- Anton Tarasov <anton.tarasov@wirenboard.com>  Thu, 14 Aug 2025 10:55:20 +0300
+
 wb-configs (3.44.0) stable; urgency=medium
 
   * Disable bgscan on STA interfaces
