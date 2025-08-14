@@ -1,0 +1,14 @@
+#!/bin/sh
+# Wrapper for nmtui that forces Wi-Fi rescan before launch
+
+# Trigger rescan on all Wi-Fi interfaces
+for i in $(nmcli -t -f DEVICE,TYPE d | awk -F: '$2=="wifi" {print $1}'); do
+    nmcli dev wifi rescan ifname "$i"
+done
+
+# Small wait result scan
+sleep 0.5
+
+# Launch the real nmtui
+exec /usr/bin/nmtui "$@"
+

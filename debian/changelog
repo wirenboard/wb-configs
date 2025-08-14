@@ -1,3 +1,9 @@
+wb-configs (3.44.0) stable; urgency=medium
+
+  * Disable bgscan on STA interfaces
+
+ -- Anton Tarasov <anton.tarasov@wirenboard.com>  Wed, 13 Aug 2025 09:37:23 +0300
+
 wb-configs (3.43.0) stable; urgency=medium
 
   * Add configs and service for start xinit and firefox in kiosk mode
