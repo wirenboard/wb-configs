@@ -1,3 +1,9 @@
+wb-configs (3.46.0) stable; urgency=medium
+
+  * Add nginx service restart on failure
+
+ -- Mikhail Burchu <mikhail.burchu@wirenboard.com>  Tue, 2 Sep 2025 12:00:00 +0300
+
 wb-configs (3.45.0) stable; urgency=medium
 
   * xinitrc.wb: cleanup crash/session markers to prevent recovery prompts in kiosk mode
