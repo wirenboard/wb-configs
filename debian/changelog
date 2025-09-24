@@ -1,3 +1,9 @@
+wb-configs (3.47.0) stable; urgency=medium
+
+  * Remove the /dev/fb0 condition for xinit.service: Xorg can launch without fbdev now, and on 4K panels fb0 may not appear. Without this check, xinit actually starts even when fbdev fails.
+
+ -- Anton Tarasov <anton.tarasov@wirenboard.com>  Wed, 24 Sep 2025 18:37:07 +0300
+
 wb-configs (3.46.0) stable; urgency=medium
 
   * Add nginx service restart on failure
