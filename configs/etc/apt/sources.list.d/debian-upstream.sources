@@ -1,17 +1,17 @@
 Types: deb
-URIs: https://mirror.docker.ru/debian/
+URIs: http://debian-mirror.wirenboard.com/debian/
 Suites: trixie
 Components: main
 Signed-By: /usr/share/keyrings/debian-archive-trixie-automatic.gpg
 
 Types: deb
-URIs: https://mirror.docker.ru/debian/
+URIs: http://debian-mirror.wirenboard.com/debian/
 Suites: trixie-updates
 Components: main
 Signed-By: /usr/share/keyrings/debian-archive-trixie-automatic.gpg
 
 Types: deb
-URIs: https://mirror.docker.ru/debian-security/
+URIs: http://debian-mirror.wirenboard.com/debian-security/
 Suites: trixie-security
 Components: main
 Signed-By: /usr/share/keyrings/debian-archive-trixie-security-automatic.gpg
