@@ -1,0 +1,53 @@
+#
+# Wiren Board default ALSA pipeline with software volume control.
+# Softvol wraps the current default PCM so audio can be attenuated even when
+# the hardware codec (e.g. HDMI) exposes no own mixer controls.
+#
+
+pcm.wb_softvol_hw {
+	type hw
+	card {
+		@func refer
+		name defaults.pcm.card
+	}
+	device {
+		@func refer
+		name defaults.pcm.device
+	}
+	subdevice {
+		@func refer
+		name defaults.pcm.subdevice
+	}
+}
+
+pcm.wb_softvol_slave {
+	type plug
+	slave.pcm "wb_softvol_hw"
+}
+
+pcm.wb_softvol {
+	type softvol
+	slave.pcm "wb_softvol_slave"
+	control {
+		name "WB HDMI Softvol"
+		card {
+			@func refer
+			name defaults.ctl.card
+		}
+	}
+	min_dB -60.0
+	max_dB 0.0
+}
+
+pcm.!default {
+	type plug
+	slave.pcm "wb_softvol"
+}
+
+ctl.!default {
+	type hw
+	card {
+		@func refer
+		name defaults.ctl.card
+	}
+}
