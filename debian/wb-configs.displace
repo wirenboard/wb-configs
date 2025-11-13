@@ -4,6 +4,7 @@
 /etc/modules.wb
 /etc/inittab.wb
 /etc/fstab.wb
+/etc/asound.conf.wb
 /etc/gai.conf.wb
 /etc/default/rcS.wb
 /etc/hosts.wb

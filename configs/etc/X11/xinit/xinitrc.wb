@@ -25,6 +25,24 @@ if [ -z "$url" ] || [ "$url" = "null" ]; then
     url="http://localhost"
 fi
 
+ff_mode=$(jq -r '.mod4.options.ff_mode // "kiosk"' /etc/wb-hardware.conf 2>/dev/null)
+if [ -z "$ff_mode" ] || [ "$ff_mode" = "null" ]; then
+    ff_mode="kiosk"
+fi
+
+volume=$(jq -r '.mod4.options.volume // 50' /etc/wb-hardware.conf 2>/dev/null)
+if [ -z "$volume" ] || [ "$volume" = "null" ]; then
+    volume=50
+fi
+
+# Ensure the softvol control exists before adjusting the level.
+if ! amixer -D default scontrols 2>/dev/null | grep -q "WB HDMI Softvol"; then
+    timeout 0.1 aplay -D default -q -t raw -f S16_LE -c 2 -r 48000 /dev/zero 2>/dev/null || true
+fi
+
+amixer -D default -q sset 'WB HDMI Softvol' "${volume}%" >/dev/null 2>&1 || true
+alsactl --file /var/lib/alsa/asound.state store >/dev/null 2>&1 || true
+
 PROFILE_NAME="wirenboard"
 PROFILE_DIR="/root/.mozilla/firefox/${PROFILE_NAME}"
 
@@ -87,5 +105,9 @@ rm -f "$PROFILE_DIR/datareporting/session-state.json" "$PROFILE_DIR/datareportin
 export MOZ_CRASHREPORTER_DISABLE=1
 export MOZ_DISABLE_SAFE_MODE_KEY=1
 
-exec firefox --no-remote --kiosk --profile "$PROFILE_DIR" "$url"
-
+set -- firefox --no-remote
+if [ "$ff_mode" != "window" ]; then
+    set -- "$@" --kiosk
+fi
+set -- "$@" --profile "$PROFILE_DIR" "$url"
+exec "$@"
