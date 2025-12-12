@@ -1,12 +1,17 @@
-wb-configs (3.49.0) stable; urgency=medium
+wb-configs (3.50.0) stable; urgency=medium
 
   * Update default fw_env.config for WB7
 
- -- Ilya Titov <ilya.titov@wirenboard.com>  Mon, 01 Dec 2025 17:20:10 +0300
+ -- Ilya Titov <ilya.titov@wirenboard.com>  Fri, 12 Dec 2025 12:57:07 +0300
+
+wb-configs (3.49.0) stable; urgency=medium
+
+  * Add /etc/apt/apt.conf.d/98wireless-regdb config file
+
+ -- Ilya Titov <ilya.titov@wirenboard.com>  Fri, 12 Dec 2025 12:18:07 +0300
 
 wb-configs (3.48.0) stable; urgency=medium
 
-  * HDMI:
     - add Firefox launch mode option
     - add volume control for HDMI audio
 
