@@ -1,6 +1,12 @@
+wb-configs (3.49.0) stable; urgency=medium
+
+  * Add /etc/apt/apt.conf.d/98wireless-regdb config file
+
+ -- Ilya Titov <ilya.titov@wirenboard.com>  Fri, 12 Dec 2025 12:18:07 +0300
+
 wb-configs (3.48.0) stable; urgency=medium
 
-  * HDMI: 
+  * HDMI:
     - add Firefox launch mode option
     - add volume control for HDMI audio
 
