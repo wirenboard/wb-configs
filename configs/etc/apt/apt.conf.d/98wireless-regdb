@@ -1,0 +1,1 @@
+DPkg::Post-Invoke {"update-alternatives --set regulatory.db $(update-alternatives --list regulatory.db | grep upstream) || true";};
