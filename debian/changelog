@@ -1,3 +1,9 @@
+wb-configs (3.49.1) stable; urgency=medium
+
+  * Set unlimited restart attempts for NetworkManager service
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.com>  Sat, 10 Jan 2026 16:46:16 +0500
+
 wb-configs (3.49.0) stable; urgency=medium
 
   * Add /etc/apt/apt.conf.d/98wireless-regdb config file
