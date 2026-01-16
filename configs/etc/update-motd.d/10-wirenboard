@@ -4,9 +4,8 @@
 . /usr/lib/wb-release
 SHORT_SN=`cat /var/lib/wirenboard/short_sn.conf`
 
-echo -ne "\u001b[32m"
-figlet wirenboard
-echo -ne "\u001b[0m"
+# Figlet banner is displayed by /etc/profile.d/wb-banner.sh at login time
+# to properly detect terminal width
 
 echo -e "Welcome to \u001b[32mWiren Board ${WB_BOARD_REVISION}\u001b[0m \
 (s/n \u001b[1m${SHORT_SN}\u001b[0m), \
