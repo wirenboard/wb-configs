@@ -2,7 +2,7 @@
 Description=WB Kiosk (Firefox on Weston)
 After=weston.service
 Requires=weston.service
-ConditionPathExists=/usr/local/bin/wb-kiosk-firefox.sh
+ConditionPathExists=/usr/lib/wb-configs/wb-kiosk-firefox.sh
 ConditionPathExists=/usr/bin/firefox-esr
 
 [Service]
@@ -22,7 +22,7 @@ ExecStartPre=/bin/sh -c '\
   amixer -D default -q sset "WB HDMI Softvol" "$${volume}%" >/dev/null 2>&1 || true; \
   alsactl --file /var/lib/alsa/asound.state store >/dev/null 2>&1 || true; \
 '
-ExecStart=/usr/local/bin/wb-kiosk-firefox.sh
+ExecStart=/usr/lib/wb-configs/wb-kiosk-firefox.sh
 Restart=always
 RestartSec=3
 StandardOutput=journal
