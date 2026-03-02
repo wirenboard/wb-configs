@@ -1,0 +1,21 @@
+[Unit]
+Description=Weston Wayland Compositor (DRM)
+After=wb-hwconf-manager.service systemd-user-sessions.service
+Wants=systemd-user-sessions.service
+ConditionPathExists=/usr/bin/weston
+ConditionPathExists=/etc/xdg/weston/weston.ini
+
+[Service]
+Type=simple
+User=root
+Environment=XDG_RUNTIME_DIR=/run/weston
+RuntimeDirectory=weston
+RuntimeDirectoryMode=0700
+ExecStart=/usr/bin/weston --backend=drm-backend.so --tty=1 --idle-time=0 --log=/var/log/weston.log
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

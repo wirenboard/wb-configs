@@ -1,0 +1,32 @@
+[Unit]
+Description=WB Kiosk (Firefox on Weston)
+After=weston.service
+Requires=weston.service
+ConditionPathExists=/usr/local/bin/wb-kiosk-firefox.sh
+ConditionPathExists=/usr/bin/firefox-esr
+
+[Service]
+Type=simple
+User=root
+Environment=XDG_RUNTIME_DIR=/run/weston
+Environment=WAYLAND_DISPLAY=wayland-0
+Environment=MOZ_ENABLE_WAYLAND=1
+Environment=MOZ_CRASHREPORTER_DISABLE=1
+Environment=MOZ_DISABLE_SAFE_MODE_KEY=1
+ExecStartPre=/bin/sh -c '\
+  volume=$$(jq -r ".mod4.options.volume // 50" /etc/wb-hardware.conf 2>/dev/null); \
+  [ -z "$$volume" -o "$$volume" = "null" ] && volume=50; \
+  if ! amixer -D default scontrols 2>/dev/null | grep -q "WB HDMI Softvol"; then \
+    timeout 0.1 aplay -D default -q -t raw -f S16_LE -c 2 -r 48000 /dev/zero 2>/dev/null || true; \
+  fi; \
+  amixer -D default -q sset "WB HDMI Softvol" "$${volume}%" >/dev/null 2>&1 || true; \
+  alsactl --file /var/lib/alsa/asound.state store >/dev/null 2>&1 || true; \
+'
+ExecStart=/usr/local/bin/wb-kiosk-firefox.sh
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
