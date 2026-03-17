@@ -1,6 +1,7 @@
 [Unit]
 Description=Looped xinit launcher
 After=multi-user.target
+Conflicts=sway-kiosk.service
 ConditionPathExists=/usr/bin/xinit
 
 [Service]
