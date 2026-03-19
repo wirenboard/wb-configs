@@ -1,7 +1,7 @@
 #!/bin/bash
 
 for iface in eth0 eth1; do
-    ip="$(ifconfig "$iface" | awk '/inet/ {print $2}' | cut -f2 -d:)"
+    ip="$(ifconfig "$iface" | awk '/inet / {print $2}')" # ipv4 only
     if [[ -n $ip ]]; then
         echo "$iface ip: $ip"
     fi
