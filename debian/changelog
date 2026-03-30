@@ -1,3 +1,9 @@
+wb-configs (3.50.0) stable; urgency=medium
+
+  * Update default fw_env.config for WB7
+
+ -- Ilya Titov <ilya.titov@wirenboard.com>  Tue, 24 Mar 2026 13:51:28 +0300
+
 wb-configs (3.49.2) stable; urgency=medium
 
   * Fix garbage in MOTD

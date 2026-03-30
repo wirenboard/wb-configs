@@ -4,7 +4,7 @@ wb_source "of"
 
 # generate u-boot env config before config-package debheler
 UBOOT_DIR="/usr/share/wb-configs/u-boot"
-UBOOT_FNAME="fw_env.config.wb"
+UBOOT_FNAME="fw_env.config"
 if of_machine_match "allwinner,sun50i-h616"; then
     FVER="sun50i"
 elif of_machine_match "allwinner,sun8i-r40"; then
@@ -17,7 +17,8 @@ else
     FVER="default"
 fi
 
-if ! of_has_prop "wirenboard" "uboot-env-offset" || ! of_has_prop "wirenboard" "uboot-env-size"; then
+if [ ! -f "/etc/${UBOOT_FNAME}" ]; then
+    UBOOT_FNAME="${UBOOT_FNAME}.wb"
     cp "${UBOOT_DIR}/${UBOOT_FNAME}.${FVER}" "/etc/${UBOOT_FNAME}"
 fi
 
@@ -90,7 +91,7 @@ wb_check_undisplace_unlink_from()
 if [ "$1" = "configure" ]; then
     wb_check_undisplace_unlink_from /etc/ssh/sshd_config "" wb-configs "1.75.4"
 
-     if ! grep -qE '^[[:space:]]*(LANG|LC_ALL)=' /etc/default/locale 2>/dev/null; then
+    if ! grep -qE '^[[:space:]]*(LANG|LC_ALL)=' /etc/default/locale 2>/dev/null; then
         echo "No locale set in /etc/default/locale. Setting en_US.UTF-8..."
 
         # Generate locale:
@@ -217,7 +218,7 @@ nm_fixes
 ppp_peers_fixes
 
 add_mmc_mount_options(){
-    awk '{ 
+    awk '{
     EMMC_REGEX="^(/dev/mmcblk0p2|/dev/mmcblk0p5|/dev/mmcblk0p6)"
     TIME_OPTION_REGEX="(noatime|atime|relatime)"
     options=$4
