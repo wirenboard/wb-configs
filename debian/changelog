@@ -1,3 +1,9 @@
+wb-configs (3.50.1) stable; urgency=medium
+
+  * Fill fw_env.config at system early boot (if uboot supports it)
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 02 Apr 2026 16:45:21 +0300
+
 wb-configs (3.50.0) stable; urgency=medium
 
   * Update default fw_env.config for WB7

@@ -186,8 +186,34 @@ set_fwupdate_permissions()
     fi
 }
 
+maybe_fix_uboot_dynamic_env()
+{
+    local actual_env_offset=$(cat /proc/device-tree/wirenboard/uboot-env-offset 2>/dev/null) || true
+    local actual_env_size=$(cat /proc/device-tree/wirenboard/uboot-env-size 2>/dev/null) || true
+    local uboot_config="/etc/fw_env.config"
+    local target_device=$1
+
+    if [[ ! -z $actual_env_offset ]] && [[ ! -z $actual_env_size ]]; then
+        echo "Found actual uboot env offset: $actual_env_offset & size: $actual_env_size; Filling $uboot_config"
+        cat > $uboot_config << EOF
+# Configuration file for fw_(printenv/setenv) utility.
+# Up to two entries are valid, in this case the redundant
+# environment sector is assumed present.
+#
+# XXX this configuration might miss a fifth parameter for the "Number of
+# sectors"
+
+# MTD device name   Device offset   Env. size   Flash sector size
+$target_device        0x$actual_env_offset         0x$actual_env_size
+EOF
+    else
+        echo "Using $uboot_config from rootfs"
+    fi
+}
+
 case "$1" in
   start)
+    maybe_fix_uboot_dynamic_env /dev/mmcblk0
     do_start
     set_fwupdate_permissions
     ;;
