@@ -6,6 +6,12 @@ Signed-By: /usr/share/keyrings/debian-archive-trixie-automatic.gpg
 
 Types: deb
 URIs: http://debian-mirror.wirenboard.com/debian/
+Suites: trixie-backports
+Components: main
+Signed-By: /usr/share/keyrings/debian-archive-trixie-automatic.gpg
+
+Types: deb
+URIs: http://debian-mirror.wirenboard.com/debian/
 Suites: trixie-updates
 Components: main
 Signed-By: /usr/share/keyrings/debian-archive-trixie-automatic.gpg
