@@ -2,7 +2,7 @@ wb-configs (3.50.2) stable; urgency=medium
 
   * HDMI:
     - remove legacy weston.service and wb-kiosk.service
-    - add Firefox Wayland launcher for kiosk mode without Xorg
+    - remove unused wb-configs Firefox kiosk launcher
 
  -- Anton Tarasov <anton.tarasov@wirenboard.com>  Tue, 21 Apr 2026 00:00:00 +0300
 
