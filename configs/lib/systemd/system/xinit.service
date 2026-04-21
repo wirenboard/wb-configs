@@ -1,7 +1,12 @@
+# Legacy Xorg kiosk session launcher.
+# Starts /etc/X11/xinit/xinitrc.wb in a restart loop for devices that still use
+# the X11-based HDMI runtime. It conflicts with wb-sway-kiosk.service because
+# both services own the kiosk display session.
+
 [Unit]
 Description=Looped xinit launcher
 After=multi-user.target
-Conflicts=sway-kiosk.service
+Conflicts=wb-sway-kiosk.service
 ConditionPathExists=/usr/bin/xinit
 
 [Service]

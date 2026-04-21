@@ -1,11 +1,19 @@
 #!/bin/sh
+# Firefox ESR launcher for the HDMI kiosk runtime.
+# Reads the kiosk URL and Firefox mode from /etc/wb-hardware.conf, prepares a
+# dedicated root Firefox profile, suppresses recovery prompts and browser chrome
+# for kiosk mode, then replaces this process with firefox-esr.
 set -eu
 
 url=$(jq -r '.mod4.options.url // "http://localhost"' /etc/wb-hardware.conf 2>/dev/null || true)
-[ -z "$url" ] || [ "$url" = "null" ] && url="http://localhost"
+if [ -z "$url" ] || [ "$url" = "null" ]; then
+	url="http://localhost"
+fi
 
 ff_mode=$(jq -r '.mod4.options.ff_mode // "kiosk"' /etc/wb-hardware.conf 2>/dev/null || true)
-[ -z "$ff_mode" ] || [ "$ff_mode" = "null" ] && ff_mode="kiosk"
+if [ -z "$ff_mode" ] || [ "$ff_mode" = "null" ]; then
+	ff_mode="kiosk"
+fi
 
 PROFILE_NAME="wirenboard"
 PROFILE_DIR="/root/.mozilla/firefox/${PROFILE_NAME}"
@@ -24,6 +32,10 @@ ensure_profile() {
 		[ -d "$PROFILE_DIR" ] && break
 		sleep 0.5
 	done
+	if [ ! -d "$PROFILE_DIR" ]; then
+		printf '%s\n' "Failed to create Firefox profile '$PROFILE_NAME' at '$PROFILE_DIR'" >&2
+		exit 1
+	fi
 
 	cat <<-'EOF' > "$USER_JS"
 	user_pref("browser.sessionstore.resume_from_crash", false);
