@@ -1,6 +1,29 @@
 #!/bin/bash
 
+set +e
+
+# recovering lost slave ids
+systemctl stop wb-mqtt-serial
+
+wb-mcu-fw-updater recover-all --force
+
+for bd in 1200 2400 4800 9600 19200 38400 57600 115200; do
+    modbus_client -mrtu -pnone /dev/ttyRS485-1 -a0 -t6 -r110 -b$bd 1152 || true;
+done
+
+wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 213117 -i 39  # LED
+wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 227839 -i 64  # MSW
+wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 187060 -i 133 # MIR
+wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 229918 -i 30  # M1W2
+wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 220307 -i 46  # MR6C
+wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 4278207547 -i 35  # MAP12E
+wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 223169 -i 57  # MDM3
+
+
+# installing demokit dashboards
 apt update
 apt install -y wb-demo-kit-configs --reinstall
 
 cp /mnt/data/etc/wb-webui.conf /etc/wb-webui.conf
+
+systemctl restart wb-mqtt-serial
