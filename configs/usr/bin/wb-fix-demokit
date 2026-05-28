@@ -24,6 +24,7 @@ wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 229918 -i 30  # M1W2
 wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 220307 -i 46  # MR6C
 wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 4278207547 -i 35  # MAP12E
 wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 223169 -i 57  # MDM3
+wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 222471 -i 25  # MWAC v.2
 
 
 # installing demokit dashboards
