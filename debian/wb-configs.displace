@@ -20,7 +20,6 @@
 /etc/nfc/libnfc.conf.wb
 
 /etc/lirc/hardware.conf.wb
-/etc/sysctl.conf.wb
 
 /etc/default/avahi-daemon.wb
 /etc/nsswitch.conf.wb

@@ -1,3 +1,9 @@
+wb-configs (3.51.0) stable; urgency=medium
+
+  * Port for Debian 13
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Tue, 02 Jun 2026 16:20:00 +0400
+
 wb-configs (3.50.2) stable; urgency=medium
 
   * HDMI:
