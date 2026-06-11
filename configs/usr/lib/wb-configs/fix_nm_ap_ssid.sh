@@ -4,7 +4,7 @@ wb_ap_ssid_prefix="${WB_AP_SSID_PREFIX:-WirenBoard}"
 
 # find Wi-Fi module
 wifi_module="RTL8723BU"
-if [ -z $(lsusb -d'0bda:b720') ]; then
+if [ -z "$(lsusb -d'0bda:b720')" ]; then
     wifi_module="RTL8733BU"
 fi
 
