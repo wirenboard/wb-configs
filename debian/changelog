@@ -1,3 +1,9 @@
+wb-configs (3.52.0) stable; urgency=medium
+
+  * Move services overrides from /etc to /usr/lib
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Mon, 22 Jun 2026 17:20:00 +0400
+
 wb-configs (3.51.2) stable; urgency=medium
 
   * Remove debian-upstream.list
