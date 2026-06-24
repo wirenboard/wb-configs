@@ -4,3 +4,4 @@ package-installs-apt-preferences
 package-installs-apt-sources
 udev-rule-in-etc
 aliased-location
+file-in-unusual-dir
