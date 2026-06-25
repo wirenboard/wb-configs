@@ -25,7 +25,7 @@ generate_ssh_host_keys()
 }
 
 # remove obsolete keys
-rm /etc/ssh_host_dsa_key*
+rm -f /etc/ssh/ssh_host_dsa_key*
 
 generate_ssh_host_keys
 sync
