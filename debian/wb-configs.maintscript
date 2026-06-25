@@ -16,3 +16,8 @@ rm_conffile /etc/wb-security.conf 3.38.0~
 rm_conffile /etc/wb-configs.d/20wb-security 3.38.0~
 rm_conffile /etc/systemd/system/fcgiwrap.service.d/override.conf 3.38.0~
 rm_conffile /etc/nginx/sites-available/default.wb 3.38.0~
+rm_conffile /etc/systemd/system/NetworkManager.service.d/override.conf 3.52.0~
+rm_conffile /etc/systemd/system/hostapd.service.d/override.conf 3.52.0~
+rm_conffile /etc/systemd/system/mosquitto.service.d/override.conf 3.52.0~
+rm_conffile /etc/systemd/system/nginx.service.d/restart.conf 3.52.0~
+rm_conffile /etc/systemd/system/serial-getty@ttyS0.service.d/override.conf 3.52.0~
