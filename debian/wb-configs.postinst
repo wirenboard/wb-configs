@@ -229,9 +229,7 @@ add_mmc_mount_options(){
           options="noatime,"options;
     }
     printf "%-20s %-20s %-10s %-70s %-10s %s\n", $1, $2, $3, options, $5, $6;
-    }' /etc/fstab > /tmp/fstab_tmp
-
-    mv /tmp/fstab_tmp /etc/fstab
+    }' /etc/fstab | sponge /etc/fstab
 }
 
 add_mmc_mount_options
