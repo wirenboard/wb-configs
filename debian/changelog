@@ -1,3 +1,9 @@
+wb-configs (3.52.1) stable; urgency=medium
+
+  * Create missed users after upgrade with FIT
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 26 Jun 2026 11:20:00 +0400
+
 wb-configs (3.52.0) stable; urgency=medium
 
   * Move services overrides from /etc to /usr/lib
