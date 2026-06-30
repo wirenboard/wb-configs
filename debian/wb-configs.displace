@@ -17,10 +17,6 @@
 /etc/ppp/chap-secrets.wb
 /etc/ppp/ip-up.d/0000usepeerdns.wb
 
-/etc/nfc/libnfc.conf.wb
-
-/etc/lirc/hardware.conf.wb
-
 /etc/default/avahi-daemon.wb
 /etc/nsswitch.conf.wb
 /etc/fw_env.config.wb

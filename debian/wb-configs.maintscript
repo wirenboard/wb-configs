@@ -21,3 +21,7 @@ rm_conffile /etc/systemd/system/hostapd.service.d/override.conf 3.52.0~
 rm_conffile /etc/systemd/system/mosquitto.service.d/override.conf 3.52.0~
 rm_conffile /etc/systemd/system/nginx.service.d/restart.conf 3.52.0~
 rm_conffile /etc/systemd/system/serial-getty@ttyS0.service.d/override.conf 3.52.0~
+rm_conffile /etc/lirc/hardware.conf 3.52.2~
+rm_conffile /etc/lirc/hardware.conf.wb 3.52.2~
+rm_conffile /etc/nfc/libnfc.conf 3.52.2~
+rm_conffile /etc/nfc/libnfc.conf.wb 3.52.2~
