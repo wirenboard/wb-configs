@@ -1,3 +1,9 @@
+wb-configs (3.52.2) stable; urgency=medium
+
+  * Remove obsolete lirc and nfc configs
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Tue, 30 Jun 2026 17:20:00 +0400
+
 wb-configs (3.52.1) stable; urgency=medium
 
   * Create missed users after upgrade with FIT
