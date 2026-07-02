@@ -1,3 +1,9 @@
+wb-configs (3.52.3) stable; urgency=medium
+
+  * postinst: use try-restart and ignore restart failures
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 02 Jul 2026 18:20:00 +0400
+
 wb-configs (3.52.2) stable; urgency=medium
 
   * Remove obsolete lirc and nfc configs
