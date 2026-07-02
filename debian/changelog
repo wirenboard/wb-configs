@@ -1,3 +1,9 @@
+wb-configs (3.52.6) stable; urgency=medium
+
+  * Update mosquitto config
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Tue, 28 Jul 2026 10:50:00 +0400
+
 wb-configs (3.52.5) stable; urgency=medium
 
   * Install libcurl4-openssl-dev from backports

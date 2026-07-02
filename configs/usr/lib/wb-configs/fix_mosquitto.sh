@@ -23,10 +23,10 @@ if grep -q "persistence .*" $MOSQUITTO_CONF; then
     sed -i '/persistence .*/c# persistence is disabled by default. enable in /etc/mosquitto/conf.d/000persistence.conf' $MOSQUITTO_CONF
     restart_required=1
 fi
-if grep -q "^listener 18883$" $LISTENERS_CONF; then
-	sed -i '/^listener 18883$/clistener 18883 lo' $LISTENERS_CONF
-	restart_required=1
-fi
+#if grep -q "^listener 18883$" $LISTENERS_CONF; then
+#	sed -i '/^listener 18883$/clistener 18883 lo' $LISTENERS_CONF
+#	restart_required=1
+#fi
 
 mosquitto_confs=("/etc/mosquitto/acl.conf"
                  "/etc/mosquitto/passwd.conf"
