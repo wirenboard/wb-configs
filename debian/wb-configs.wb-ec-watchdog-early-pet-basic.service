@@ -1,0 +1,14 @@
+[Unit]
+Description=Top up EC watchdog budget (basic.target milestone)
+DefaultDependencies=no
+Conflicts=shutdown.target
+After=sysinit.target
+Before=basic.target shutdown.target
+ConditionPathExists=/usr/bin/wb-ec-watchdog-early-pet
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/wb-ec-watchdog-early-pet basic
+
+[Install]
+WantedBy=basic.target

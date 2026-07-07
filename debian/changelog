@@ -1,3 +1,13 @@
+wb-configs (3.53.0) stable; urgency=medium
+
+  * Add discrete progress-gated EC watchdog early pets, so a fast panic-reboot
+    tops up the EC watchdog budget before the watchdog daemon starts and the EC
+    hard power-cycles the board (which can also destroy a harvested pstore log).
+    Hang-detection is preserved: pets are gated on real boot milestones, so a
+    genuine early-boot stall never pets and the EC still catches it.
+
+ -- Evgeny Boger <boger@wirenboard.com>  Tue, 07 Jul 2026 22:20:00 +0400
+
 wb-configs (3.52.4) stable; urgency=medium
 
   * Fix mosquitto override config

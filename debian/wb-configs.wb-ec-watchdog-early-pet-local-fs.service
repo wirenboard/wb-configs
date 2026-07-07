@@ -1,0 +1,14 @@
+[Unit]
+Description=Top up EC watchdog budget (early milestone, after local filesystems)
+DefaultDependencies=no
+Conflicts=shutdown.target
+After=local-fs.target
+Before=sysinit.target shutdown.target
+ConditionPathExists=/usr/bin/wb-ec-watchdog-early-pet
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/wb-ec-watchdog-early-pet local-fs
+
+[Install]
+WantedBy=sysinit.target

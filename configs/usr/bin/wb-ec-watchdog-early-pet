@@ -1,0 +1,70 @@
+#!/bin/sh
+# wb-ec-watchdog-early-pet -- discrete, one-shot keepalive for the EC watchdog.
+#
+# Wiren Board controllers with an embedded controller (EC) expose a
+# non-disableable hardware watchdog that the `watchdog` daemon feeds. The EC
+# counts its timeout from the last ping on a *panic-relative* deadline: after a
+# kernel panic and SoC warm reset the EC keeps counting down from the pre-panic
+# ping, but the `watchdog` daemon only starts late in boot (its unit is ordered
+# After=multi-user.target and gated behind network-online, so it comes up ~+50s).
+# On a controller that panics and reboots quickly, the EC can therefore
+# power-cycle the board before its only feeder starts -- a hard power-cycle that
+# can also destroy a just-harvested pstore/kmsg panic log.
+#
+# This helper issues exactly ONE keepalive to top up the EC budget, then exits.
+# It is wired to a few progress-gated systemd milestones early in boot (see the
+# wb-ec-watchdog-early-pet-*.service units). Because each pet is gated on reaching
+# a real boot milestone, a boot that actually STALLS before a milestone never pets
+# -- so the EC still catches a genuine hang. A single keepalive can only top up the
+# budget; it can never disable the (non-disableable) EC watchdog.
+#
+# The device is taken from the `watchdog` daemon's OWN config (the watchdog-device
+# setting in /etc/watchdog.conf), so this always tops up exactly the device(s) the
+# daemon feeds -- on every platform, with no second hardcode to drift out of sync.
+# If no watchdog-device is configured it falls back to /dev/watchdog1 (the
+# historical Wiren Board default).
+#
+# Opening a watchdog device and writing any byte other than 'V' is a keepalive;
+# closing the fd without a prior 'V' leaves the EC ARMED with a bounded grace, so
+# hang-detection is preserved after this exits. Not a loop, not a daemon: open,
+# one ping, close, exit. Always exits 0 so a missing device or a failed ping never
+# blocks boot.
+
+set -u
+
+TAG="${1:-milestone}"
+
+log() {
+	# Early milestones can run before journald is up; /dev/console is the reliable
+	# sink. Never let a logging failure fail the unit.
+	echo "wb-ec-watchdog-early-pet: $*" > /dev/console 2>/dev/null || true
+}
+
+# Device(s) to feed = whatever the `watchdog` daemon is configured to feed. Parse
+# the daemon's config (the displaced .wb variant is a fallback source); if it names
+# no watchdog-device, fall back to the historical /dev/watchdog1.
+devs=
+for conf in /etc/watchdog.conf /etc/watchdog.conf.wb; do
+	[ -r "$conf" ] || continue
+	devs=$(sed -n 's/^[[:space:]]*watchdog-device[[:space:]]*=[[:space:]]*//p' "$conf" | awk 'NF{print $1}')
+	[ -n "$devs" ] && break
+done
+[ -n "$devs" ] || devs=/dev/watchdog1
+
+petted=
+for dev in $devs; do
+	# No such watchdog on this board/revision: skip it.
+	[ -c "$dev" ] || continue
+	# A single write of any byte other than 'V' is a keepalive ping. The redirection
+	# opens $dev (arms), writes the ping, then closes the fd without a magic-close,
+	# leaving the EC armed.
+	if printf '1' > "$dev" 2>/dev/null; then
+		log "tag=$TAG petted $dev"
+		petted=1
+	else
+		log "tag=$TAG ping-failed $dev"
+	fi
+done
+
+[ -n "$petted" ] || log "tag=$TAG skip: no configured watchdog device present"
+exit 0
