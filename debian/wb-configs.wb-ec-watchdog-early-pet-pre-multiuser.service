@@ -1,0 +1,12 @@
+[Unit]
+Description=Top up EC watchdog budget (last top-up before the watchdog daemon)
+After=network.target
+Before=multi-user.target
+ConditionPathExists=/usr/bin/wb-ec-watchdog-early-pet
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/wb-ec-watchdog-early-pet pre-multiuser
+
+[Install]
+WantedBy=multi-user.target
