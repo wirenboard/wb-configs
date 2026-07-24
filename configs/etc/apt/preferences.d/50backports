@@ -1,3 +1,11 @@
-Package: curl libcurl4t64 libngtcp2-16 libnghttp3-9
+Package: curl libcurl3t64-gnutls libcurl4-gnutls libcurl4-gnutls-dev libcurl4-openssl-dev libcurl4t64
+Pin: release n=trixie-backports
+Pin-Priority: 990
+
+Package: libngtcp2-16 libngtcp2-crypto-gnutls-dev libngtcp2-crypto-gnutls8 libngtcp2-crypto-ossl-dev libngtcp2-crypto-ossl0 libngtcp2-dev
+Pin: release n=trixie-backports
+Pin-Priority: 990
+
+Package: libnghttp3-9 libnghttp3-dev
 Pin: release n=trixie-backports
 Pin-Priority: 990
