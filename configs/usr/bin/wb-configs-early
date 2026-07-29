@@ -48,7 +48,7 @@ wb_fix_data_file()
         fi
 
         # get the copies to the disk before exposing them: a power cut
-        # must not leave zero-length configs behind (SOFT-7211)
+        # must not leave zero-length configs behind
         sync
 
         [[ "$f" != "$dst" ]] && mv -T "$dst.new" "$dst"
