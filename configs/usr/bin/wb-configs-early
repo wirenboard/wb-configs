@@ -51,8 +51,12 @@ wb_fix_data_file()
         # must not leave zero-length configs behind
         sync
 
-        [[ "$f" != "$dst" ]] && mv -T "$dst.new" "$dst"
-        [[ -n "$made_backup" ]] && mv -T "${src}.default.new" "${src}.default"
+        if [[ "$f" != "$dst" ]]; then
+            mv -T "$dst.new" "$dst"
+        fi
+        if [[ -n "$made_backup" ]]; then
+            mv -T "${src}.default.new" "${src}.default"
+        fi
     else
         if [[ -d "${src}" ]] && [[ ! -L "${src}" ]]; then
             echo "$dst already exists, but $src is not a symlink, copy missing files"
