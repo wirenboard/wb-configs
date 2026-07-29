@@ -1,3 +1,10 @@
+wb-configs (3.52.6) stable; urgency=medium
+
+  * wb-configs-early: make config copies durable before removing originals
+    (temp name + sync + atomic rename)
+
+ -- Ekaterina Volkova <ekaterina.volkova@wirenboard.com>  Tue, 28 Jul 2026 12:00:00 +0300
+
 wb-configs (3.52.5) stable; urgency=medium
 
   * Install libcurl4-openssl-dev from backports
