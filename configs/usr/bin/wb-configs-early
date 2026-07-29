@@ -33,13 +33,26 @@ wb_fix_data_file()
         echo "$src: fixing with existing file $f"
         mkdir -p `dirname "$dst"`
         [[ -n "$nosavefiles" ]] && find "$f" -type f -delete
-        cp -aH "$f" "$dst"
+        if [[ "$f" != "$dst" ]]; then
+            rm -rf "$dst.new"
+            cp -aH "$f" "$dst.new"
+        fi
 
         # create backup if there isn't one
+        local made_backup=''
         if [[ ! -e "${src}.default" ]]; then
             echo "$src: saving backup to ${src}.default"
-            cp -aH "$f" "${src}.default"
+            rm -rf "${src}.default.new"
+            cp -aH "$f" "${src}.default.new"
+            made_backup=1
         fi
+
+        # get the copies to the disk before exposing them: a power cut
+        # must not leave zero-length configs behind (SOFT-7211)
+        sync
+
+        [[ "$f" != "$dst" ]] && mv -T "$dst.new" "$dst"
+        [[ -n "$made_backup" ]] && mv -T "${src}.default.new" "${src}.default"
     else
         if [[ -d "${src}" ]] && [[ ! -L "${src}" ]]; then
             echo "$dst already exists, but $src is not a symlink, copy missing files"
