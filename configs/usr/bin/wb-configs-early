@@ -33,28 +33,21 @@ wb_fix_data_file()
         echo "$src: fixing with existing file $f"
         mkdir -p `dirname "$dst"`
         [[ -n "$nosavefiles" ]] && find "$f" -type f -delete
+        # copy to a temporary name, get it to the disk, then publish with
+        # an atomic rename: a power cut must not leave zero-length configs
         if [[ "$f" != "$dst" ]]; then
             rm -rf "$dst.new"
             cp -aH "$f" "$dst.new"
+            sync -f "$dst.new"
+            mv -T "$dst.new" "$dst"
         fi
 
         # create backup if there isn't one
-        local made_backup=''
         if [[ ! -e "${src}.default" ]]; then
             echo "$src: saving backup to ${src}.default"
             rm -rf "${src}.default.new"
             cp -aH "$f" "${src}.default.new"
-            made_backup=1
-        fi
-
-        # get the copies to the disk before exposing them: a power cut
-        # must not leave zero-length configs behind
-        sync
-
-        if [[ "$f" != "$dst" ]]; then
-            mv -T "$dst.new" "$dst"
-        fi
-        if [[ -n "$made_backup" ]]; then
+            sync -f "${src}.default.new"
             mv -T "${src}.default.new" "${src}.default"
         fi
     else
