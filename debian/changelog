@@ -1,9 +1,15 @@
-wb-configs (3.52.6) stable; urgency=medium
+wb-configs (3.52.7) stable; urgency=medium
 
   * wb-configs-early: make config copies durable before removing originals
     (temp name + sync + atomic rename)
 
  -- Ekaterina Volkova <ekaterina.volkova@wirenboard.com>  Tue, 28 Jul 2026 12:00:00 +0300
+
+wb-configs (3.52.6) stable; urgency=medium
+
+  * Cleanup apt preferences
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 30 Jul 2026 12:10:00 +0400
 
 wb-configs (3.52.5) stable; urgency=medium
 
