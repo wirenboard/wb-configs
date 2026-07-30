@@ -1,0 +1,3 @@
+if ! getent passwd ntpsec >/dev/null; then
+    DEBIAN_FRONTEND=noninteractive dpkg-reconfigure ntpsec
+fi
