@@ -5,6 +5,18 @@ MNT=/mnt/data
 
 WATCH_FILES_LIST=/var/run/wb-configs.watch
 
+# Copy $1 to $2 ($2 must not exist) so that after a power cut $2 is either
+# complete or absent, never partial or zero-length: copy to a temporary
+# name, get it to the disk, then publish with an atomic rename.
+wb_durable_copy()
+{
+    local from=$1 to=$2
+    rm -rf "$to.new"
+    cp -aH "$from" "$to.new"
+    sync -f "$to.new"
+    mv -T "$to.new" "$to"
+}
+
 wb_fix_data_file()
 {
     local src_orig=$1
@@ -33,12 +45,14 @@ wb_fix_data_file()
         echo "$src: fixing with existing file $f"
         mkdir -p `dirname "$dst"`
         [[ -n "$nosavefiles" ]] && find "$f" -type f -delete
-        cp -aH "$f" "$dst"
+        if [[ "$f" != "$dst" ]]; then
+            wb_durable_copy "$f" "$dst"
+        fi
 
         # create backup if there isn't one
         if [[ ! -e "${src}.default" ]]; then
             echo "$src: saving backup to ${src}.default"
-            cp -aH "$f" "${src}.default"
+            wb_durable_copy "$f" "${src}.default"
         fi
     else
         if [[ -d "${src}" ]] && [[ ! -L "${src}" ]]; then
