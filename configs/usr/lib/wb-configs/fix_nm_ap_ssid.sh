@@ -67,3 +67,10 @@ if [ ! -f "$wb_ap_connection" ] && [ ! -f "$deleted_wb_ap" ]; then
         sed -i "/band=bg/d" "$wb_ap_connection"
     fi
 fi
+
+# old driver doesn't support PMF in AP mode, disable it explicitly (pmf=1)
+if [ "$wifi_module" == "RTL8723BU" ] && [ -f "$wb_ap_connection" ]; then
+    if grep -q -x -F "[wifi-security]" "$wb_ap_connection" && ! grep -q "^pmf=" "$wb_ap_connection"; then
+        sed -i "/^\[wifi-security\]$/a pmf=1" "$wb_ap_connection"
+    fi
+fi
