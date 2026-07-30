@@ -1,4 +1,4 @@
-wb-configs (3.50.2-wb100) stable; urgency=medium
+wb-configs (3.50.2+wb100) stable; urgency=medium
 
   * wb-configs-early: make config copies durable before removing originals
     (temp name + sync + atomic rename)
