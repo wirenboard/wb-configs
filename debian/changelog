@@ -1,3 +1,10 @@
+wb-configs (3.52.8) stable; urgency=medium
+
+  * wb-configs-early: make config copies durable before removing originals
+    (temp name + sync + atomic rename)
+
+ -- Ekaterina Volkova <ekaterina.volkova@wirenboard.com>  Tue, 31 Jul 2026 09:47:00 +0300
+
 wb-configs (3.52.7) stable; urgency=medium
 
   * Disable PMF for Wi-Fi access point for RTL8723BU
