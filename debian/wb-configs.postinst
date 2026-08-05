@@ -107,7 +107,6 @@ fi
 #DEBHELPER#
 . /etc/wb-prepare.d/01udev-rules # install hw-specific udev rules
 
-rm -f /etc/logrotate.d/rsyslog
 rm -f /etc/update-motd.d/10-uname
 
 # remove default Debian motd
