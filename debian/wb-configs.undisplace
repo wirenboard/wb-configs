@@ -6,3 +6,4 @@
 /etc/nginx/sites-available/default.wb
 /etc/lirc/hardware.conf.wb
 /etc/nfc/libnfc.conf.wb
+/etc/rsyslog.conf.wb

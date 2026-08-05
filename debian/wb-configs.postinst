@@ -107,10 +107,6 @@ fi
 #DEBHELPER#
 . /etc/wb-prepare.d/01udev-rules # install hw-specific udev rules
 
-if dpkg-query -s rsyslog >/dev/null 2>/dev/null; then
-    rm -f /etc/logrotate.d/messages
-fi
-
 rm -f /etc/logrotate.d/rsyslog
 rm -f /etc/update-motd.d/10-uname
 
@@ -133,7 +129,6 @@ if grep -q -R --include=\*.conf "$OPT_REGEX" /etc/mosquitto/; then
         -exec sed -i.wb-bak3 "s/${OPT_REGEX}/# ${DEPR_MSG}\n#\1/" '{}' \;
 fi
 
-deb-systemd-invoke try-restart rsyslog || true
 deb-systemd-invoke start watchdog
 deb-systemd-invoke try-restart systemd-journald || true
 
