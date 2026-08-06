@@ -1,3 +1,9 @@
+wb-configs (3.52.10) stable; urgency=medium
+
+  * Fix installation of armhf libs on arm64 from trixie-backports
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 06 Aug 2026 13:50:00 +0400
+
 wb-configs (3.52.9) stable; urgency=medium
 
   * Create ntpsec user after upgrade with FIT
