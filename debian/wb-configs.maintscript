@@ -25,3 +25,5 @@ rm_conffile /etc/lirc/hardware.conf 3.52.2~
 rm_conffile /etc/lirc/hardware.conf.wb 3.52.2~
 rm_conffile /etc/nfc/libnfc.conf 3.52.2~
 rm_conffile /etc/nfc/libnfc.conf.wb 3.52.2~
+rm_conffile /etc/rsyslog.conf.wb 3.53.0~
+rm_conffile /etc/logrotate.d/messages 3.53.0~

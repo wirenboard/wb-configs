@@ -26,4 +26,3 @@
 /etc/ssh/sshd_config.wb
 /etc/avahi/avahi-daemon.conf.wb
 /etc/systemd/journald.conf.wb
-/etc/rsyslog.conf.wb
