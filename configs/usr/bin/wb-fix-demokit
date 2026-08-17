@@ -34,3 +34,95 @@ apt install -y wb-demo-kit-configs --reinstall
 cp /mnt/data/etc/wb-webui.conf /etc/wb-webui.conf
 
 systemctl restart wb-mqtt-serial
+
+command -v docker > /dev/null && command -v jq > /dev/null || apt install -y docker.io jq
+systemctl enable --now docker
+
+mkdir -p /mnt/data/home-assistant
+ha_config_updated=0
+if ! grep -q trusted_proxies /mnt/data/home-assistant/configuration.yaml 2>/dev/null; then
+    cat > /mnt/data/home-assistant/configuration.yaml <<'EOF'
+default_config:
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+    - ::1
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+EOF
+    ha_config_updated=1
+fi
+touch /mnt/data/home-assistant/automations.yaml
+touch /mnt/data/home-assistant/scripts.yaml
+touch /mnt/data/home-assistant/scenes.yaml
+
+if docker inspect home-assistant > /dev/null 2>&1; then
+    if [ "$ha_config_updated" = "1" ]; then
+        docker restart home-assistant
+    fi
+else
+    docker run -d \
+        --name home-assistant \
+        --restart unless-stopped \
+        --network host \
+        --log-opt max-size=10m --log-opt max-file=3 \
+        -e TZ=Europe/Moscow \
+        -v /mnt/data/home-assistant:/config \
+        ghcr.io/home-assistant/home-assistant:stable
+fi
+
+mkdir -p /mnt/data/node-red
+if [ "$(stat -c %u /mnt/data/node-red)" != "1000" ]; then
+    chown 1000:1000 /mnt/data/node-red
+    docker restart node-red > /dev/null 2>&1 || true
+fi
+
+docker inspect node-red > /dev/null 2>&1 || docker run -d \
+    --name node-red \
+    --restart unless-stopped \
+    -p 1880:1880 \
+    --log-opt max-size=10m --log-opt max-file=3 \
+    -e TZ=Europe/Moscow \
+    -v /mnt/data/node-red:/data \
+    nodered/node-red:latest
+
+HA_URL="http://127.0.0.1:8123"
+HA_CLIENT_ID="$HA_URL/"
+
+ha_onboarding=""
+for _ in $(seq 1 120); do
+    code=$(curl -s -o /dev/null --max-time 10 -w '%{http_code}' "$HA_URL/api/onboarding")
+    if [ "$code" = "200" ] || [ "$code" = "404" ]; then
+        ha_onboarding="$code"
+        break
+    fi
+    sleep 5
+done
+
+if [ "$ha_onboarding" = "200" ]; then
+    auth_code=$(curl -sf --max-time 10 -X POST "$HA_URL/api/onboarding/users" \
+        -H "Content-Type: application/json" \
+        -d "{\"client_id\": \"$HA_CLIENT_ID\", \"name\": \"Demo\", \"username\": \"root\", \"password\": \"wirenboard\", \"language\": \"ru\"}" \
+        | jq -r '.auth_code // empty')
+
+    if [ -n "$auth_code" ]; then
+        access_token=$(curl -sf --max-time 10 -X POST "$HA_URL/auth/token" \
+            -d "grant_type=authorization_code" -d "code=$auth_code" -d "client_id=$HA_CLIENT_ID" \
+            | jq -r '.access_token // empty')
+
+        if [ -n "$access_token" ]; then
+            for step in core_config analytics; do
+                curl -sf --max-time 60 -X POST "$HA_URL/api/onboarding/$step" \
+                    -H "Authorization: Bearer $access_token" -H "Content-Type: application/json" \
+                    -d '{}' > /dev/null
+            done
+            curl -sf --max-time 30 -X POST "$HA_URL/api/onboarding/integration" \
+                -H "Authorization: Bearer $access_token" -H "Content-Type: application/json" \
+                -d "{\"client_id\": \"$HA_CLIENT_ID\", \"redirect_uri\": \"${HA_CLIENT_ID}?auth_callback=1\"}" > /dev/null
+        fi
+    fi
+fi
