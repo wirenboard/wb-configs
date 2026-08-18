@@ -35,7 +35,9 @@ cp /mnt/data/etc/wb-webui.conf /etc/wb-webui.conf
 
 systemctl restart wb-mqtt-serial
 
-command -v docker > /dev/null && command -v jq > /dev/null || apt install -y docker.io jq
+if ! command -v docker > /dev/null || ! command -v jq > /dev/null; then
+    apt install -y docker.io jq
+fi
 systemctl enable --now docker
 
 mkdir -p /mnt/data/home-assistant
