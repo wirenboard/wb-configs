@@ -1,3 +1,11 @@
+wb-configs (3.53.0-wbdemokit1) stable; urgency=medium
+
+  * online-demokit: mark the package version so it sorts above the release
+    build of the same base version and never collides with the next base
+    release (revision suffix, same scheme wb-initramfs used before)
+
+ -- Ekaterina Volkova <ekaterina.volkova@wirenboard.com>  Wed, 26 Aug 2026 20:37:11 +0000
+
 wb-configs (3.53.0) stable; urgency=medium
 
   * Remove obsolete rsyslog configs
