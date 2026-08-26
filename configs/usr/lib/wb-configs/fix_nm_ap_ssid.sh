@@ -4,7 +4,7 @@ wb_ap_ssid_prefix="${WB_AP_SSID_PREFIX:-WirenBoard}"
 
 # find Wi-Fi module
 wifi_module="RTL8723BU"
-if [ -z $(lsusb -d'0bda:b720') ]; then
+if [ -z "$(lsusb -d'0bda:b720')" ]; then
     wifi_module="RTL8733BU"
 fi
 
@@ -65,5 +65,12 @@ if [ ! -f "$wb_ap_connection" ] && [ ! -f "$deleted_wb_ap" ]; then
     if [ "$wifi_module" == "RTL8733BU" ]; then
         sed -i "/channel=1/d" "$wb_ap_connection"
         sed -i "/band=bg/d" "$wb_ap_connection"
+    fi
+fi
+
+# old driver doesn't support PMF in AP mode, disable it explicitly (pmf=1)
+if [ "$wifi_module" == "RTL8723BU" ] && [ -f "$wb_ap_connection" ]; then
+    if grep -q -x -F "[wifi-security]" "$wb_ap_connection" && ! grep -q "^pmf=" "$wb_ap_connection"; then
+        sed -i "/^\[wifi-security\]$/a pmf=1" "$wb_ap_connection"
     fi
 fi

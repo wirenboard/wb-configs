@@ -107,11 +107,6 @@ fi
 #DEBHELPER#
 . /etc/wb-prepare.d/01udev-rules # install hw-specific udev rules
 
-if dpkg-query -s rsyslog >/dev/null 2>/dev/null; then
-    rm -f /etc/logrotate.d/messages
-fi
-
-rm -f /etc/logrotate.d/rsyslog
 rm -f /etc/update-motd.d/10-uname
 
 # remove default Debian motd
@@ -133,18 +128,8 @@ if grep -q -R --include=\*.conf "$OPT_REGEX" /etc/mosquitto/; then
         -exec sed -i.wb-bak3 "s/${OPT_REGEX}/# ${DEPR_MSG}\n#\1/" '{}' \;
 fi
 
-# this flag may be created in preinst
-MOSQUITTO_UPGRADE_FLAG=/var/lib/wirenboard/.mosquitto2-upgrade-restart-required
-
-if [ -f $MOSQUITTO_UPGRADE_FLAG ]; then
-    echo "mosquitto configs are updated, restarting mosquitto and all Wiren Board MQTT services"
-    deb-systemd-invoke restart mosquitto
-    rm $MOSQUITTO_UPGRADE_FLAG -rf
-fi
-
-deb-systemd-invoke restart rsyslog || true
 deb-systemd-invoke start watchdog
-deb-systemd-invoke restart systemd-journald
+deb-systemd-invoke try-restart systemd-journald || true
 
 # remove transitional files left after 2.0~~transitional
 if echo "$2" | grep '~~transitional' >/dev/null; then
@@ -202,8 +187,8 @@ nm_fixes() {
             fi
         fi
 
-        deb-systemd-invoke restart dnsmasq || true
-        deb-systemd-invoke restart NetworkManager || true
+        deb-systemd-invoke try-restart dnsmasq || true
+        deb-systemd-invoke try-restart NetworkManager || true
 }
 
 # manually unsetting WBGSM_INTERACTIVE var for all ppp-peers to allow launch ppp-connection via pon/poff
@@ -229,9 +214,7 @@ add_mmc_mount_options(){
           options="noatime,"options;
     }
     printf "%-20s %-20s %-10s %-70s %-10s %s\n", $1, $2, $3, options, $5, $6;
-    }' /etc/fstab > /tmp/fstab_tmp
-
-    mv /tmp/fstab_tmp /etc/fstab
+    }' /etc/fstab | sponge /etc/fstab
 }
 
 add_mmc_mount_options
@@ -241,7 +224,7 @@ mosquitto_fixes()
     /usr/lib/wb-configs/fix_mosquitto.sh
     if [ $? -eq 1 ]; then
         if [ "$(deb-systemd-invoke is-enabled mosquitto)" != "masked" ]; then
-            deb-systemd-invoke restart mosquitto
+            deb-systemd-invoke try-restart mosquitto || true
         else
             echo "Mosquitto is masked, skipping restart"
         fi

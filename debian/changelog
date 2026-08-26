@@ -1,3 +1,100 @@
+wb-configs (3.53.0) stable; urgency=medium
+
+  * Remove obsolete rsyslog configs
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Wed, 06 Aug 2026 16:10:00 +0400
+
+wb-configs (3.52.10) stable; urgency=medium
+
+  * Fix installation of armhf libs on arm64 from trixie-backports
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 06 Aug 2026 13:50:00 +0400
+
+wb-configs (3.52.9) stable; urgency=medium
+
+  * Create ntpsec user after upgrade with FIT
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 31 Jul 2026 10:10:00 +0400
+
+wb-configs (3.52.8) stable; urgency=medium
+
+  * wb-configs-early: make config copies durable before removing originals
+    (temp name + sync + atomic rename)
+
+ -- Ekaterina Volkova <ekaterina.volkova@wirenboard.com>  Tue, 31 Jul 2026 09:47:00 +0300
+
+wb-configs (3.52.7) stable; urgency=medium
+
+  * Disable PMF for Wi-Fi access point for RTL8723BU
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 30 Jul 2026 16:10:00 +0400
+
+wb-configs (3.52.6) stable; urgency=medium
+
+  * Cleanup apt preferences
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 30 Jul 2026 12:10:00 +0400
+
+wb-configs (3.52.5) stable; urgency=medium
+
+  * Install libcurl4-openssl-dev from backports
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 23 Jul 2026 17:10:00 +0400
+
+wb-configs (3.52.4) stable; urgency=medium
+
+  * Fix mosquitto override config
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 03 Jul 2026 10:10:00 +0400
+
+wb-configs (3.52.3) stable; urgency=medium
+
+  * postinst: use try-restart and ignore restart failures
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 02 Jul 2026 18:20:00 +0400
+
+wb-configs (3.52.2) stable; urgency=medium
+
+  * Remove obsolete lirc and nfc configs
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Tue, 30 Jun 2026 17:20:00 +0400
+
+wb-configs (3.52.1) stable; urgency=medium
+
+  * Create missed users after upgrade with FIT
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 26 Jun 2026 11:20:00 +0400
+
+wb-configs (3.52.0) stable; urgency=medium
+
+  * Move services overrides from /etc to /usr/lib
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 25 Jun 2026 15:20:00 +0400
+
+wb-configs (3.51.3) stable; urgency=medium
+
+  * Move ssh host keys generation from wb-utils
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 25 Jun 2026 10:20:00 +0400
+
+wb-configs (3.51.2) stable; urgency=medium
+
+  * Remove debian-upstream.list
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 19 Jun 2026 08:20:00 +0400
+
+wb-configs (3.51.1) stable; urgency=medium
+
+  * Fix fix_nm_ap_ssid.sh
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 11 Jun 2026 10:20:00 +0400
+
+wb-configs (3.51.0) stable; urgency=medium
+
+  * Port for Debian 13
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Tue, 02 Jun 2026 16:20:00 +0400
+
 wb-configs (3.50.3) stable; urgency=medium
 
   * add wb-fix-demokit service
