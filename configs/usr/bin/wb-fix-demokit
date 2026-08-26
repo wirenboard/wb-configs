@@ -31,6 +31,10 @@ wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 222471 -i 25  # MWAC v.2
 apt update
 apt install -y wb-demo-kit-configs --reinstall
 
+# wb-configs-early runs before wb-demo-kit-configs is installed, so on a freshly
+# flashed controller /etc/wb-mqtt-serial.conf and /etc/wb-webui.conf are not linked
+# to /mnt/data; copy the rendered demokit configs into /etc explicitly.
 cp /mnt/data/etc/wb-webui.conf /etc/wb-webui.conf
+cp /mnt/data/etc/wb-mqtt-serial.conf /etc/wb-mqtt-serial.conf
 
 systemctl restart wb-mqtt-serial
