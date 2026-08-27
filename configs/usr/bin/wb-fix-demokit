@@ -30,6 +30,7 @@ wb-modbus-scanner -d /dev/ttyRS485-1 -b 115200 -s 222471 -i 25  # MWAC v.2
 # installing demokit dashboards
 apt update
 apt install -y wb-demo-kit-configs --reinstall
+apt install -y wb-mqtt-dali
 
 # wb-configs-early runs before wb-demo-kit-configs is installed, so on a freshly
 # flashed controller /etc/wb-mqtt-serial.conf and /etc/wb-webui.conf are not linked
