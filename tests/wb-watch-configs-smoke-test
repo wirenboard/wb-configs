@@ -1,0 +1,227 @@
+#!/bin/bash
+
+# Run as root on a controller with the candidate wb-configs package installed.
+# The watcher runs in a mount namespace; production configs and services stay untouched.
+
+set -euo pipefail
+
+readonly SERVICE="wb-configs.service"
+readonly DEFAULT_WATCHER="/usr/bin/wb-watch-configs"
+readonly TEST_TIMEOUT_SECONDS=30
+
+TEST_ROOT=""
+WATCHER_PID=""
+
+fail() {
+	printf 'FAIL: %s\n' "$*" >&2
+	exit 1
+}
+
+pass() {
+	printf 'PASS: %s\n' "$*"
+}
+
+cleanup_test_root() {
+	if [[ -n "$TEST_ROOT" && "$TEST_ROOT" == /tmp/wb-watch-configs-smoke.* ]]; then
+		rm -rf -- "$TEST_ROOT"
+	fi
+}
+
+wait_for_file() {
+	local path=$1
+	local attempt=0
+
+	while ((attempt < 100)); do
+		[[ -s "$path" ]] && return 0
+		sleep 0.05
+		((attempt += 1))
+	done
+	return 1
+}
+
+wait_for_copy() {
+	local source=$1
+	local destination=$2
+	local attempt=0
+
+	while ((attempt < 100)); do
+		cmp -s "$source" "$destination" && return 0
+		sleep 0.05
+		((attempt += 1))
+	done
+	return 1
+}
+
+stop_watcher() {
+	local inotify_pid=""
+
+	if [[ -s /run/wb-watch-configs.pid ]]; then
+		inotify_pid=$(< /run/wb-watch-configs.pid)
+		kill "$inotify_pid" 2>/dev/null || true
+	fi
+	if [[ -n "$WATCHER_PID" ]]; then
+		kill "$WATCHER_PID" 2>/dev/null || true
+		wait "$WATCHER_PID" 2>/dev/null || true
+	fi
+	rm -f /run/wb-watch-configs.pid
+	WATCHER_PID=""
+}
+
+start_watcher() {
+	local watcher=$1
+	local source=$2
+	local log_file=$3
+	local fake_bin=${4:-}
+	local caller_pid_file=${5:-}
+
+	rm -f /run/wb-watch-configs.pid
+	if [[ -n "$fake_bin" ]]; then
+		PATH="$fake_bin:$PATH" COPY_CALLER_PID_FILE="$caller_pid_file" \
+			"$watcher" "$source" > "$log_file" 2>&1 &
+	else
+		"$watcher" "$source" > "$log_file" 2>&1 &
+	fi
+	WATCHER_PID=$!
+
+	if ! wait_for_file /run/wb-watch-configs.pid; then
+		return 1
+	fi
+	# The PID file is written immediately before inotifywait installs its watch.
+	sleep 0.25
+}
+
+create_failing_cp() {
+	local fake_cp=$1
+
+	cat > "$fake_cp" <<'EOF'
+#!/bin/bash
+set -eu
+
+destination=${!#}
+printf 'partial copy\n' > "$destination"
+printf '%s\n' "$PPID" > "$COPY_CALLER_PID_FILE"
+kill -STOP "$PPID"
+EOF
+	chmod 0755 "$fake_cp"
+}
+
+run_isolated() {
+	local test_root=$1
+	local watcher=$2
+	local source="$test_root/source/test.conf"
+	local destination="/mnt/data${source}"
+	local moved_source="${source}.moved"
+	local fake_bin="$test_root/fake-bin"
+	local caller_pid_file="$test_root/copy-caller.pid"
+	local watcher_log="$test_root/watcher.log"
+	local caller_pid
+
+	mount --make-rprivate /
+	mount -t tmpfs -o size=8M,nosuid,nodev tmpfs /mnt/data
+	mount -t tmpfs -o size=1M,nosuid,nodev tmpfs /run
+
+	mkdir -p "$(dirname "$source")" "$(dirname "$destination")" "$fake_bin"
+	printf 'new complete contents\n' > "$source"
+	chmod 0640 "$source"
+	chown 123:456 "$source"
+	printf 'old valid contents\n' > "$destination"
+	chmod 0600 "$destination"
+	create_failing_cp "$fake_bin/cp"
+
+	trap stop_watcher EXIT
+	start_watcher "$watcher" "$source" "$watcher_log" "$fake_bin" "$caller_pid_file" || \
+		fail "the isolated watcher did not start"
+	printf 'trigger interrupted copy\n' > "$source"
+	if ! wait_for_file "$caller_pid_file"; then
+		fail "the simulated interrupted copy did not start"
+	fi
+	cmp -s <(printf 'old valid contents\n') "$destination" || \
+		fail "an interrupted copy changed the old destination"
+	[[ -s "${destination}.new" ]] || fail "the interrupted temporary copy was not created"
+	caller_pid=$(< "$caller_pid_file")
+	kill -KILL "$caller_pid" 2>/dev/null || true
+	stop_watcher
+	pass "an interrupted copy keeps the old destination intact"
+
+	start_watcher "$watcher" "$source" "$watcher_log" || \
+		fail "the isolated watcher did not restart after an interrupted copy"
+	printf 'close_write contents\n' > "$source"
+	if ! wait_for_copy "$source" "$destination"; then
+		fail "a close_write event was not copied"
+	fi
+	[[ ! -e "${destination}.new" ]] || fail "the temporary copy remains after close_write"
+	[[ $(stat -c '%u:%g:%a' "$destination") == "123:456:640" ]] || \
+		fail "owner, group or mode changed after close_write"
+	pass "close_write copies contents and metadata"
+
+	printf 'moved_to contents\n' > "$moved_source"
+	chmod 0600 "$moved_source"
+	chown 234:567 "$moved_source"
+	mv -T "$moved_source" "$source"
+	if ! wait_for_copy "$source" "$destination"; then
+		fail "a moved_to event was not copied"
+	fi
+	[[ ! -e "${destination}.new" ]] || fail "the temporary copy remains after moved_to"
+	[[ $(stat -c '%u:%g:%a' "$destination") == "234:567:600" ]] || \
+		fail "owner, group or mode changed after moved_to"
+	pass "moved_to copies contents and metadata"
+
+	stop_watcher
+}
+
+require_commands() {
+	local command_name
+
+	for command_name in bash cat chmod chown cmp dirname grep inotifywait mkdir \
+		mktemp mount mv readlink rm sleep stat timeout unshare; do
+		command -v "$command_name" > /dev/null || fail "missing command: $command_name"
+	done
+}
+
+main() {
+	local watcher=${WATCHER:-$DEFAULT_WATCHER}
+	local script_path
+	local service_pid_before=""
+	local service_pid_after
+
+	[[ $EUID -eq 0 ]] || fail "run this test as root"
+	require_commands
+	[[ -x "$watcher" ]] || fail "$watcher is not executable"
+	bash -n "$watcher" || fail "$watcher has invalid shell syntax"
+	grep -q '^wb_durable_copy()' "$watcher" || \
+		fail "$watcher does not contain the durable-copy fix"
+	pass "$watcher has valid syntax and contains the durable-copy fix"
+
+	if [[ -d /run/systemd/system ]]; then
+		command -v systemctl > /dev/null || fail "missing command: systemctl"
+		systemctl is-active --quiet "$SERVICE" || fail "$SERVICE is not active before the test"
+		service_pid_before=$(systemctl show --property MainPID --value "$SERVICE")
+	fi
+
+	TEST_ROOT=$(mktemp -d /tmp/wb-watch-configs-smoke.XXXXXX)
+	trap cleanup_test_root EXIT
+	script_path=$(readlink -f "$0")
+	if ! timeout --signal=TERM --kill-after=2 "$TEST_TIMEOUT_SECONDS" \
+		unshare --mount --fork "$script_path" --isolated "$TEST_ROOT" "$watcher"; then
+		fail "isolated watcher test failed"
+	fi
+
+	if [[ -n "$service_pid_before" ]]; then
+		systemctl is-active --quiet "$SERVICE" || fail "$SERVICE stopped during the test"
+		service_pid_after=$(systemctl show --property MainPID --value "$SERVICE")
+		[[ "$service_pid_after" == "$service_pid_before" ]] || \
+			fail "$SERVICE restarted during the test"
+		pass "$SERVICE stayed active with PID $service_pid_after"
+	else
+		printf 'SKIP: systemd service check (systemd is not running)\n'
+	fi
+
+	pass "real /etc, /mnt/data and /run were not modified"
+	printf 'All wb-watch-configs smoke tests passed.\n'
+}
+
+if [[ ${1:-} == "--isolated" ]]; then
+	run_isolated "$2" "$3"
+else
+	main
+fi
