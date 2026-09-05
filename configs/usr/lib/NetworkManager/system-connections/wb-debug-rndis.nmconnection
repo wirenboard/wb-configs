@@ -1,0 +1,15 @@
+[connection]
+id=wb-debug-rndis
+uuid=4c17ddc5-8e62-4fe5-891b-1640c4aa764d
+type=ethernet
+interface-name=dbg0
+autoconnect=true
+master=0f098677-2b49-4167-a534-207567b1751b
+slave-type=bridge
+
+[user]
+wb.read-only=true
+
+[ethernet]
+
+[bridge-port]

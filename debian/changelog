@@ -1,3 +1,12 @@
+wb-configs (3.54.0) stable; urgency=medium
+
+  * NetworkManager: carry the USB Debug Network (wb-debug, 10.200.200.1/30) on the
+    dbgbr bridge with the RNDIS (dbg0) and CDC ECM (dbge0) gadget interfaces as
+    ports, so wb-usb-otg can switch the USB network function for macOS hosts
+    without re-activating the connection
+
+ -- Evgeny Boger <boger@wirenboard.com>  Sat, 05 Sep 2026 21:52:04 +0300
+
 wb-configs (3.53.0) stable; urgency=medium
 
   * Remove obsolete rsyslog configs
