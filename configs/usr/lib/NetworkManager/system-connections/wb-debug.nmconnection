@@ -17,6 +17,9 @@ stp=false
 address1=10.200.200.1/30
 method=shared
 never-default=true
+# one address in the /30 and dnsmasq now lives as long as the bridge: keep the lease short
+# so a host with another MAC is not locked out for the default hour
+shared-dhcp-lease-time=120
 
 [ipv6]
 addr-gen-mode=stable-privacy
