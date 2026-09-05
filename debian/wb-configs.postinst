@@ -199,6 +199,17 @@ ppp_peers_fixes()
     done
 }
 
+# 3.54.0: wb-debug moved from dbg0 to the dbgbr bridge under the same uuid. NetworkManager
+# cannot re-assume the ethernet device with a bridge profile after the restart below and would
+# keep dbg0 as an externally configured device with the old address outside the bridge, so
+# release it first; the port profile then autoconnects it.
+if [ "$1" = "configure" ] && [ -n "$2" ] && dpkg --compare-versions "$2" lt "3.54.0~~"; then
+    if [ "$(nmcli -g GENERAL.CONNECTION device show dbg0 2>/dev/null)" = "wb-debug" ]; then
+        echo "Releasing dbg0 from the old wb-debug profile (it moves to the dbgbr bridge)"
+        nmcli -w 5 device disconnect dbg0 || true
+    fi
+fi
+
 nm_fixes
 ppp_peers_fixes
 
