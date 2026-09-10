@@ -19,6 +19,20 @@ log() {
 	logger -t wb-watch-configs "$*"
 }
 
+# Keep the old destination intact until the new copy is complete and on disk.
+wb_durable_copy() {
+	local from=$1
+	local to=$2
+	local tmp="${to}.new"
+
+	rm -rf "$tmp" || return 1
+	if cp -aH "$from" "$tmp" && sync -f "$tmp" && mv -T "$tmp" "$to"; then
+		return 0
+	fi
+	rm -rf "$tmp"
+	return 1
+}
+
 log "Watched dirs: ${WATCH_DIRS[*]}"
 
 (
@@ -34,6 +48,8 @@ while read EVENT_FILE EVENT_TYPE; do
 	grep -q "$EVENT_FILE" <<<"${WATCH_FILES[@]}" || continue
 	log "$EVENT_FILE was changed"
 	DST="${MNT}${EVENT_FILE}"
-	cp "$EVENT_FILE" "$DST"
+	if ! wb_durable_copy "$EVENT_FILE" "$DST"; then
+		log "Failed to copy $EVENT_FILE to $DST"
+	fi
 done
 }
