@@ -1,3 +1,9 @@
+wb-configs (3.53.3) stable; urgency=medium
+
+  * Restrict www-data user privileges to dedicated helpers
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 17 Sep 2026 16:35:19 +0400
+
 wb-configs (3.53.2) stable; urgency=medium
 
   * wb-watch-configs: make copies durable before publishing them
