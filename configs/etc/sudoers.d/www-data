@@ -1,1 +1,1 @@
-www-data ALL = (root) NOPASSWD: /usr/lib/wb-configs/wb-export-rootfs "", /usr/lib/wb-configs/wb-export-configs "", /usr/lib/wb-configs/wb-export-everything ""
+www-data ALL = (root) NOPASSWD: /usr/lib/wb-configs/wb_export.sh rootfs, /usr/lib/wb-configs/wb_export.sh configs, /usr/lib/wb-configs/wb_export.sh everything
