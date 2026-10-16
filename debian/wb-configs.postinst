@@ -232,3 +232,5 @@ mosquitto_fixes()
 }
 
 mosquitto_fixes
+
+/usr/lib/wb-configs/fix_dpkg_symlinks.sh cleanup
