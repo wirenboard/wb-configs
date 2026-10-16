@@ -1,3 +1,10 @@
+wb-configs (3.53.5) stable; urgency=medium
+
+  * Preserve symlinks for watched configs (fixes /etc/localtime set by
+    timedatectl turning into a regular file after reboot)
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Fri, 16 Oct 2026 12:00:00 +0400
+
 wb-configs (3.53.4) stable; urgency=medium
 
   * wb-adjust-systime: support ntpsec and correctly detect stale drift files
