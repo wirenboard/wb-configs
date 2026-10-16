@@ -1,3 +1,9 @@
+wb-configs (3.53.0+wb100) stable; urgency=medium
+
+  * wb-adjust-systime: support ntpsec and correctly detect stale drift files
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Thu, 15 Oct 2026 16:35:19 +0400
+
 wb-configs (3.53.0) stable; urgency=medium
 
   * Remove obsolete rsyslog configs
