@@ -11,6 +11,7 @@ Package: wb-configs
 Architecture: all
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         bc,
          ucf,
          wb-utils (>= 4.28.3~~),
          inotify-tools,
