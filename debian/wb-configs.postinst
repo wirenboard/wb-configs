@@ -232,3 +232,25 @@ mosquitto_fixes()
 }
 
 mosquitto_fixes
+
+# postrm of versions before 3.53.6 replaces /etc/mosquitto/conf.d symlink with a copy, restore it
+restore_mosquitto_confd()
+{
+    local etc_dir=/etc/mosquitto/conf.d
+    local data_dir=/mnt/data/etc/mosquitto/conf.d
+
+    [ -d "$etc_dir" ] && [ ! -L "$etc_dir" ] && [ -d "$data_dir" ] || return 0
+
+    echo "Restoring $etc_dir symlink to $data_dir"
+    for f in "$etc_dir"/*; do
+        [ -e "$f" ] && [ ! -L "$f" ] && [[ "$f" != *.dpkg-new ]] || continue
+        cp -a "$f" "$data_dir/" || return 1
+    done
+    rm -f "$data_dir"/{00default_listener.conf,10listeners.conf,20bridges.conf,21bridge.conf.example}.dpkg-new
+    rm -rf "$etc_dir"
+    ln -s "$data_dir" "$etc_dir"
+}
+
+if [ "$1" = "configure" ] && [ -n "$2" ] && dpkg --compare-versions "$2" lt "3.53.6~~"; then
+    restore_mosquitto_confd
+fi
