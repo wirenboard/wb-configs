@@ -233,7 +233,7 @@ mosquitto_fixes()
 
 mosquitto_fixes
 
-# postrm of versions before 3.53.6 replaces /etc/mosquitto/conf.d symlink with a copy, restore it
+# postrm of versions before 3.53.7 replaces /etc/mosquitto/conf.d symlink with a copy, restore it
 restore_mosquitto_confd()
 {
     local etc_dir=/etc/mosquitto/conf.d
@@ -251,6 +251,8 @@ restore_mosquitto_confd()
     ln -s "$data_dir" "$etc_dir"
 }
 
-if [ "$1" = "configure" ] && [ -n "$2" ] && dpkg --compare-versions "$2" lt "3.53.6~~"; then
+if [ "$1" = "configure" ] && [ -n "$2" ] && dpkg --compare-versions "$2" lt "3.53.7~~"; then
     restore_mosquitto_confd
 fi
+
+/usr/lib/wb-configs/fix_dpkg_symlinks.sh cleanup
