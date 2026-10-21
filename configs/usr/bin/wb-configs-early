@@ -17,6 +17,17 @@ wb_durable_copy()
     mv -T "$to.new" "$to"
 }
 
+# Same as wb_durable_copy, but make $2 a symlink to $1. The symlink may
+# dangle, so sync the filesystem through its directory.
+wb_durable_symlink()
+{
+    local target=$1 to=$2
+    rm -rf "$to.new"
+    ln -s "$target" "$to.new"
+    sync -f "$(dirname "$to")"
+    mv -T "$to.new" "$to"
+}
+
 wb_fix_data_file()
 {
     local src_orig=$1
@@ -120,10 +131,35 @@ init_start_functions() {
 
     wb_move_watch()
     {
-        wb_fix_data_file "$@" || return $?
-
         local src=$1
         local dst="$MNT${2:-$src}"
+
+        # Keep symlinks as symlinks (e.g. /etc/localtime set by timedatectl,
+        # which reads the timezone name from the link). The target is relative
+        # to rootfs and may dangle under $MNT, so wb_fix_data_file can't be
+        # used here: it doesn't see a dangling $dst and dereferences $src.
+        if [[ -L "$dst" ]] || [[ -L "$src" && ! -e "$dst" ]]; then
+            if [[ ! -L "$dst" ]]; then
+                echo "$src: saving symlink to $dst"
+                mkdir -p "$(dirname "$dst")"
+                wb_durable_symlink "$(readlink "$src")" "$dst"
+                if [[ ! -e "${src}.default" && ! -L "${src}.default" ]]; then
+                    echo "$src: saving backup to ${src}.default"
+                    wb_durable_symlink "$(readlink "$src")" "${src}.default"
+                fi
+            fi
+
+            if [[ ! -L "$src" || "$(readlink "$src")" != "$(readlink "$dst")" ]]; then
+                echo "$src: restoring symlink from $dst"
+                wb_durable_symlink "$(readlink "$dst")" "$src"
+            fi
+
+            [[ "$DEBUG" == "yes" ]] && echo "$src: watching for changes"
+            WB_WATCH_FILES+=("$src")
+            return 0
+        fi
+
+        wb_fix_data_file "$@" || return $?
 
         [[ ! -f "$src" || -h "$src" ]] && rm "$src"
         diff -q "$src" "$dst" >/dev/null 2>&1 || {
@@ -202,8 +238,8 @@ set_fwupdate_permissions()
 
 maybe_fix_uboot_dynamic_env()
 {
-    local actual_env_offset=$(cat /proc/device-tree/wirenboard/uboot-env-offset 2>/dev/null) || true
-    local actual_env_size=$(cat /proc/device-tree/wirenboard/uboot-env-size 2>/dev/null) || true
+    local actual_env_offset=$(tr -d '\0' 2>/dev/null < /proc/device-tree/wirenboard/uboot-env-offset) || true
+    local actual_env_size=$(tr -d '\0' 2>/dev/null < /proc/device-tree/wirenboard/uboot-env-size) || true
     local uboot_config="/etc/fw_env.config"
     local target_device=$1
 

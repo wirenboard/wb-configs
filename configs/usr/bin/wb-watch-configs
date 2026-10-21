@@ -20,13 +20,15 @@ log() {
 }
 
 # Keep the old destination intact until the new copy is complete and on disk.
+# Symlinks (e.g. /etc/localtime set by timedatectl) are copied as symlinks;
+# they may dangle under $MNT, so sync the filesystem through the directory.
 wb_durable_copy() {
 	local from=$1
 	local to=$2
 	local tmp="${to}.new"
 
 	rm -rf "$tmp" || return 1
-	if cp -aH "$from" "$tmp" && sync -f "$tmp" && mv -T "$tmp" "$to"; then
+	if cp -a "$from" "$tmp" && sync -f "$(dirname "$tmp")" && mv -T "$tmp" "$to"; then
 		return 0
 	fi
 	rm -rf "$tmp"
