@@ -1,36 +1,46 @@
 #!/bin/bash
 
 PPM_DIFF_FNAME=/proc/device-tree/wirenboard/24mhz_ppm_diff
-NTP_DRIFT_FILE=/var/lib/ntp/ntp.drift
+NTP_DRIFT_FILE=/var/lib/ntpsec/ntp.drift
 ALLOWED_SECONDS_FROM_LAST_MODIFICATION=432000  # 5 days
 
 write_compensation()
 {
-    local compensation_value=$(bc -l <<<"$(cat $PPM_DIFF_FNAME)*-1")  # value in dts is with the opposite sign
+    local compensation_value
+    local ppm_diff
+
+    # Device-tree string properties are NUL-terminated. Strip the terminator
+    # before command substitution so bash does not warn about an ignored byte.
+    ppm_diff=$(tr -d '\0' < "$PPM_DIFF_FNAME")
+    compensation_value=$(bc -l <<<"$ppm_diff*-1")  # value in dts is with the opposite sign
     ntptime -f "$compensation_value"
     echo "Has set systime compensation $compensation_value via ntptime"
 }
 
 seconds_from_last_modification()
 {
-    local drift_modified_at=$(date -r $NTP_DRIFT_FILE +%s)
-    local now=$(date +%s)
-    return $(bc -l <<<"$now - $drift_modified_at")
+    local drift_modified_at
+    local now
+
+    drift_modified_at=$(date -r "$NTP_DRIFT_FILE" +%s)
+    now=$(date +%s)
+    echo $((now - drift_modified_at))
 }
 
 do_adjust()
 {
-    if $(systemctl is-active --quiet ntp); then
-        echo "Found active ntp service. Will look to $NTP_DRIFT_FILE"
-        seconds_from_last_modification
-        if [ "$?" -gt "$ALLOWED_SECONDS_FROM_LAST_MODIFICATION" ]; then
-            echo "Drift file is too old (was edited more than $? seconds ago)"
+    if systemctl is-active --quiet ntpsec; then
+        echo "Found active ntpsec service. Will look to $NTP_DRIFT_FILE"
+        local age
+        age=$(seconds_from_last_modification)
+        if [ "$age" -gt "$ALLOWED_SECONDS_FROM_LAST_MODIFICATION" ]; then
+            echo "Drift file is too old (was edited $age seconds ago)"
             write_compensation
         else
             echo "Drift file is valid (was recently edited)"
         fi
     else
-        echo "No active ntp service was found"
+        echo "No active ntpsec service was found"
         write_compensation
     fi
 }
