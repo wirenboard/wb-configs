@@ -1,3 +1,9 @@
+wb-configs (3.53.8) stable; urgency=medium
+
+  * extended rootfs: swap is a file (instead of partition)
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Thu, 27 Oct 2026 15:45:21 +0300
+
 wb-configs (3.53.7) stable; urgency=medium
 
   * fix /etc/mosquitto/conf.d turning into a directory on upgrade, which lost
