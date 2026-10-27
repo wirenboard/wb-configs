@@ -1,3 +1,11 @@
+wb-configs (3.53.8) stable; urgency=medium
+
+  * fix web firmware update on WB7 with U-Boot 2021.10 after FIT update
+    without factory reset: restore default fw_env.config (0x88000 0x20000)
+    for U-Boot that doesn't report env location in device tree
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Tue, 27 Oct 2026 12:00:00 +0400
+
 wb-configs (3.53.7) stable; urgency=medium
 
   * fix /etc/mosquitto/conf.d turning into a directory on upgrade, which lost
