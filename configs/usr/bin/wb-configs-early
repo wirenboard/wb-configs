@@ -1,6 +1,5 @@
 #!/bin/bash
 
-STORAGE=/dev/mmcblk0
 MNT=/mnt/data
 
 WATCH_FILES_LIST=/var/run/wb-configs.watch
@@ -203,8 +202,6 @@ do_start()
 {
     init_start_functions
 
-    local md5_interfaces=`md5sum /etc/network/interfaces`
-
     echo "Checking symlinks to $MNT" >&2
     for item in /etc/wb-configs.d/*; do
         grep -q '\.dpkg-old$' <<< "$item" && continue
@@ -222,7 +219,6 @@ do_stop()
         grep -q '\.dpkg-old$' <<< "$item" && continue
         source "$item"
     done
-
 }
 
 # nginx user should has rw access to fwupdate uploads dir
