@@ -207,6 +207,14 @@ maybe_fix_uboot_dynamic_env()
     local uboot_config="/etc/fw_env.config"
     local target_device=$1
 
+    # U-Boot 2021.10 on WB7 doesn't report env location, but it's always here
+    if [[ -z $actual_env_offset ]] && \
+        tr '\0' '\n' 2>/dev/null < /proc/device-tree/compatible | grep -qx 'wirenboard,wirenboard-720' && \
+        tr -d '\0' 2>/dev/null < /proc/device-tree/chosen/u-boot-version | grep -qE '^U-Boot 2021\.10([^0-9]|$)'; then
+        actual_env_offset=88000
+        actual_env_size=20000
+    fi
+
     if [[ ! -z $actual_env_offset ]] && [[ ! -z $actual_env_size ]]; then
         echo "Found actual uboot env offset: $actual_env_offset & size: $actual_env_size; Filling $uboot_config"
         cat > $uboot_config << EOF
