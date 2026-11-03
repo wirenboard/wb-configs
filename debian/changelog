@@ -1,3 +1,9 @@
+wb-configs (3.53.0+wb102) stable; urgency=medium
+
+  * extended rootfs: swap is a file (instead of partition)
+
+ -- Vladimir Romanov <v.romanov@wirenboard.com>  Tu3, 03 Nov 2026 15:02:12 +0300
+
 wb-configs (3.53.0+wb101) stable; urgency=medium
 
   * fix update on WB7 with U-Boot 2021.10
