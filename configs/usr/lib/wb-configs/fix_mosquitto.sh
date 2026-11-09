@@ -58,17 +58,73 @@ for i in ${!mosquitto_confs[@]}; do
     fi
 done
 
-# Fix permissions for default ACL and password files
 MOSQUITTO_ACL_CONF="/etc/mosquitto/acl/default.conf"
+MOSQUITTO_EXTERNAL_ACL_CONF="/etc/mosquitto/acl/external.conf"
 MOSQUITTO_PASSWD_CONF="/etc/mosquitto/passwd/default.conf"
 
-chmod 0700 $MOSQUITTO_ACL_CONF
-chmod 0700 $MOSQUITTO_PASSWD_CONF
+# md5 of the stock /etc/mosquitto/acl/default.conf:
+#   topic readwrite #
+#   topic readwrite $SYS/#
+MOSQUITTO_ACL_CONF_HASH="a5f75ce092ed11139995d31db8fc355b"
 
-chgrp mosquitto $MOSQUITTO_ACL_CONF
-chgrp mosquitto $MOSQUITTO_PASSWD_CONF
+# Listener 1883 used to share the default ACL with the web interface listener,
+# which allowed any client in the network to call MQTT-RPC of Wiren Board
+# services. Switch it to its own ACL, unless the user has customized
+# the default ACL (e.g. added accounts) or the listener.
+#
+# Runs both from postinst and on boot (data partition may come from an older
+# firmware), so it must be idempotent.
+migrate_external_acl()
+{
+    local new_conf="$LISTENERS_CONF.wb-new"
 
-chown mosquitto $MOSQUITTO_ACL_CONF
-chown mosquitto $MOSQUITTO_PASSWD_CONF
+    [ -f "$LISTENERS_CONF" ] || return 0
+
+    awk -v from="$MOSQUITTO_ACL_CONF" -v to="$MOSQUITTO_EXTERNAL_ACL_CONF" '
+        $1 == "listener" { in_1883 = ($2 == "1883") }
+        in_1883 && $1 == "acl_file" && $2 == from && NF == 2 {
+            i = index($0, from)
+            $0 = substr($0, 1, i - 1) to substr($0, i + length(from))
+        }
+        { print }
+    ' "$LISTENERS_CONF" > "$new_conf"
+
+    if cmp -s "$LISTENERS_CONF" "$new_conf"; then
+        rm -f "$new_conf"
+        return 0
+    fi
+
+    if [ ! -f "$MOSQUITTO_EXTERNAL_ACL_CONF" ]; then
+        echo "Not switching listener 1883 to $MOSQUITTO_EXTERNAL_ACL_CONF: file is missing" >&2
+        rm -f "$new_conf"
+        return 0
+    fi
+
+    local acl_hash
+    acl_hash=$(md5sum "$MOSQUITTO_ACL_CONF" 2>/dev/null | cut -f 1 -d ' ')
+    if [ "$acl_hash" != "$MOSQUITTO_ACL_CONF_HASH" ]; then
+        echo "WARNING: listener 1883 uses customized $MOSQUITTO_ACL_CONF, keeping it." >&2
+        echo "WARNING: anonymous clients may have access to MQTT-RPC (/rpc/#), see $MOSQUITTO_EXTERNAL_ACL_CONF" >&2
+        rm -f "$new_conf"
+        return 0
+    fi
+
+    echo "Switching listener 1883 to $MOSQUITTO_EXTERNAL_ACL_CONF"
+    chmod --reference="$LISTENERS_CONF" "$new_conf"
+    chown --reference="$LISTENERS_CONF" "$new_conf"
+    sync -f "$new_conf"
+    mv -f "$new_conf" "$LISTENERS_CONF"
+    restart_required=1
+}
+
+migrate_external_acl
+
+# Fix permissions for default ACL and password files
+for f in "$MOSQUITTO_ACL_CONF" "$MOSQUITTO_EXTERNAL_ACL_CONF" "$MOSQUITTO_PASSWD_CONF"; do
+    [ -f "$f" ] || continue
+    chmod 0700 "$f"
+    chgrp mosquitto "$f"
+    chown mosquitto "$f"
+done
 
 exit "$restart_required"
