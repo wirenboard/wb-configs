@@ -1,3 +1,14 @@
+wb-configs (3.55.0) stable; urgency=medium
+
+  * mosquitto: listener 1883 uses its own ACL /etc/mosquitto/acl/external.conf,
+    which denies anonymous access to MQTT-RPC of WB services (/rpc/#) and
+    to wb-cloud-agent activation controls. Existing installations are
+    switched to it unless /etc/mosquitto/acl/default.conf was customized.
+    BREAKING: external clients calling MQTT-RPC over port 1883 need
+    an account (user section in external.conf)
+
+ -- Nikolay Korotkiy <nikolay.korotkiy@wirenboard.com>  Mon, 09 Nov 2026 12:00:00 +0400
+
 wb-configs (3.54.2) stable; urgency=medium
 
   * extended rootfs: swap is a file (instead of partition)
