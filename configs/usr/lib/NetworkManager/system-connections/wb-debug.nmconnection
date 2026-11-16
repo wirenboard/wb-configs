@@ -1,20 +1,25 @@
 [connection]
 id=wb-debug
 uuid=0f098677-2b49-4167-a534-207567b1751b
-type=ethernet
-interface-name=dbg0
+type=bridge
+interface-name=dbgbr
 autoconnect=true
+autoconnect-slaves=1
 
 [user]
 wb.read-only=true
 wb.disable-nat=true
 
-[ethernet]
+[bridge]
+stp=false
 
 [ipv4]
 address1=10.200.200.1/30
 method=shared
 never-default=true
+# one address in the /30 and dnsmasq now lives as long as the bridge: keep the lease short
+# so a host with another MAC is not locked out for the default hour
+shared-dhcp-lease-time=120
 
 [ipv6]
 addr-gen-mode=stable-privacy

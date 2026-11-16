@@ -1,0 +1,15 @@
+[connection]
+id=wb-debug-ecm
+uuid=aea5dbf5-2641-4c35-9efd-135343e6e0c7
+type=ethernet
+interface-name=dbge0
+autoconnect=true
+master=0f098677-2b49-4167-a534-207567b1751b
+slave-type=bridge
+
+[user]
+wb.read-only=true
+
+[ethernet]
+
+[bridge-port]
