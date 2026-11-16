@@ -1,6 +1,5 @@
 #!/bin/bash
 
-STORAGE=/dev/mmcblk0
 MNT=/mnt/data
 
 WATCH_FILES_LIST=/var/run/wb-configs.watch
@@ -14,6 +13,17 @@ wb_durable_copy()
     rm -rf "$to.new"
     cp -aH "$from" "$to.new"
     sync -f "$to.new"
+    mv -T "$to.new" "$to"
+}
+
+# Same as wb_durable_copy, but make $2 a symlink to $1. The symlink may
+# dangle, so sync the filesystem through its directory.
+wb_durable_symlink()
+{
+    local target=$1 to=$2
+    rm -rf "$to.new"
+    ln -s "$target" "$to.new"
+    sync -f "$(dirname "$to")"
     mv -T "$to.new" "$to"
 }
 
@@ -120,10 +130,35 @@ init_start_functions() {
 
     wb_move_watch()
     {
-        wb_fix_data_file "$@" || return $?
-
         local src=$1
         local dst="$MNT${2:-$src}"
+
+        # Keep symlinks as symlinks (e.g. /etc/localtime set by timedatectl,
+        # which reads the timezone name from the link). The target is relative
+        # to rootfs and may dangle under $MNT, so wb_fix_data_file can't be
+        # used here: it doesn't see a dangling $dst and dereferences $src.
+        if [[ -L "$dst" ]] || [[ -L "$src" && ! -e "$dst" ]]; then
+            if [[ ! -L "$dst" ]]; then
+                echo "$src: saving symlink to $dst"
+                mkdir -p "$(dirname "$dst")"
+                wb_durable_symlink "$(readlink "$src")" "$dst"
+                if [[ ! -e "${src}.default" && ! -L "${src}.default" ]]; then
+                    echo "$src: saving backup to ${src}.default"
+                    wb_durable_symlink "$(readlink "$src")" "${src}.default"
+                fi
+            fi
+
+            if [[ ! -L "$src" || "$(readlink "$src")" != "$(readlink "$dst")" ]]; then
+                echo "$src: restoring symlink from $dst"
+                wb_durable_symlink "$(readlink "$dst")" "$src"
+            fi
+
+            [[ "$DEBUG" == "yes" ]] && echo "$src: watching for changes"
+            WB_WATCH_FILES+=("$src")
+            return 0
+        fi
+
+        wb_fix_data_file "$@" || return $?
 
         [[ ! -f "$src" || -h "$src" ]] && rm "$src"
         diff -q "$src" "$dst" >/dev/null 2>&1 || {
@@ -167,8 +202,6 @@ do_start()
 {
     init_start_functions
 
-    local md5_interfaces=`md5sum /etc/network/interfaces`
-
     echo "Checking symlinks to $MNT" >&2
     for item in /etc/wb-configs.d/*; do
         grep -q '\.dpkg-old$' <<< "$item" && continue
@@ -186,7 +219,6 @@ do_stop()
         grep -q '\.dpkg-old$' <<< "$item" && continue
         source "$item"
     done
-
 }
 
 # nginx user should has rw access to fwupdate uploads dir
@@ -202,10 +234,18 @@ set_fwupdate_permissions()
 
 maybe_fix_uboot_dynamic_env()
 {
-    local actual_env_offset=$(cat /proc/device-tree/wirenboard/uboot-env-offset 2>/dev/null) || true
-    local actual_env_size=$(cat /proc/device-tree/wirenboard/uboot-env-size 2>/dev/null) || true
+    local actual_env_offset=$(tr -d '\0' 2>/dev/null < /proc/device-tree/wirenboard/uboot-env-offset) || true
+    local actual_env_size=$(tr -d '\0' 2>/dev/null < /proc/device-tree/wirenboard/uboot-env-size) || true
     local uboot_config="/etc/fw_env.config"
     local target_device=$1
+
+    # U-Boot 2021.10 on WB7 doesn't report env location, but it's always here
+    if [[ -z $actual_env_offset ]] && \
+        tr '\0' '\n' 2>/dev/null < /proc/device-tree/compatible | grep -qx 'wirenboard,wirenboard-720' && \
+        tr -d '\0' 2>/dev/null < /proc/device-tree/chosen/u-boot-version | grep -qE '^U-Boot 2021\.10([^0-9]|$)'; then
+        actual_env_offset=88000
+        actual_env_size=20000
+    fi
 
     if [[ ! -z $actual_env_offset ]] && [[ ! -z $actual_env_size ]]; then
         echo "Found actual uboot env offset: $actual_env_offset & size: $actual_env_size; Filling $uboot_config"

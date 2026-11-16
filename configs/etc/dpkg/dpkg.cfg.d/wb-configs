@@ -1,0 +1,2 @@
+# Fix conffiles symlinked to /mnt/data, see /usr/lib/wb-configs/fix_dpkg_symlinks.sh
+post-invoke="if [ -x /usr/lib/wb-configs/fix_dpkg_symlinks.sh ]; then /usr/lib/wb-configs/fix_dpkg_symlinks.sh; fi"

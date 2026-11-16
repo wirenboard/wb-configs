@@ -1,0 +1,205 @@
+#!/bin/bash
+#
+# Midnight Commander extfs helper for Wiren Board firmware images (*.fit)
+#
+# Shows blobs stored in the FIT image:
+#   zImage / Image.gz  - bootlet kernel (/images/kernel)
+#   boot.dtb           - bootlet device tree (/images/dtb)
+#   install_update.sh  - installation script (/images/install)
+#   rootfs/            - contents of the rootfs tarball (/images/rootfs)
+#
+# Blobs are read in place by offsets reported by fit_info, so nothing
+# is unpacked to disk except the file being viewed or copied.
+# The rootfs tarball is shown only as a directory, not as a file: as a nested
+# archive mc would copy the whole blob and its decompressed tar to TMPDIR.
+#
+# Usage: press Enter on a *.fit file in mc, or "cd factoryreset.fit/ufit://"
+#
+# "ufit info <file.fit>" prints image properties (version, release, hashes),
+# mc shows it on F3 for *.fit files.
+
+FIT="$2"
+
+fit_prop() {
+    local node="$1"
+    local prop="$2"
+    local tmp len off
+
+    tmp=$(fit_info -f "$FIT" -n "$node" -p "$prop" 2>/dev/null) || return 1
+    len=$(sed -rn 's#LEN: (.*)#\1#p' <<< "$tmp")
+    off=$(sed -rn 's#OFF: (.*)#\1#p' <<< "$tmp")
+    [[ "$len" -gt 0 && "$off" -gt 0 ]] 2>/dev/null || return 1
+    tail -c +$((off + 1)) "$FIT" 2>/dev/null | head -c "$len" 2>/dev/null
+}
+
+fit_prop_string() {
+    fit_prop "$@" | tr -d '\0'
+}
+
+fit_blob_size() {
+    local tmp
+    tmp=$(fit_info -f "$FIT" -n "/images/$1" -p data 2>/dev/null) || return 1
+    sed -rn 's#LEN: ([1-9][0-9]*)$#\1#p' <<< "$tmp" | grep .
+}
+
+fit_blob_data() {
+    fit_prop "/images/$1" data
+}
+
+fit_blob_hash() {
+    fit_prop "/images/$1/hash@1" value | od -An -v -tx1 | tr -d ' \n'
+}
+
+# FIT image node -> file name shown in mc
+blob_file_name() {
+    case "$1" in
+        kernel)
+            if [[ "$(fit_blob_data kernel | head -c 2 | od -An -tx1 | tr -d ' \n')" == "1f8b" ]]; then
+                echo "Image.gz"
+            else
+                echo "zImage"
+            fi
+            ;;
+        dtb) echo "boot.dtb" ;;
+        install) echo "install_update.sh" ;;
+        rootfs) echo "rootfs.tar.gz" ;;
+        *) return 1 ;;
+    esac
+}
+
+blob_node() {
+    case "$1" in
+        zImage|Image.gz) echo "kernel" ;;
+        boot.dtb) echo "dtb" ;;
+        install_update.sh) echo "install" ;;
+        *) return 1 ;;
+    esac
+}
+
+BLOBS=(kernel dtb install rootfs)
+
+fit_info_text() {
+    local node size
+
+    cat <<EOF
+Description:         $(fit_prop_string / description)
+Compatible device:   $(fit_prop_string / compatible)
+Firmware version:    $(fit_prop_string / firmware-version)
+Firmware compatible: $(fit_prop_string / firmware-compatible)
+Release name:        $(fit_prop_string / release-name)
+Release suite:       $(fit_prop_string / release-suite)
+Release target:      $(fit_prop_string / release-target)
+Release repo prefix: $(fit_prop_string / release-repo-prefix)
+
+Images:
+EOF
+    for node in "${BLOBS[@]}"; do
+        size=$(fit_blob_size "$node") || continue
+        echo "  $(blob_file_name "$node") (/images/$node)"
+        echo "    Description: $(fit_prop_string "/images/$node" description)"
+        echo "    Size:        $size"
+        echo "    SHA1:        $(fit_blob_hash "$node")"
+    done
+}
+
+# Converts "tar -tv --numeric-owner" output to the "ls -l" format expected by mc.
+# Hard links are shown as relative symlinks to their target: tar can't extract
+# a hard link alone (it would be empty), and mc resolves symlinks inside the archive.
+tar_list_to_ls() {
+    LC_ALL=C awk -v prefix="$1" '
+    {
+        perm = $1; size = $3; date = $4; time = $5
+        split($2, owner, "/")
+        name = $0
+        for (i = 0; i < 5; i++)
+            sub(/^[^ ]+ +/, "", name)
+        sub(/^\.\//, "", name)
+
+        target = ""
+        if (perm ~ /^l/) {
+            target = name
+            sub(/^.* -> /, "", target)
+            sub(/ -> .*$/, "", name)
+        } else if (perm ~ /^h/) {
+            target = name
+            sub(/^.* link to /, "", target)
+            sub(/ link to .*$/, "", name)
+            sub(/^\.\//, "", target)
+            # relative path from the link directory to the archive root
+            up = name
+            gsub(/[^\/]+/, "", up)
+            gsub(/\//, "../", up)
+            target = up target
+            perm = "lrwxrwxrwx"
+        }
+        if (perm ~ /^[cb]/)
+            sub(/,/, ", ", size)
+
+        sub(/\/$/, "", name)
+        if (name == "" || name == ".")
+            next
+
+        split(date, d, "-")
+        printf "%s 1 %s %s %s %s-%s-%s %s %s%s", perm, owner[1], owner[2], size, d[2], d[3], d[1], time, prefix, name
+        if (target != "")
+            printf " -> %s", target
+        printf "\n"
+    }'
+}
+
+rootfs_list() {
+    fit_blob_data rootfs | LC_ALL=C tar -tvz --numeric-owner --quoting-style=literal -f - 2>/dev/null | tar_list_to_ls "rootfs/"
+}
+
+rootfs_extract() {
+    local name="$1"
+
+    # WB rootfs tarballs store names as "./path", try it first
+    fit_blob_data rootfs | tar -xzO --occurrence -f - "./$name" 2>/dev/null ||
+        fit_blob_data rootfs | tar -xzO --occurrence -f - "$name"
+}
+
+mcfit_list() {
+    local date node size
+
+    date=$(date -r "$FIT" '+%m-%d-%Y %H:%M')
+    for node in kernel dtb install; do
+        size=$(fit_blob_size "$node") || continue
+        printf -- '-r--r--r-- 1 0 0 %s %s %s\n' "$size" "$date" "$(blob_file_name "$node")"
+    done
+    if fit_blob_size rootfs >/dev/null; then
+        printf 'dr-xr-xr-x 1 0 0 0 %s %s\n' "$date" "rootfs"
+        rootfs_list
+    fi
+}
+
+mcfit_copyout() {
+    local name="$1"
+    local dest="$2"
+    local node
+
+    case "$name" in
+        rootfs/*)
+            rootfs_extract "${name#rootfs/}" > "$dest"
+            ;;
+        *)
+            node=$(blob_node "$name") || exit 1
+            fit_blob_data "$node" > "$dest"
+            ;;
+    esac
+}
+
+case "$1" in
+    list)
+        mcfit_list
+        ;;
+    copyout)
+        mcfit_copyout "$3" "$4"
+        ;;
+    info)
+        fit_info_text
+        ;;
+    *)
+        exit 1
+        ;;
+esac
